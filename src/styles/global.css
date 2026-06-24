@@ -1,1 +1,110 @@
 @import "tailwindcss";
+
+/* =============================================================
+   Tailwind v4 テーマ定義（採用デザイン: 案A 温かみ）
+   ベージュ・くすみ青緑・テラコッタの福祉トーン
+   ============================================================= */
+@theme {
+  /* Brand colors */
+  --color-bg: #F8F2E4;
+  --color-bg-deep: #EFE4CC;
+  --color-surface: #FFFFFF;
+  --color-card: #FFF8E8;
+  --color-ink-1: #2D2820;
+  --color-ink-2: #6B6353;
+  --color-ink-3: #A39A85;
+  --color-accent-1: #5C8B89;
+  --color-accent-1-deep: #3F6B69;
+  --color-accent-2: #C97A4F;
+  --color-accent-2-soft: #F2D9C8;
+  --color-border-soft: #E8DCC0;
+  --color-warn: #B85A3E;
+  --color-warn-soft: #FBEEE6;
+
+  /* Typography */
+  --font-display: "Klee One", "Zen Maru Gothic", serif;
+  --font-body: "Zen Maru Gothic", system-ui, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", "Menlo", monospace;
+
+  /* Radii */
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+
+  /* Shadows (warm tone) */
+  --shadow-soft: 0 1px 3px rgba(91, 70, 30, 0.04);
+  --shadow-card: 0 2px 8px rgba(91, 70, 30, 0.06), 0 8px 24px rgba(91, 70, 30, 0.04);
+}
+
+/* =============================================================
+   ベースリセット
+   ============================================================= */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-ink-1);
+  font-family: var(--font-body);
+  font-size: clamp(15px, 0.9vw + 13px, 17px);
+  line-height: 1.75;
+  letter-spacing: 0.01em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+/* =============================================================
+   ユーティリティ（モックアップA案から流用）
+   ============================================================= */
+.font-display {
+  font-family: var(--font-display);
+  font-weight: 600;
+}
+
+.container-page {
+  width: 100%;
+  max-width: 480px;
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 2vw, 1.5rem);
+}
+
+@media (min-width: 768px) {
+  .container-page { max-width: 720px; }
+}
+
+@media (min-width: 1024px) {
+  .container-page { max-width: 960px; }
+}
+
+/* Reduced motion 対応 */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
