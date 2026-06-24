@@ -1,72 +1,119 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import PromptCard from '../components/PromptCard.astro';
 import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import Timetable from '../components/Timetable.astro';
+import TopicCard from '../components/TopicCard.astro';
+import QRDisplay from '../components/QRDisplay.astro';
+
+const SITE_URL = 'https://yasushi-honda.github.io/seiho-ai-study/';
 
 const topics = (await getCollection('topics')).sort((a, b) => a.data.order - b.data.order);
 ---
 
 <Layout title="生保AIスタディ">
-  <section class="container-page py-16">
-    <p
-      class="mb-4 inline-block rounded-full bg-accent-1 px-3 py-1 text-xs font-semibold tracking-wider text-white"
-    >
-      2026.09.07 MON · なんばスカイオ
-    </p>
-    <h1 class="font-display mb-4 text-3xl font-semibold leading-tight md:text-5xl">
-      伴走支援の時間を作る、<br />
-      現場のための<span
-        class="bg-gradient-to-t from-accent-2-soft from-[35%] to-transparent to-[35%] px-1"
-        >AI活用術</span
+  {/* Hero */}
+  <section class="relative overflow-hidden">
+    <span
+      aria-hidden="true"
+      class="pointer-events-none absolute -right-20 -top-12 h-60 w-60 rounded-[50%_40%_60%_50%] bg-accent-2-soft opacity-60"
+    ></span>
+    <span
+      aria-hidden="true"
+      class="pointer-events-none absolute -left-16 bottom-0 h-48 w-48 rounded-[60%_40%_50%_50%] bg-accent-1/15"
+    ></span>
+
+    <div class="container-page relative py-12 md:py-20">
+      <p
+        class="mb-5 inline-block rounded-full bg-accent-1 px-3 py-1 text-xs font-semibold tracking-wider text-white"
       >
-    </h1>
-    <p class="mb-8 max-w-2xl text-base text-ink-2 leading-relaxed">
-      生活保護受給者・生活困窮者支援の現場を支える業務効率化。<br />
-      記録・マニュアル・法令検索を、AIで「半歩はやく、半歩深く」。
-    </p>
-
-    <div class="mt-12 rounded-xl border border-border-soft bg-card p-6">
-      <p class="text-sm text-ink-2">
-        🚧 <strong class="text-ink-1">B3+B4 動作確認用ページ</strong>です。
-        Content Collections から {topics.length} トピック検出、PromptCard コンポーネントの動作確認。
-        次の B5 でトップページ本実装、B6 でトピック詳細ページに進みます。
+        2026.09.07 MON · なんばスカイオ
       </p>
+      <h1 class="font-display mb-5 text-3xl font-semibold leading-tight md:text-5xl">
+        伴走支援の時間を作る、<br />
+        現場のための<span
+          class="bg-gradient-to-t from-accent-2-soft from-[35%] to-transparent to-[35%] px-1"
+          >AI活用術</span
+        >
+      </h1>
+      <p class="mb-8 max-w-2xl text-base leading-relaxed text-ink-2">
+        生活保護受給者・生活困窮者支援の現場を支える業務効率化。<br />
+        記録・マニュアル・法令検索を、AIで「半歩はやく、半歩深く」。
+      </p>
+      <div class="flex flex-wrap gap-3">
+        <span class="rounded-xl border border-border-soft bg-surface px-4 py-2 text-sm text-ink-2">
+          ⏱ <strong class="font-bold text-ink-1">2時間30分</strong>
+        </span>
+        <span class="rounded-xl border border-border-soft bg-surface px-4 py-2 text-sm text-ink-2">
+          🎯 <strong class="font-bold text-ink-1">9トピック</strong>の実践
+        </span>
+        <span class="rounded-xl border border-border-soft bg-surface px-4 py-2 text-sm text-ink-2">
+          📱 スマホで操作
+        </span>
+      </div>
     </div>
+  </section>
 
-    <h2 class="font-display mt-12 mb-4 text-xl font-semibold">検出されたトピック</h2>
-    <ul class="space-y-2 text-sm">
+  {/* Timetable */}
+  <section class="container-page py-12">
+    <header class="mb-6">
+      <span
+        class="font-display mb-1 block text-xs font-semibold uppercase tracking-widest text-accent-1"
+      >
+        Timetable
+      </span>
+      <h2 class="font-display m-0 text-2xl font-semibold md:text-3xl">当日の流れ</h2>
+      <p class="mt-2 text-sm text-ink-2">2.5時間で「明日からの一歩」が見つかる構成</p>
+    </header>
+    <Timetable />
+  </section>
+
+  {/* Topic cards */}
+  <section id="topics" class="container-page py-12">
+    <header class="mb-6">
+      <span
+        class="font-display mb-1 block text-xs font-semibold uppercase tracking-widest text-accent-1"
+      >
+        9 Topics
+      </span>
+      <h2 class="font-display m-0 text-2xl font-semibold md:text-3xl">学ぶ内容</h2>
+      <p class="mt-2 text-sm text-ink-2">各トピックは独立しています。気になる番号からどうぞ。</p>
+    </header>
+    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {
         topics.map((t) => (
-          <li class="flex items-baseline gap-2">
-            <span class="font-display text-accent-1">{String(t.data.order).padStart(2, '0')}</span>
-            <span>{t.data.icon}</span>
-            <span>{t.data.title}</span>
-            <span class="text-ink-3 text-xs">({t.data.category})</span>
-          </li>
+          <TopicCard
+            order={t.data.order}
+            title={t.data.title}
+            icon={t.data.icon}
+            summary={t.data.summary}
+            slug={t.id}
+            draft={t.data.draft}
+          />
         ))
       }
-    </ul>
+    </div>
+  </section>
 
-    <h2 class="font-display mt-12 mb-4 text-xl font-semibold">PromptCard 動作確認</h2>
-    <PromptCard
-      number="01"
-      title="文字起こしを議事録にまとめる（サンプル）"
-      prompt={`あなたは福祉施設の議事録作成を補助するアシスタントです。
-以下の文字起こしテキストから、議事録を作成してください。
-
-【出力フォーマット】
-■ 日時：
-■ 出席者：
-■ 議題：
-■ 決定事項（箇条書き）：
-■ 次回までの宿題（担当者と期限を明記）：
-
-【ルール】
-- 個人を特定できる情報は[マスク]に置き換える
-- 推測ではなく、文字起こしに書かれている内容のみで作成する
-
-【文字起こし】
-（ここに貼り付け）`}
-    />
+  {/* QR / share */}
+  <section class="container-page py-12">
+    <div
+      class="rounded-2xl border-2 border-dashed border-accent-1 bg-bg-deep p-6 text-center md:p-8"
+    >
+      <span
+        class="font-display mb-1 block text-xs font-semibold uppercase tracking-widest text-accent-1"
+      >
+        Share
+      </span>
+      <h2 class="font-display m-0 mb-2 text-xl font-semibold md:text-2xl">同僚にも共有</h2>
+      <p class="m-0 text-sm text-ink-2">研修後も、いつでもこのページに戻ってこられます</p>
+      <div class="my-6">
+        <QRDisplay url={SITE_URL} size={200} ariaLabel="本研修ページのQRコード" />
+      </div>
+      <code
+        class="inline-block rounded-full border border-border-soft bg-surface px-4 py-2 text-xs text-ink-2 md:text-sm"
+      >
+        yasushi-honda.github.io/seiho-ai-study
+      </code>
+    </div>
   </section>
 </Layout>

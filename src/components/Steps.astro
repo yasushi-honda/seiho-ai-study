@@ -1,0 +1,35 @@
+---
+interface Step {
+  title: string;
+  description: string;
+}
+
+interface Props {
+  steps: Step[];
+}
+
+const { steps } = Astro.props;
+---
+
+<ol class="my-4 list-none p-0">
+  {
+    steps.map((step, i) => (
+      <li
+        class={`grid grid-cols-[36px_1fr] gap-3 py-3 ${
+          i < steps.length - 1 ? 'border-b border-dashed border-border-soft' : ''
+        }`}
+      >
+        <span
+          class="font-display grid h-8 w-8 place-items-center rounded-full bg-accent-1 text-sm font-semibold text-white"
+          aria-hidden="true"
+        >
+          {i + 1}
+        </span>
+        <div>
+          <strong class="font-display block text-base">{step.title}</strong>
+          <p class="m-0 text-sm leading-relaxed text-ink-2">{step.description}</p>
+        </div>
+      </li>
+    ))
+  }
+</ol>

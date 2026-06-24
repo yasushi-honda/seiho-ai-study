@@ -1,0 +1,53 @@
+---
+import { withBase } from '../lib/urls';
+
+interface Adjacent {
+  slug: string;
+  title: string;
+  order: number;
+}
+
+interface Props {
+  prev?: Adjacent;
+  next?: Adjacent;
+}
+
+const { prev, next } = Astro.props;
+---
+
+<nav class="my-10 grid grid-cols-2 gap-3" aria-label="前後のトピック">
+  {
+    prev ? (
+      <a
+        href={withBase(`topics/${prev.slug}`)}
+        class="block rounded-xl border border-border-soft bg-surface p-4 text-ink-1 no-underline hover:shadow-soft"
+      >
+        <span class="font-display block text-xs tracking-wider text-ink-3">← PREV</span>
+        <strong class="font-display mt-1 block text-sm">
+          {String(prev.order).padStart(2, '0')}. {prev.title}
+        </strong>
+      </a>
+    ) : (
+      <span class="rounded-xl border border-dashed border-border-soft p-4 text-center text-xs text-ink-3">
+        最初のトピックです
+      </span>
+    )
+  }
+  {
+    next ? (
+      <a
+        href={withBase(`topics/${next.slug}`)}
+        class="block rounded-xl border border-border-soft bg-surface p-4 text-right text-ink-1 no-underline hover:shadow-soft"
+      >
+        <span class="font-display block text-xs tracking-wider text-ink-3">NEXT →</span>
+        <strong class="font-display mt-1 block text-sm">
+          {String(next.order).padStart(2, '0')}. {next.title}
+        </strong>
+      </a>
+    ) : (
+      <span class="rounded-xl border border-dashed border-border-soft p-4 text-center text-xs text-ink-3">
+        最後のトピックです
+      </span>
+    )
+  }
+</nav>

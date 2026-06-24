@@ -1,0 +1,31 @@
+---
+import QRCode from 'qrcode';
+
+interface Props {
+  /** QRコード化するURL */
+  url: string;
+  /** 表示サイズ（px） */
+  size?: number;
+  /** SVG title 属性（アクセシビリティ用） */
+  ariaLabel?: string;
+}
+
+const { url, size = 200, ariaLabel = 'QRコード' } = Astro.props;
+
+// ビルド時にSVG文字列を生成（ランタイム依存ゼロ）
+const svg = await QRCode.toString(url, {
+  type: 'svg',
+  margin: 1,
+  errorCorrectionLevel: 'M',
+  color: { dark: '#2D2820', light: '#FFFFFF' },
+});
+---
+
+<div
+  class="mx-auto rounded-xl bg-white p-3 shadow-card"
+  style={`width:${size}px; height:${size}px;`}
+  role="img"
+  aria-label={ariaLabel}
+  set:html={svg}
+>
+</div>
