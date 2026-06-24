@@ -1,0 +1,35 @@
+---
+import { withBase } from '../lib/urls';
+
+interface Props {
+  showTopicsLink?: boolean;
+}
+
+const { showTopicsLink = true } = Astro.props;
+---
+
+<header
+  class="sticky top-0 z-50 border-b border-dashed border-border-soft bg-bg/90 backdrop-blur-md"
+>
+  <div class="container-page flex items-center justify-between gap-3 py-3">
+    <a href={withBase('')} class="flex items-center gap-2 text-ink-1 no-underline">
+      <span
+        class="grid h-8 w-8 place-items-center rounded-[50%_50%_50%_8px] bg-accent-1 text-sm font-bold text-white -rotate-[8deg]"
+      >
+        福
+      </span>
+      <span class="font-display text-base font-semibold">生保AIスタディ</span>
+    </a>
+
+    {
+      showTopicsLink && (
+        <a
+          href={`${withBase('')}#topics`}
+          class="min-h-9 rounded-full border-[1.5px] border-accent-1 px-4 py-2 text-xs font-semibold text-accent-1 transition-colors hover:bg-accent-1 hover:text-white"
+        >
+          トピック一覧
+        </a>
+      )
+    }
+  </div>
+</header>

@@ -1,17 +1,47 @@
 ---
-
+import Layout from '../layouts/Layout.astro';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout title="生保AIスタディ">
+  <section class="container-page py-16">
+    <p
+      class="mb-4 inline-block rounded-full bg-accent-1 px-3 py-1 text-xs font-semibold tracking-wider text-white"
+    >
+      2026.09.07 MON · なんばスカイオ
+    </p>
+    <h1 class="font-display mb-4 text-3xl font-semibold leading-tight md:text-5xl">
+      伴走支援の時間を作る、<br />
+      現場のための<span class="bg-gradient-to-t from-accent-2-soft from-[35%] to-transparent to-[35%] px-1">AI活用術</span>
+    </h1>
+    <p class="mb-8 max-w-2xl text-base text-ink-2 leading-relaxed">
+      生活保護受給者・生活困窮者支援の現場を支える業務効率化。<br />
+      記録・マニュアル・法令検索を、AIで「半歩はやく、半歩深く」。
+    </p>
+    <div class="flex flex-wrap gap-3">
+      <span class="rounded-lg border border-border-soft bg-surface px-4 py-2 text-sm text-ink-2">
+        ⏱ <strong class="text-ink-1 font-bold">2時間30分</strong>
+      </span>
+      <span class="rounded-lg border border-border-soft bg-surface px-4 py-2 text-sm text-ink-2">
+        🎯 <strong class="text-ink-1 font-bold">9トピック</strong>の実践
+      </span>
+      <span class="rounded-lg border border-border-soft bg-surface px-4 py-2 text-sm text-ink-2">
+        📱 スマホで操作
+      </span>
+    </div>
+
+    <div class="mt-12 rounded-xl border border-border-soft bg-card p-6">
+      <p class="text-sm text-ink-2">
+        🚧 <strong class="text-ink-1">B1/B2 動作確認用ページ</strong>です。
+        Layout / Header / Footer / Toast / フォント / 配色トークンが動いています。
+        次の B3〜B6 でトップページ / トピック詳細を実装していきます。
+      </p>
+      <button
+        type="button"
+        class="mt-4 min-h-11 rounded-full bg-accent-1 px-5 py-2 text-sm font-semibold text-white hover:bg-accent-1-deep"
+        onclick="window.__showToast?.('Toast 動作確認 OK!')"
+      >
+        Toast テスト
+      </button>
+    </div>
+  </section>
+</Layout>

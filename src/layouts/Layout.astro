@@ -1,0 +1,86 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Toast from '../components/Toast.astro';
+import { pwaInfo } from 'virtual:pwa-info';
+import { withBase } from '../lib/urls';
+
+interface Props {
+  title: string;
+  description?: string;
+  ogImage?: string;
+  hideHeader?: boolean;
+  hideFooter?: boolean;
+}
+
+const {
+  title,
+  description = '大阪市生活保護施設連盟 AI活用研修 2026/9/7。福祉現場のためのAI活用術を9トピックで実践。',
+  ogImage,
+  hideHeader = false,
+  hideFooter = false,
+} = Astro.props;
+
+const siteName = '生保AIスタディ';
+const fullTitle = title === siteName ? title : `${title}｜${siteName}`;
+const canonical = new URL(Astro.url.pathname, Astro.site).toString();
+const ogImageUrl = ogImage ? new URL(ogImage, Astro.site).toString() : undefined;
+---
+
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="theme-color" content="#5C8B89" />
+    <meta name="format-detection" content="telephone=no" />
+
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    <!-- Favicon / PWA icons -->
+    <link rel="icon" type="image/svg+xml" href={withBase('favicon.svg')} />
+    <link rel="icon" href={withBase('favicon.ico')} />
+    <link rel="apple-touch-icon" href={withBase('icon-192.png')} />
+
+    <!-- OpenGraph / Twitter -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:site_name" content={siteName} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content="ja_JP" />
+    {ogImageUrl && <meta property="og:image" content={ogImageUrl} />}
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&family=Zen+Maru+Gothic:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+
+    {pwaInfo && <Fragment set:html={pwaInfo.webManifest.linkTag} />}
+  </head>
+  <body class="min-h-screen flex flex-col">
+    {!hideHeader && <Header />}
+    <main class="flex-1">
+      <slot />
+    </main>
+    {!hideFooter && <Footer />}
+    <Toast />
+    <script>
+      import { registerSW } from 'virtual:pwa-register';
+      registerSW({
+        immediate: true,
+        onRegisterError(err) {
+          console.error('[PWA] SW registration failed:', err);
+        },
+      });
+    </script>
+  </body>
+</html>
