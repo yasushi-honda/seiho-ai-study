@@ -1,0 +1,179 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { withBase } from '../lib/urls';
+---
+
+<Layout title="免責・Credits" description="生保AIスタディの制作情報、ライセンス、免責事項。">
+  <section class="container-page py-10 md:py-16">
+    <header class="mb-8">
+      <span class="font-display mb-2 block text-xs font-semibold uppercase tracking-widest text-accent-1">
+        Credits
+      </span>
+      <h1 class="font-display text-3xl font-semibold leading-tight md:text-4xl">免責・Credits</h1>
+      <p class="mt-3 text-base text-ink-2">本研修教材の制作情報、ライセンス、免責事項。</p>
+    </header>
+
+    {/* 研修概要 */}
+    <section class="mb-10 rounded-2xl border border-border-soft bg-card p-6 md:p-8">
+      <h2 class="font-display mb-4 text-xl font-semibold md:text-2xl">📋 研修概要</h2>
+      <dl class="grid grid-cols-1 gap-3 text-sm md:grid-cols-[8rem_1fr] md:gap-y-3">
+        <dt class="font-display font-semibold text-ink-2">テーマ</dt>
+        <dd class="text-ink-1">生活保護受給者・生活困窮者支援の現場を支える AI 活用術</dd>
+
+        <dt class="font-display font-semibold text-ink-2">対象</dt>
+        <dd class="text-ink-1">大阪市生活保護施設連盟 加盟施設職員</dd>
+
+        <dt class="font-display font-semibold text-ink-2">日時</dt>
+        <dd class="text-ink-1">2026 年 9 月 7 日（月）｜2 時間 30 分</dd>
+
+        <dt class="font-display font-semibold text-ink-2">会場</dt>
+        <dd class="text-ink-1">なんばスカイオ 会議室</dd>
+
+        <dt class="font-display font-semibold text-ink-2">想定参加者</dt>
+        <dd class="text-ink-1">30〜50 名（初級と中級の間）</dd>
+
+        <dt class="font-display font-semibold text-ink-2">形式</dt>
+        <dd class="text-ink-1">講師主導、参加者はスマホで本ページを開きながら追従</dd>
+      </dl>
+    </section>
+
+    {/* 制作 */}
+    <section class="mb-10 rounded-2xl border border-border-soft bg-card p-6 md:p-8">
+      <h2 class="font-display mb-4 text-xl font-semibold md:text-2xl">🛠 制作</h2>
+      <dl class="grid grid-cols-1 gap-3 text-sm md:grid-cols-[8rem_1fr] md:gap-y-3">
+        <dt class="font-display font-semibold text-ink-2">主催</dt>
+        <dd class="text-ink-1">大阪市生活保護施設連盟</dd>
+
+        <dt class="font-display font-semibold text-ink-2">講師</dt>
+        <dd class="text-ink-1">本田 安史</dd>
+
+        <dt class="font-display font-semibold text-ink-2">教材制作</dt>
+        <dd class="text-ink-1">本田 安史（AI 補助：Anthropic Claude）</dd>
+
+        <dt class="font-display font-semibold text-ink-2">公開</dt>
+        <dd class="text-ink-1">
+          GitHub Pages（Public）<br />
+          <a href="https://github.com/yasushi-honda/seiho-ai-study" target="_blank" rel="noopener noreferrer" class="text-accent-1 underline-offset-2 hover:underline">
+            リポジトリ ↗
+          </a>
+        </dd>
+      </dl>
+    </section>
+
+    {/* 技術スタック */}
+    <section class="mb-10 rounded-2xl border border-border-soft bg-card p-6 md:p-8">
+      <h2 class="font-display mb-4 text-xl font-semibold md:text-2xl">⚙ 技術スタック</h2>
+      <ul class="grid grid-cols-1 gap-2 text-sm leading-relaxed sm:grid-cols-2">
+        <li>
+          <strong>Astro</strong>（静的サイトジェネレータ）
+        </li>
+        <li>
+          <strong>Tailwind CSS</strong>（スタイリング）
+        </li>
+        <li>
+          <strong>MDX</strong>（コンテンツ記述）
+        </li>
+        <li>
+          <strong>@vite-pwa/astro</strong>（PWA 化）
+        </li>
+        <li>
+          <strong>TypeScript</strong>
+        </li>
+        <li>
+          <strong>GitHub Actions</strong>（自動デプロイ）
+        </li>
+      </ul>
+      <p class="mt-3 text-xs leading-relaxed text-ink-3">
+        本サイトはオープンソース技術のみで構成、ランタイム費用はゼロ円です。
+      </p>
+    </section>
+
+    {/* フォント */}
+    <section class="mb-10 rounded-2xl border border-border-soft bg-card p-6 md:p-8">
+      <h2 class="font-display mb-4 text-xl font-semibold md:text-2xl">✒ フォント</h2>
+      <ul class="space-y-2 text-sm">
+        <li>
+          <strong class="font-display">Klee One</strong>（見出し）
+          ／&nbsp;
+          <a href="https://fonts.google.com/specimen/Klee+One" target="_blank" rel="noopener noreferrer" class="text-accent-1 underline-offset-2 hover:underline">
+            Google Fonts ↗
+          </a>
+          ／ SIL Open Font License
+        </li>
+        <li>
+          <strong class="font-display">Zen Maru Gothic</strong>（本文）
+          ／&nbsp;
+          <a href="https://fonts.google.com/specimen/Zen+Maru+Gothic" target="_blank" rel="noopener noreferrer" class="text-accent-1 underline-offset-2 hover:underline">
+            Google Fonts ↗
+          </a>
+          ／ SIL Open Font License
+        </li>
+      </ul>
+    </section>
+
+    {/* ライセンス */}
+    <section class="mb-10 rounded-2xl border border-border-soft bg-card p-6 md:p-8">
+      <h2 class="font-display mb-4 text-xl font-semibold md:text-2xl">📜 教材ライセンス</h2>
+      <ul class="space-y-2 text-sm leading-relaxed">
+        <li>
+          🟢 <strong>研修参加者の施設内利用</strong>：自由に複製・配布・改変可
+        </li>
+        <li>
+          🟢 <strong>同業他施設での社内研修利用</strong>：内部利用に限り可、出典明記推奨
+        </li>
+        <li>
+          🟡 <strong>外部公開・商用利用</strong>：事前に主催者へお問い合わせください
+        </li>
+        <li>
+          🟡 <strong>大幅改変版の公開</strong>：原版へのリンクと改変箇所の明示をお願いします
+        </li>
+      </ul>
+    </section>
+
+    {/* 免責 */}
+    <section class="mb-10 rounded-2xl border-l-4 border-warn bg-warn-soft p-6 md:p-8">
+      <h2 class="font-display mb-4 text-xl font-semibold text-warn md:text-2xl">
+        ⚠ 免責事項
+      </h2>
+      <ul class="space-y-3 text-sm leading-relaxed text-ink-1">
+        <li>
+          <strong>情報の鮮度：</strong>
+          本資料は <strong>2026 年 6 月時点</strong> の情報に基づきます。AI サービスの料金・仕様・規約は頻繁に変更されます。
+          契約・実運用前に必ず公式サイトをご確認ください。
+        </li>
+        <li>
+          <strong>事例の正確性：</strong>
+          紹介する自治体・社会福祉法人の事例は、公開情報に基づくものですが、固有名詞・時期・規模等は契約・引用前に一次資料で確認してください。
+        </li>
+        <li>
+          <strong>法令解釈：</strong>
+          法令・通知に関する記述は理解の助けとしてのものであり、個別ケースの法的判断を保証するものではありません。
+          実務の判断は、施設の規程と上長判断、必要に応じて弁護士・社会福祉士等の専門家にご相談ください。
+        </li>
+        <li>
+          <strong>個人情報事故：</strong>
+          本資料の内容に基づいて AI を利用した結果生じた個人情報事故・損害について、講師・教材制作者は責任を負いません。
+          各施設のガイドラインと、トピック⑦〜⑨の内容に基づき、慎重に運用判断を行ってください。
+        </li>
+      </ul>
+    </section>
+
+    {/* 謝辞 */}
+    <section class="mb-10 rounded-2xl border border-border-soft bg-card p-6 md:p-8">
+      <h2 class="font-display mb-4 text-xl font-semibold md:text-2xl">🙏 謝辞</h2>
+      <p class="text-sm leading-relaxed text-ink-2">
+        本研修教材の制作にあたり、大阪市生活保護施設連盟の関係者の皆さま、現場の事例や疑問点を共有いただいた職員の皆さまに、心より御礼申し上げます。<br /><br />
+        生成 AI 技術は急速に発展しています。本研修が、福祉現場の業務効率化と、結果として利用者の方々への支援時間を増やす一助となれば幸いです。
+      </p>
+    </section>
+
+    <div class="mt-12 rounded-2xl border-2 border-dashed border-accent-1 bg-bg-deep p-6 text-center">
+      <a
+        href={withBase('')}
+        class="inline-block rounded-full bg-accent-1 px-5 py-2.5 text-sm font-semibold text-white no-underline hover:bg-accent-1-deep"
+      >
+        トップへ戻る
+      </a>
+    </div>
+  </section>
+</Layout>

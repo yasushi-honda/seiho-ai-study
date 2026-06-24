@@ -1,0 +1,160 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { withBase } from '../lib/urls';
+
+interface QA {
+  q: string;
+  a: string;
+}
+
+interface FaqSection {
+  title: string;
+  icon: string;
+  items: QA[];
+}
+
+const sections: FaqSection[] = [
+  {
+    title: 'AIツールについて',
+    icon: '🤖',
+    items: [
+      {
+        q: 'ChatGPT / Gemini / Claude のどれを使えばいいですか？',
+        a: '用途で使い分けます。文章生成・要約・コードはChatGPT、Google Workspace連携や検索系はGemini、長文校正・丁寧な文章はClaudeが得意です。研修では3つすべて触れますが、まず1つを業務で深く使うことをおすすめします。',
+      },
+      {
+        q: '個人アカウントで業務利用してきました。今すぐ法人契約に切り替えるべきですか？',
+        a: '個人情報を扱う業務に使っているなら、できるだけ早く法人契約への切り替えを推奨します。トピック⑧で詳しく扱いますが、個人プランは学習オフ設定漏れ・退職者対応・監査ログ不在のリスクがあります。',
+      },
+      {
+        q: '無料で使えるツールだけで十分ですか？',
+        a: '個人学習や試用は無料プランで十分です。業務利用、特に個人情報を含む業務には法人プランが必要です。NotebookLMは個人プランでも学習対象外で実用的、ただし業務常用ならWorkspace法人プランを推奨します。',
+      },
+    ],
+  },
+  {
+    title: '個人情報・セキュリティについて',
+    icon: '🔐',
+    items: [
+      {
+        q: '利用者名を「A さん」にすれば、ChatGPT に貼って大丈夫ですか？',
+        a: '氏名だけでなく、住所・年代・利用施設・疾病歴など組み合わせで特定可能な情報も注意が必要です。トピック⑦の「3 秒チェック」（特定 / 要配慮 / 組み合わせ）を必ず通してください。グレーは「入れない」が原則です。',
+      },
+      {
+        q: '音声録音は AI に直接アップしてよいですか？',
+        a: '原音は個人情報そのものです。文字起こしツールで先にテキスト化し、個人情報をマスクしてからテキスト整形AIに渡してください。文字起こしツール自体も法人契約・学習オフ設定を確認します（トピック③参照）。',
+      },
+      {
+        q: '過去のケース記録を AI に読ませて検索できますか？',
+        a: 'NotebookLM（または法人版RAG基盤）で実現できますが、個人情報のマスクが大前提です。氏名・住所・整理番号などを抽象化した「事例集」として準備してください。詳細はトピック⑥で扱います。',
+      },
+    ],
+  },
+  {
+    title: '研修について',
+    icon: '🎓',
+    items: [
+      {
+        q: '当日、スマホ操作に不安があります。',
+        a: 'プロンプトの「コピー」ボタンを押すだけで、内容がクリップボードに入り、ChatGPT / Gemini が自動で開きます。タップ操作だけで進められる設計です。困ったら隣の参加者・講師にお声がけください。',
+      },
+      {
+        q: 'プロンプトはコピーして持ち帰れますか？',
+        a: 'はい、すべてのプロンプトはコピー可能です。スマホでこのページを「ホーム画面に追加」しておくと、研修後も同じプロンプト集に1タップでアクセスできます。',
+      },
+      {
+        q: '研修後も、このページは見られますか？',
+        a: 'はい、公開ページとして残ります。施設に持ち帰って同僚と共有していただいて構いません。半年〜1年後の見直し時にも、最新情報の確認窓口として使えます。',
+      },
+      {
+        q: '研修中、自分の業務に当てはめながら考えても大丈夫ですか？',
+        a: 'むしろ大歓迎です。「うちならどう使うか」を頭の片隅に置きながら参加していただくと、持ち帰りの内容が一段豊かになります。',
+      },
+    ],
+  },
+  {
+    title: '施設での導入について',
+    icon: '🏢',
+    items: [
+      {
+        q: '何から始めればいいですか？',
+        a: '①議事録 ②案内文・マニュアル ③ケース記録の整形 — のどれか1つに絞って、1ヶ月パイロットすることをおすすめします。研修トピック②③④に手順があります。',
+      },
+      {
+        q: '上司や運営側を説得する材料はありますか？',
+        a: '①議事録2時間→20分などの時短実績、②厚労省も生成AI活用を明記（2025年4月の中間取りまとめ）、③非営利向け割引・ISMAP登録AIで安全面も整備、の3点が説得力があります。トピック①にまとめがあります。',
+      },
+      {
+        q: 'ガイドラインはどう作ればいいですか？',
+        a: 'トピック⑨に7項目雛形とコピー可能な本文があります。完璧を目指さず「最初は厳しめでまず配る → 半年で見直し」のサイクルで始めてください。',
+      },
+      {
+        q: '失敗事例はありますか？',
+        a: '個人アカウントで業務利用 → 退職時の業務情報持ち出し、個人情報を貼って事故、AI出力をそのまま外部に出して誤情報配布、などが他業界で報告されています。ガイドライン整備 + 研修周知で予防します。',
+      },
+    ],
+  },
+];
+---
+
+<Layout title="よくある質問" description="生保AIスタディに寄せられるよくある質問。AIツール選び、個人情報、研修参加、施設での導入について。">
+  <section class="container-page py-10 md:py-16">
+    <header class="mb-8">
+      <span class="font-display mb-2 block text-xs font-semibold uppercase tracking-widest text-accent-1">
+        FAQ
+      </span>
+      <h1 class="font-display text-3xl font-semibold leading-tight md:text-4xl">よくある質問</h1>
+      <p class="mt-3 text-base text-ink-2">研修参加前後によくいただく質問と回答です。</p>
+    </header>
+
+    <nav class="mb-10 rounded-2xl border border-border-soft bg-bg-deep p-4 md:p-5" aria-label="目次">
+      <p class="font-display mb-2 text-xs font-semibold tracking-wider text-ink-3">CONTENTS</p>
+      <ul class="grid grid-cols-1 gap-1 sm:grid-cols-2">
+        {sections.map((s) => (
+          <li>
+            <a
+              href={`#${encodeURIComponent(s.title)}`}
+              class="block py-1 text-sm text-accent-1 no-underline hover:underline"
+            >
+              {s.icon} {s.title}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    {sections.map((s) => (
+      <section id={s.title} class="mb-10 scroll-mt-20">
+        <h2 class="font-display mb-4 text-xl font-semibold md:text-2xl">
+          <span aria-hidden="true">{s.icon}</span> {s.title}
+        </h2>
+        <div class="space-y-3">
+          {s.items.map((item) => (
+            <details class="group rounded-xl border border-border-soft bg-card p-4 transition-shadow open:shadow-soft md:p-5">
+              <summary class="font-display flex cursor-pointer items-start gap-3 text-base font-semibold text-ink-1 marker:hidden">
+                <span class="mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent-1 text-xs font-bold text-white" aria-hidden="true">Q</span>
+                <span class="flex-1">{item.q}</span>
+                <span class="mt-1 text-xs text-ink-3 group-open:rotate-180 transition-transform" aria-hidden="true">▼</span>
+              </summary>
+              <div class="mt-3 flex items-start gap-3 border-t border-dashed border-border-soft pt-3">
+                <span class="mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent-2-soft text-xs font-bold text-accent-2" aria-hidden="true">A</span>
+                <p class="flex-1 text-sm leading-relaxed text-ink-2">{item.a}</p>
+              </div>
+            </details>
+          ))}
+        </div>
+      </section>
+    ))}
+
+    <div class="mt-12 rounded-2xl border-2 border-dashed border-accent-1 bg-bg-deep p-6 text-center">
+      <p class="font-display mb-2 text-base font-semibold">他にも聞きたいことがあれば</p>
+      <p class="text-sm text-ink-2">研修当日にお声がけください。匿名でのご質問もOKです。</p>
+      <a
+        href={withBase('#topics')}
+        class="mt-4 inline-block rounded-full bg-accent-1 px-5 py-2.5 text-sm font-semibold text-white no-underline hover:bg-accent-1-deep"
+      >
+        9 トピック一覧へ戻る
+      </a>
+    </div>
+  </section>
+</Layout>
