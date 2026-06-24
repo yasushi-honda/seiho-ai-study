@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>案B・行政資料系｜AI研修 2026/9/7</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@500;700&family=Cormorant+Garamond:wght@300;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+<style>
+  :root {
+    --bg: #FAFAF7;
+    --bg-deep: #F2F0EA;
+    --surface: #FFFFFF;
+    --ink-1: #1A1A1A;
+    --ink-2: #555555;
+    --ink-3: #8A8A85;
+    --accent: #2F6E5A;
+    --accent-deep: #1F4D3F;
+    --accent-soft: #DCE8E3;
+    --gold: #B8924A;
+    --gold-soft: #F0E8D5;
+    --divider: #E5E5E0;
+    --rule: #1A1A1A;
+    --space-xs: 0.5rem;
+    --space-sm: 0.875rem;
+    --space-md: clamp(1rem, 2vw, 1.5rem);
+    --space-lg: clamp(1.75rem, 4vw, 3rem);
+    --space-xl: clamp(2.5rem, 7vw, 5rem);
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink-1);
+    font-family: "Noto Sans JP", system-ui, sans-serif;
+    line-height: 1.75;
+    font-size: clamp(15px, 0.9vw + 13px, 17px);
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    -webkit-font-smoothing: antialiased;
+  }
+  .serif { font-family: "Noto Serif JP", serif; }
+  .latin { font-family: "Cormorant Garamond", serif; font-weight: 300; letter-spacing: 0.05em; }
+  .container { width: 100%; max-width: 480px; margin: 0 auto; padding: 0 var(--space-md); }
+  @media (min-width: 768px) { .container { max-width: 760px; padding: 0 var(--space-lg); } }
+  @media (min-width: 1024px) { .container { max-width: 1040px; } }
+
+  /* Header */
+  .site-header {
+    border-bottom: 1px solid var(--rule);
+    padding: var(--space-sm) 0;
+    background: var(--bg);
+    position: sticky; top: 0; z-index: 50;
+  }
+  .header-inner { display: flex; align-items: center; justify-content: space-between; }
+  .logo { display: flex; align-items: baseline; gap: 0.6rem; text-decoration: none; color: var(--ink-1); }
+  .logo-jp { font-family: "Noto Serif JP", serif; font-weight: 700; font-size: 1rem; }
+  .logo-en { font-family: "Cormorant Garamond", serif; font-size: 0.85rem; color: var(--ink-2); letter-spacing: 0.1em; }
+  .nav-button {
+    background: var(--ink-1); border: none;
+    color: #fff; padding: 0.55rem 1.2rem;
+    font-size: 0.8rem; font-weight: 500;
+    cursor: pointer; font-family: inherit;
+    min-height: 36px; letter-spacing: 0.05em;
+  }
+
+  /* Document number */
+  .doc-meta {
+    border-bottom: 1px solid var(--divider);
+    padding: var(--space-md) 0;
+    font-size: 0.8rem; color: var(--ink-2);
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem;
+    letter-spacing: 0.05em;
+  }
+  .doc-meta span { display: inline-block; }
+  .doc-meta strong { color: var(--ink-1); font-weight: 500; }
+
+  /* Hero */
+  .hero { padding: var(--space-xl) 0; border-bottom: 1px solid var(--rule); }
+  .hero-kicker {
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(0.9rem, 0.5vw + 0.8rem, 1.05rem);
+    letter-spacing: 0.25em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin: 0 0 var(--space-md);
+    padding-bottom: var(--space-sm);
+    border-bottom: 1px solid var(--accent);
+    display: inline-block;
+  }
+  .hero-title {
+    font-family: "Noto Serif JP", serif;
+    font-weight: 700;
+    font-size: clamp(1.75rem, 5vw + 0.5rem, 3.25rem);
+    line-height: 1.4;
+    margin: 0 0 var(--space-md);
+    letter-spacing: 0.02em;
+  }
+  .hero-sub {
+    color: var(--ink-2);
+    font-size: clamp(0.95rem, 0.5vw + 0.85rem, 1.1rem);
+    line-height: 1.85;
+    max-width: 40rem;
+    margin: 0 0 var(--space-lg);
+  }
+  .hero-meta {
+    display: grid;
+    grid-template-columns: 1fr;
+    border-top: 1px solid var(--divider);
+  }
+  @media (min-width: 600px) { .hero-meta { grid-template-columns: repeat(3, 1fr); } }
+  .meta-item {
+    padding: var(--space-md) 0;
+    border-bottom: 1px solid var(--divider);
+  }
+  @media (min-width: 600px) {
+    .meta-item { padding: var(--space-md) var(--space-md) var(--space-md) 0; border-bottom: none; border-right: 1px solid var(--divider); }
+    .meta-item:last-child { border-right: none; }
+  }
+  .meta-label {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.2em;
+    color: var(--ink-3);
+    text-transform: uppercase;
+    margin: 0 0 0.3rem;
+  }
+  .meta-value {
+    font-family: "Noto Serif JP", serif;
+    font-weight: 500;
+    font-size: 1rem;
+    color: var(--ink-1);
+    margin: 0;
+  }
+
+  /* Section heading */
+  .section { padding: var(--space-xl) 0; border-bottom: 1px solid var(--divider); }
+  .section-head {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-lg);
+    align-items: end;
+  }
+  @media (min-width: 768px) {
+    .section-head { grid-template-columns: 1fr auto; }
+  }
+  .section-num-wrap {
+    display: flex; align-items: baseline; gap: 0.8rem;
+  }
+  .section-num {
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(2rem, 5vw, 3rem);
+    color: var(--accent);
+    font-weight: 300; line-height: 1;
+  }
+  .section-label {
+    font-family: "Cormorant Garamond", serif;
+    letter-spacing: 0.25em;
+    color: var(--ink-3);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+  }
+  .section-title {
+    font-family: "Noto Serif JP", serif;
+    font-weight: 700;
+    font-size: clamp(1.4rem, 2vw + 1rem, 1.8rem);
+    margin: 0;
+    line-height: 1.5;
+  }
+  .section-sub {
+    color: var(--ink-2); margin: 0;
+    font-size: 0.9rem; line-height: 1.7;
+  }
+
+  /* Timetable */
+  .timetable { border-top: 2px solid var(--ink-1); border-bottom: 2px solid var(--ink-1); }
+  .tt-row {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: var(--space-md);
+    padding: var(--space-md) 0;
+    border-bottom: 1px solid var(--divider);
+  }
+  @media (min-width: 600px) {
+    .tt-row { grid-template-columns: 100px 240px 1fr; }
+  }
+  .tt-row:last-child { border-bottom: none; }
+  .tt-time {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 1.4rem;
+    color: var(--accent);
+    line-height: 1;
+  }
+  .tt-title {
+    font-family: "Noto Serif JP", serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+  }
+  .tt-desc {
+    color: var(--ink-2);
+    font-size: 0.85rem;
+    line-height: 1.7;
+  }
+
+  /* Topic list */
+  .topics {
+    display: grid; grid-template-columns: 1fr; gap: 0;
+    border-top: 2px solid var(--ink-1);
+  }
+  @media (min-width: 768px) {
+    .topics { grid-template-columns: 1fr 1fr; }
+  }
+  .topic-item {
+    display: grid;
+    grid-template-columns: 60px 1fr 24px;
+    gap: var(--space-sm);
+    padding: var(--space-md);
+    border-bottom: 1px solid var(--divider);
+    text-decoration: none;
+    color: inherit;
+    transition: background 0.2s;
+    align-items: start;
+  }
+  @media (min-width: 768px) {
+    .topic-item:nth-child(odd) { border-right: 1px solid var(--divider); }
+  }
+  .topic-item:hover { background: var(--bg-deep); }
+  .topic-item .num {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 2rem;
+    color: var(--accent);
+    line-height: 1;
+    font-weight: 300;
+    padding-top: 0.2rem;
+  }
+  .topic-item .body { display: flex; flex-direction: column; gap: 0.3rem; }
+  .topic-item .label {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    color: var(--ink-3);
+    text-transform: uppercase;
+  }
+  .topic-item .title {
+    font-family: "Noto Serif JP", serif;
+    font-weight: 500;
+    font-size: 1rem;
+    line-height: 1.5;
+    margin: 0;
+  }
+  .topic-item .desc {
+    font-size: 0.82rem;
+    color: var(--ink-2);
+    margin: 0;
+    line-height: 1.6;
+  }
+  .topic-item .arrow {
+    color: var(--accent);
+    font-family: serif;
+    align-self: center;
+  }
+
+  /* QR */
+  .qr-block {
+    display: grid; grid-template-columns: 1fr; gap: var(--space-lg);
+    align-items: center;
+  }
+  @media (min-width: 768px) {
+    .qr-block { grid-template-columns: 240px 1fr; gap: var(--space-xl); }
+  }
+  .qr-box {
+    width: 240px; height: 240px;
+    background: #fff;
+    padding: 16px;
+    border: 1px solid var(--ink-1);
+    margin: 0 auto;
+  }
+  .qr-box img { width: 100% !important; height: 100% !important; display: block; }
+  .qr-info .latin-mark {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 0.85rem; letter-spacing: 0.2em;
+    color: var(--accent);
+    margin-bottom: var(--space-sm);
+  }
+  .qr-info h3 {
+    font-family: "Noto Serif JP", serif;
+    font-size: 1.3rem;
+    margin: 0 0 var(--space-sm);
+  }
+  .qr-info p { color: var(--ink-2); margin: 0 0 var(--space-md); }
+  .qr-url {
+    font-family: ui-monospace, monospace;
+    font-size: 0.85rem;
+    background: var(--bg-deep);
+    padding: 0.6rem 0.9rem;
+    border-left: 3px solid var(--accent);
+    display: inline-block;
+    word-break: break-all;
+  }
+
+  /* Footer */
+  .site-footer {
+    background: var(--ink-1);
+    color: rgba(255,255,255,0.75);
+    padding: var(--space-xl) 0;
+    margin-top: 0;
+  }
+  .footer-grid {
+    display: grid; grid-template-columns: 1fr; gap: var(--space-lg);
+  }
+  @media (min-width: 768px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
+  .footer-mark {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 0.85rem; letter-spacing: 0.2em;
+    color: var(--gold);
+    margin-bottom: 1rem;
+  }
+  .footer-title { font-family: "Noto Serif JP", serif; color: #fff; font-size: 1.1rem; margin: 0 0 0.5rem; }
+  .footer-desc { font-size: 0.85rem; line-height: 1.8; }
+  .footer-disclaimer { font-size: 0.78rem; opacity: 0.6; line-height: 1.7; padding-top: var(--space-lg); border-top: 1px solid rgba(255,255,255,0.2); margin-top: var(--space-lg); }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="#" class="logo">
+      <span class="logo-jp">生保AIスタディ</span>
+      <span class="logo-en">SEIHO AI STUDY</span>
+    </a>
+    <button class="nav-button" onclick="document.getElementById('topics').scrollIntoView()">CONTENTS</button>
+  </div>
+</header>
+
+<div class="container">
+  <div class="doc-meta">
+    <span><strong>研修資料</strong> No.2026-09-07</span>
+    <span>大阪市生活保護施設連盟</span>
+    <span>令和8年9月7日（月）</span>
+  </div>
+</div>
+
+<section class="hero">
+  <div class="container">
+    <p class="hero-kicker">AI Workshop for Welfare Practitioners</p>
+    <h1 class="hero-title">伴走支援の時間を作る、<br>現場のためのAI活用術</h1>
+    <p class="hero-sub">
+      生活保護受給者・生活困窮者支援の現場を支える業務効率化。<br>
+      記録・マニュアル・法令検索を、AIで「半歩はやく、半歩深く」。
+    </p>
+    <div class="hero-meta">
+      <div class="meta-item">
+        <p class="meta-label">Date</p>
+        <p class="meta-value">2026.09.07 MON</p>
+      </div>
+      <div class="meta-item">
+        <p class="meta-label">Venue</p>
+        <p class="meta-value">なんばスカイオ 会議室</p>
+      </div>
+      <div class="meta-item">
+        <p class="meta-label">Duration</p>
+        <p class="meta-value">2時間30分</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="section-num-wrap">
+          <span class="section-num">I.</span>
+          <span class="section-label">Timetable</span>
+        </div>
+        <h2 class="section-title">当日の進行</h2>
+      </div>
+      <p class="section-sub">全7パート構成<br>休憩10分を含む</p>
+    </div>
+    <div class="timetable">
+      <div class="tt-row">
+        <span class="tt-time">14:00</span>
+        <span class="tt-title">オープニング</span>
+        <span class="tt-desc">研修のねらい・参加者アンケート</span>
+      </div>
+      <div class="tt-row">
+        <span class="tt-time">14:15</span>
+        <span class="tt-title">先進事例とAIの全体像</span>
+        <span class="tt-desc">福祉業界の活用事例、できること・できないこと</span>
+      </div>
+      <div class="tt-row">
+        <span class="tt-time">14:50</span>
+        <span class="tt-title">実践ワーク①</span>
+        <span class="tt-desc">案内文・マニュアル / 議事録 / ケース記録</span>
+      </div>
+      <div class="tt-row">
+        <span class="tt-time">15:40</span>
+        <span class="tt-title">休憩</span>
+        <span class="tt-desc">10分</span>
+      </div>
+      <div class="tt-row">
+        <span class="tt-time">15:50</span>
+        <span class="tt-title">法令・事例の検索</span>
+        <span class="tt-desc">NotebookLM / RAG で「知の即時検索」</span>
+      </div>
+      <div class="tt-row">
+        <span class="tt-time">16:10</span>
+        <span class="tt-title">個人情報とセキュリティ</span>
+        <span class="tt-desc">入力可否の境界、匿名化、ガイドライン</span>
+      </div>
+      <div class="tt-row">
+        <span class="tt-time">16:25</span>
+        <span class="tt-title">クロージング</span>
+        <span class="tt-desc">明日から始める3ステップ / Q&A</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="topics">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="section-num-wrap">
+          <span class="section-num">II.</span>
+          <span class="section-label">Contents</span>
+        </div>
+        <h2 class="section-title">学ぶ内容（全9トピック）</h2>
+      </div>
+      <p class="section-sub">各トピックは独立しています。<br>気になる番号からご覧ください。</p>
+    </div>
+    <div class="topics">
+      <a href="topic.html" class="topic-item">
+        <span class="num">01</span>
+        <div class="body">
+          <span class="label">Case Studies</span>
+          <p class="title">福祉業界のAI活用先進事例</p>
+          <p class="desc">自治体・社会福祉法人の報告書/議事録効率化</p>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+      <a href="topic.html" class="topic-item">
+        <span class="num">02</span>
+        <div class="body">
+          <span class="label">Writing</span>
+          <p class="title">わかりやすい案内文・マニュアル作成</p>
+          <p class="desc">利用者向けしおり・新任職員向けマニュアル実践</p>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+      <a href="topic.html" class="topic-item">
+        <span class="num">03</span>
+        <div class="body">
+          <span class="label">Transcription</span>
+          <p class="title">音声から議事録を作る</p>
+          <p class="desc">録音→文字起こし→要約までの最短ルート</p>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+      <a href="topic.html" class="topic-item">
+        <span class="num">04</span>
+        <div class="body">
+          <span class="label">Report</span>
+          <p class="title">架空ケース記録→規定様式の報告書</p>
+          <p class="desc">様式に沿った報告書をAIで整形する技術</p>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+      <a href="topic.html" class="topic-item">
+        <span class="num">05</span>
+        <div class="body">
+          <span class="label">Legal Search</span>
+          <p class="title">法令データから瞬時に検索</p>
+          <p class="desc">生活保護法・困窮者法・障害者総合支援法・介護保険法</p>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+      <a href="topic.html" class="topic-item">
+        <span class="num">06</span>
+        <div class="body">
+          <span class="label">Knowledge Base</span>
+          <p class="title">施設内マニュアル・事例集の検索基盤</p>
+          <p class="desc">過去の支援事例を「いつでも引き出せる」仕組み</p>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+      <a href="topic.html" class="topic-item">
+        <span class="num">07</span>
+        <div class="body">
+          <span class="label">Privacy</span>
+          <p class="title">入れていいデータ／ダメなデータ</p>
+          <p class="desc">個人特定を避ける抽象化テクニック</p>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+      <a href="topic.html" class="topic-item">
+        <span class="num">08</span>
+        <div class="body">
+          <span class="label">Settings</span>
+          <p class="title">データ学習オフ設定と法人契約</p>
+          <p class="desc">無料/有料/法人プランの違いと選び方</p>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+      <a href="topic.html" class="topic-item">
+        <span class="num">09</span>
+        <div class="body">
+          <span class="label">Governance</span>
+          <p class="title">施設内ガイドラインの作り方</p>
+          <p class="desc">AI利用規程の雛形とチェックポイント</p>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="section-num-wrap">
+          <span class="section-num">III.</span>
+          <span class="section-label">Share</span>
+        </div>
+        <h2 class="section-title">同僚にも共有</h2>
+      </div>
+      <p class="section-sub">研修後もいつでもアクセス可能</p>
+    </div>
+    <div class="qr-block">
+      <div class="qr-box" id="qr"></div>
+      <div class="qr-info">
+        <div class="latin-mark">SCAN TO ACCESS</div>
+        <h3>このページのURL</h3>
+        <p>QRコードをスマートフォンで読み取ると、本研修資料に直接アクセスできます。同じ施設の同僚や、他施設の方にも共有してください。</p>
+        <div class="qr-url">yasushi-honda.github.io/seiho-ai-study</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-mark">SEIHO AI STUDY</div>
+        <h3 class="footer-title">生活保護施設のためのAI活用研修</h3>
+        <p class="footer-desc">2026年9月7日 開催<br>大阪市生活保護施設連盟主催<br>会場：なんばスカイオ会議室</p>
+      </div>
+      <div>
+        <div class="footer-mark">CONTACT</div>
+        <h3 class="footer-title">問合せ・フィードバック</h3>
+        <p class="footer-desc">研修後のご質問・ご意見は<br>フィードバックフォームよりお寄せください。</p>
+      </div>
+    </div>
+    <p class="footer-disclaimer">本資料は2026年6月時点の情報に基づいて作成しています。AIサービスの仕様や料金体系は頻繁に変動するため、最新情報は各公式サイトを必ずご確認ください。</p>
+  </div>
+</footer>
+
+<script>
+  const qr = qrcode(0, 'M');
+  qr.addData('https://yasushi-honda.github.io/seiho-ai-study/');
+  qr.make();
+  document.getElementById('qr').innerHTML = qr.createImgTag(8, 0);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>03. 音声から議事録を作る｜案A・温かみ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F8F2E4;
+    --bg-deep: #EFE4CC;
+    --surface: #FFFFFF;
+    --card: #FFF8E8;
+    --ink-1: #2D2820;
+    --ink-2: #6B6353;
+    --ink-3: #A39A85;
+    --accent-1: #5C8B89;
+    --accent-1-deep: #3F6B69;
+    --accent-2: #C97A4F;
+    --accent-2-soft: #F2D9C8;
+    --border: #E8DCC0;
+    --shadow: 0 2px 8px rgba(91, 70, 30, 0.06), 0 8px 24px rgba(91, 70, 30, 0.04);
+    --space-xs: 0.5rem;
+    --space-sm: 0.75rem;
+    --space-md: clamp(1rem, 2vw, 1.5rem);
+    --space-lg: clamp(1.5rem, 4vw, 2.5rem);
+    --space-xl: clamp(2rem, 6vw, 4rem);
+    --radius: 1rem;
+    --radius-lg: 1.5rem;
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink-1);
+    font-family: "Zen Maru Gothic", system-ui, sans-serif;
+    line-height: 1.8;
+    font-size: clamp(15px, 0.9vw + 13px, 17px);
+    -webkit-font-smoothing: antialiased;
+  }
+  .display { font-family: "Klee One", serif; font-weight: 600; }
+  .container { width: 100%; max-width: 720px; margin: 0 auto; padding: 0 var(--space-md); }
+
+  /* Header */
+  .site-header {
+    padding: var(--space-sm) 0;
+    border-bottom: 1px dashed var(--border);
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(248, 242, 228, 0.95);
+    backdrop-filter: blur(8px);
+  }
+  .header-inner { display: flex; align-items: center; justify-content: space-between; }
+  .back-link {
+    color: var(--accent-1); text-decoration: none;
+    font-weight: 600; font-size: 0.9rem;
+    display: flex; align-items: center; gap: 0.3rem;
+    min-height: 44px; padding: 0 0.5rem 0 0;
+    align-items: center; display: inline-flex;
+  }
+  .progress-chip {
+    background: var(--accent-1); color: #fff;
+    padding: 0.3rem 0.8rem; border-radius: 999px;
+    font-size: 0.8rem; font-weight: 600;
+  }
+
+  /* Topic header */
+  .topic-hero {
+    padding: var(--space-xl) 0 var(--space-md);
+    position: relative;
+  }
+  .topic-num-big {
+    font-family: "Klee One", serif;
+    font-size: clamp(3rem, 10vw, 5rem);
+    color: var(--accent-1);
+    line-height: 1; font-weight: 600;
+    opacity: 0.4;
+    margin-bottom: -0.5rem;
+  }
+  .topic-icon-big { font-size: 2.5rem; margin: 0; }
+  h1.topic-title {
+    font-family: "Klee One", serif;
+    font-size: clamp(1.6rem, 3vw + 1rem, 2.4rem);
+    margin: 0.5rem 0 var(--space-sm);
+    line-height: 1.4;
+  }
+  .topic-lead {
+    color: var(--ink-2);
+    font-size: clamp(1rem, 0.5vw + 0.9rem, 1.15rem);
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  /* Section blocks */
+  .block {
+    background: var(--surface);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg) var(--space-md);
+    margin-bottom: var(--space-md);
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+  }
+  .block-label {
+    display: inline-block;
+    background: var(--accent-2-soft);
+    color: var(--accent-2);
+    font-family: "Klee One", serif;
+    font-size: 0.8rem; font-weight: 600;
+    padding: 0.3rem 0.8rem;
+    border-radius: 999px;
+    margin-bottom: var(--space-sm);
+    letter-spacing: 0.05em;
+  }
+  h2.block-title {
+    font-family: "Klee One", serif;
+    font-size: clamp(1.3rem, 1.5vw + 1rem, 1.7rem);
+    margin: 0 0 var(--space-md);
+    color: var(--ink-1);
+  }
+  .block p { margin: 0 0 1rem; }
+  .block p:last-child { margin-bottom: 0; }
+
+  /* Prompt card */
+  .prompt-card {
+    background: var(--bg-deep);
+    border-radius: var(--radius);
+    padding: var(--space-md);
+    margin: var(--space-md) 0;
+    border: 1px solid var(--border);
+  }
+  .prompt-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: var(--space-sm);
+    gap: var(--space-sm); flex-wrap: wrap;
+  }
+  .prompt-title {
+    font-family: "Klee One", serif;
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--ink-1);
+    margin: 0;
+  }
+  .prompt-body {
+    background: #fff;
+    border-radius: 0.75rem;
+    padding: var(--space-md);
+    font-family: ui-monospace, "SF Mono", monospace;
+    font-size: 0.85rem;
+    line-height: 1.7;
+    color: var(--ink-1);
+    white-space: pre-wrap;
+    word-break: break-word;
+    border: 1px solid var(--border);
+    margin-bottom: var(--space-sm);
+  }
+  .prompt-actions {
+    display: grid; grid-template-columns: 1fr; gap: 0.5rem;
+  }
+  @media (min-width: 480px) {
+    .prompt-actions { grid-template-columns: repeat(3, 1fr); }
+  }
+  .btn {
+    border: none; cursor: pointer; font-family: inherit;
+    padding: 0.75rem 1rem;
+    border-radius: 999px;
+    font-weight: 600; font-size: 0.85rem;
+    display: flex; align-items: center; justify-content: center; gap: 0.4rem;
+    min-height: 44px;
+    transition: transform 0.15s, box-shadow 0.15s;
+    text-decoration: none;
+  }
+  .btn:active { transform: scale(0.97); }
+  .btn-primary { background: var(--accent-1); color: #fff; }
+  .btn-primary:hover { background: var(--accent-1-deep); }
+  .btn-secondary { background: var(--surface); color: var(--ink-1); border: 1.5px solid var(--border); }
+  .btn-tertiary { background: var(--ink-1); color: #fff; }
+
+  /* Before/After */
+  .ba-grid {
+    display: grid; grid-template-columns: 1fr;
+    gap: var(--space-sm);
+  }
+  @media (min-width: 640px) {
+    .ba-grid { grid-template-columns: 1fr 1fr; }
+  }
+  .ba-card {
+    border-radius: var(--radius);
+    padding: var(--space-md);
+    border: 1px solid var(--border);
+    background: #fff;
+  }
+  .ba-card.before { background: #FAF4E8; }
+  .ba-card.after { background: #E8F3F1; border-color: rgba(92, 139, 137, 0.4); }
+  .ba-label {
+    font-family: "Klee One", serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+    margin-bottom: 0.5rem;
+    color: var(--ink-2);
+  }
+  .ba-card.after .ba-label { color: var(--accent-1-deep); }
+  .ba-text {
+    font-size: 0.85rem; line-height: 1.65;
+    color: var(--ink-1);
+    margin: 0;
+  }
+
+  /* Steps */
+  .steps { counter-reset: step; padding: 0; list-style: none; margin: 0; }
+  .step {
+    counter-increment: step;
+    display: grid; grid-template-columns: 36px 1fr;
+    gap: var(--space-sm);
+    padding: var(--space-sm) 0;
+    border-bottom: 1px dashed var(--border);
+  }
+  .step:last-child { border-bottom: none; }
+  .step::before {
+    content: counter(step);
+    background: var(--accent-1); color: #fff;
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    display: grid; place-items: center;
+    font-family: "Klee One", serif;
+    font-weight: 600; font-size: 0.95rem;
+  }
+  .step-content strong {
+    display: block;
+    font-family: "Klee One", serif;
+    font-size: 1rem; margin-bottom: 0.25rem;
+  }
+  .step-content p { margin: 0; color: var(--ink-2); font-size: 0.9rem; }
+
+  /* Warning */
+  .warn {
+    background: #FBEEE6;
+    border-left: 4px solid var(--accent-2);
+    padding: var(--space-md);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    margin: var(--space-md) 0;
+  }
+  .warn-title {
+    font-family: "Klee One", serif;
+    font-weight: 600; color: var(--accent-2);
+    margin: 0 0 0.5rem; font-size: 1rem;
+  }
+  .warn p { margin: 0; font-size: 0.9rem; }
+
+  /* Pager */
+  .pager {
+    display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-sm);
+    margin: var(--space-xl) 0;
+  }
+  .pager a {
+    text-decoration: none;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: var(--space-md);
+    display: block; color: inherit;
+  }
+  .pager .label {
+    font-size: 0.75rem; color: var(--ink-3);
+    font-family: "Klee One", serif;
+    letter-spacing: 0.1em;
+  }
+  .pager strong { display: block; margin-top: 0.3rem; font-family: "Klee One", serif; font-size: 0.95rem; }
+
+  .toast {
+    position: fixed; bottom: 24px; left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--ink-1); color: #fff;
+    padding: 0.8rem 1.5rem;
+    border-radius: 999px;
+    font-size: 0.9rem; font-weight: 600;
+    opacity: 0; transition: all 0.3s; z-index: 100;
+    box-shadow: var(--shadow);
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="index.html" class="back-link">← トピック一覧</a>
+    <span class="progress-chip">3 / 9</span>
+  </div>
+</header>
+
+<section class="topic-hero">
+  <div class="container">
+    <div class="topic-num-big">03</div>
+    <span class="topic-icon-big">🎙️</span>
+    <h1 class="topic-title">音声から議事録を作る</h1>
+    <p class="topic-lead">
+      支援会議・カンファレンスの録音を、AIで「文字起こし→要約→決定事項リスト」まで一気に整える。
+      手作業で2時間かかっていた作業が、20分で終わるようになります。
+    </p>
+  </div>
+</section>
+
+<main class="container">
+
+  <article class="block">
+    <span class="block-label">Overview</span>
+    <h2 class="block-title">このトピックでわかること</h2>
+    <p>支援会議・ケースカンファレンス・事例検討会など、現場で発生する「議事録作成」をAIに任せて、本来の業務（記録の解釈・支援方針の検討）に時間を使えるようにします。</p>
+    <p>本セクションでは、スマホで録音→文字起こし→AIで要約→規定様式に整える、までの一連の流れを実演します。</p>
+  </article>
+
+  <article class="block">
+    <span class="block-label">Why</span>
+    <h2 class="block-title">なぜAIで効率化できるのか</h2>
+    <p>AIは「聞く」「書き起こす」「要点をまとめる」「形式を整える」が得意です。一方、「誰の発言か」「ニュアンスはどうか」「次のアクションは何か」は人間が決める領域です。</p>
+    <p>つまりAIに任せる部分と人間が判断する部分を分けることで、議事録作成は「ゼロから書く」作業から「ドラフトを整える」作業に変わります。</p>
+  </article>
+
+  <article class="block">
+    <span class="block-label">Prompts</span>
+    <h2 class="block-title">使えるプロンプト集</h2>
+
+    <div class="prompt-card">
+      <div class="prompt-header">
+        <h3 class="prompt-title">① 文字起こしを議事録にまとめる</h3>
+      </div>
+      <div class="prompt-body">あなたは福祉施設の議事録作成を補助するアシスタントです。
+以下の文字起こしテキストから、議事録を作成してください。
+
+【出力フォーマット】
+■ 日時：
+■ 出席者：
+■ 議題：
+■ 決定事項（箇条書き）：
+■ 次回までの宿題（担当者と期限を明記）：
+■ その他の論点：
+
+【ルール】
+- 個人を特定できる情報（氏名・住所・電話番号）は[マスク]に置き換える
+- 推測ではなく、文字起こしに書かれている内容のみで作成する
+
+【文字起こし】
+（ここに貼り付け）</div>
+      <div class="prompt-actions">
+        <button class="btn btn-secondary" onclick="copyPrompt(this)">📋 コピー</button>
+        <a class="btn btn-primary" href="#" onclick="openWith('chatgpt', this); return false;">ChatGPTで開く</a>
+        <a class="btn btn-tertiary" href="#" onclick="openWith('gemini', this); return false;">Geminiで開く</a>
+      </div>
+    </div>
+
+    <div class="prompt-card">
+      <div class="prompt-header">
+        <h3 class="prompt-title">② 議事録から「次のアクション」だけ抽出</h3>
+      </div>
+      <div class="prompt-body">以下の議事録から、職員ごとに「次回までにやること」をテーブルにまとめてください。
+列：担当者 / タスク / 期限 / 関連する利用者（マスク済み）
+
+【議事録】
+（ここに貼り付け）</div>
+      <div class="prompt-actions">
+        <button class="btn btn-secondary" onclick="copyPrompt(this)">📋 コピー</button>
+        <a class="btn btn-primary" href="#" onclick="openWith('chatgpt', this); return false;">ChatGPTで開く</a>
+        <a class="btn btn-tertiary" href="#" onclick="openWith('gemini', this); return false;">Geminiで開く</a>
+      </div>
+    </div>
+  </article>
+
+  <article class="block">
+    <span class="block-label">Before / After</span>
+    <h2 class="block-title">ビフォーアフター</h2>
+    <div class="ba-grid">
+      <div class="ba-card before">
+        <div class="ba-label">Before：手書き走り書き</div>
+        <p class="ba-text">「Aさん（仮）の件、医療連携必要そう。次回までにB職員が病院に確認。Cさんは住居問題進捗あり。来月のケース会議で再検討すること」</p>
+      </div>
+      <div class="ba-card after">
+        <div class="ba-label">After：AIで整形</div>
+        <p class="ba-text"><strong>決定事項</strong><br>1. [マスク1]の医療連携を進める<br>2. [マスク2]の住居問題は来月再検討<br><br><strong>宿題</strong><br>・B職員：[マスク1]の主治医に9/15までに確認</p>
+      </div>
+    </div>
+  </article>
+
+  <article class="block">
+    <span class="block-label">Practice</span>
+    <h2 class="block-title">実践ステップ</h2>
+    <ol class="steps">
+      <li class="step"><div class="step-content"><strong>録音する</strong><p>スマホの標準ボイスメモ、またはGoogle 録音アプリで会議を録音</p></div></li>
+      <li class="step"><div class="step-content"><strong>文字起こし</strong><p>Notta / CLOVA Note / Google Pixel の文字起こし機能などで自動文字起こし</p></div></li>
+      <li class="step"><div class="step-content"><strong>個人情報マスク</strong><p>氏名・住所はGoogleドキュメントの一括置換で[マスク1][マスク2]に置換</p></div></li>
+      <li class="step"><div class="step-content"><strong>AIで議事録化</strong><p>上記プロンプト①をコピーしてChatGPTに貼り付け、マスク済みテキストを後ろに追加</p></div></li>
+      <li class="step"><div class="step-content"><strong>確認・調整</strong><p>出力された議事録を人間がチェック。固有名詞を元に戻し、職員に共有</p></div></li>
+    </ol>
+  </article>
+
+  <article class="block">
+    <span class="block-label">Caution</span>
+    <h2 class="block-title">注意点</h2>
+    <div class="warn">
+      <h3 class="warn-title">⚠ 個人情報を直接入力しない</h3>
+      <p>無料版ChatGPT・Geminiでは、入力内容がAIの学習に使われる可能性があります。氏名・住所・病名などは必ず[マスク]に置換してから貼り付けてください。</p>
+    </div>
+    <div class="warn">
+      <h3 class="warn-title">⚠ AIの出力は必ず確認</h3>
+      <p>AIは時に存在しない決定事項を作ることがあります（ハルシネーション）。職員に共有する前に必ず人間がチェックしてください。</p>
+    </div>
+  </article>
+
+  <nav class="pager">
+    <a href="topic.html">
+      <span class="label">← PREV</span>
+      <strong>02. マニュアル作成</strong>
+    </a>
+    <a href="topic.html" style="text-align:right;">
+      <span class="label">NEXT →</span>
+      <strong>04. ケース記録</strong>
+    </a>
+  </nav>
+
+</main>
+
+<div class="toast" id="toast">プロンプトをコピーしました</div>
+
+<script>
+  function copyPrompt(btn) {
+    const text = btn.closest('.prompt-card').querySelector('.prompt-body').textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      showToast('プロンプトをコピーしました');
+    });
+  }
+  function openWith(service, btn) {
+    const text = btn.closest('.prompt-card').querySelector('.prompt-body').textContent;
+    navigator.clipboard.writeText(text);
+    const encoded = encodeURIComponent(text);
+    const url = service === 'chatgpt'
+      ? 'https://chatgpt.com/?q=' + encoded
+      : 'https://gemini.google.com/app';
+    showToast('コピーしました。' + (service === 'chatgpt' ? 'ChatGPT' : 'Gemini') + 'を開きます');
+    setTimeout(() => window.open(url, '_blank'), 400);
+  }
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2000);
+  }
+</script>
+
+</body>
+</html>

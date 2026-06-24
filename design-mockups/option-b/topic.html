@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>03. 音声から議事録を作る｜案B・行政資料系</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@500;700&family=Cormorant+Garamond:wght@300;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FAFAF7;
+    --bg-deep: #F2F0EA;
+    --surface: #FFFFFF;
+    --ink-1: #1A1A1A;
+    --ink-2: #555555;
+    --ink-3: #8A8A85;
+    --accent: #2F6E5A;
+    --accent-deep: #1F4D3F;
+    --accent-soft: #DCE8E3;
+    --gold: #B8924A;
+    --gold-soft: #F0E8D5;
+    --divider: #E5E5E0;
+    --warn: #B85A3E;
+    --warn-soft: #FBEEE6;
+    --space-xs: 0.5rem;
+    --space-sm: 0.875rem;
+    --space-md: clamp(1rem, 2vw, 1.5rem);
+    --space-lg: clamp(1.75rem, 4vw, 3rem);
+    --space-xl: clamp(2.5rem, 7vw, 5rem);
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink-1);
+    font-family: "Noto Sans JP", system-ui, sans-serif;
+    line-height: 1.85;
+    font-size: clamp(15px, 0.9vw + 13px, 17px);
+    letter-spacing: 0.01em;
+    -webkit-font-smoothing: antialiased;
+  }
+  .serif { font-family: "Noto Serif JP", serif; }
+  .latin { font-family: "Cormorant Garamond", serif; }
+  .container { width: 100%; max-width: 480px; margin: 0 auto; padding: 0 var(--space-md); }
+  @media (min-width: 768px) { .container { max-width: 760px; padding: 0 var(--space-lg); } }
+
+  /* Header */
+  .site-header {
+    border-bottom: 1px solid var(--ink-1);
+    padding: var(--space-sm) 0;
+    background: var(--bg);
+    position: sticky; top: 0; z-index: 50;
+  }
+  .header-inner { display: flex; align-items: center; justify-content: space-between; }
+  .back-link {
+    color: var(--accent); text-decoration: none;
+    font-weight: 500; font-size: 0.85rem;
+    letter-spacing: 0.05em;
+    min-height: 44px;
+    display: inline-flex; align-items: center; gap: 0.4rem;
+  }
+  .progress-meta {
+    font-family: "Cormorant Garamond", serif;
+    letter-spacing: 0.15em;
+    font-size: 0.95rem;
+    color: var(--ink-2);
+  }
+  .progress-meta strong { color: var(--accent); font-weight: 500; }
+
+  /* Topic hero */
+  .topic-hero {
+    padding: var(--space-xl) 0 var(--space-lg);
+    border-bottom: 1px solid var(--ink-1);
+  }
+  .topic-cat {
+    font-family: "Cormorant Garamond", serif;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-size: 0.85rem;
+    margin-bottom: var(--space-md);
+    padding-bottom: var(--space-sm);
+    border-bottom: 1px solid var(--accent);
+    display: inline-block;
+  }
+  .topic-num-row {
+    display: flex; align-items: baseline; gap: 1.5rem;
+    margin-bottom: var(--space-sm);
+  }
+  .topic-num {
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 300;
+    font-size: clamp(4rem, 12vw, 7rem);
+    color: var(--accent);
+    line-height: 0.85;
+  }
+  .topic-num-suffix {
+    font-family: "Cormorant Garamond", serif;
+    letter-spacing: 0.2em;
+    color: var(--ink-3);
+    font-size: 0.85rem;
+  }
+  h1.topic-title {
+    font-family: "Noto Serif JP", serif;
+    font-weight: 700;
+    font-size: clamp(1.7rem, 4vw + 0.5rem, 2.6rem);
+    line-height: 1.4;
+    margin: 0 0 var(--space-md);
+  }
+  .topic-lead {
+    color: var(--ink-2);
+    font-size: clamp(1rem, 0.5vw + 0.9rem, 1.15rem);
+    line-height: 1.85;
+    margin: 0;
+    max-width: 40rem;
+  }
+
+  /* Section block */
+  .section {
+    padding: var(--space-xl) 0;
+    border-bottom: 1px solid var(--divider);
+  }
+  .section-head { margin-bottom: var(--space-lg); }
+  .section-num {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 2.5rem;
+    color: var(--accent);
+    line-height: 1;
+    font-weight: 300;
+    margin-right: 0.5rem;
+  }
+  .section-label {
+    font-family: "Cormorant Garamond", serif;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    font-size: 0.85rem;
+  }
+  h2.section-title {
+    font-family: "Noto Serif JP", serif;
+    font-weight: 700;
+    font-size: clamp(1.4rem, 1.5vw + 1rem, 1.8rem);
+    margin: 0.3rem 0 0;
+  }
+  .section p { margin: 0 0 1.1rem; color: var(--ink-1); }
+  .section p:last-child { margin-bottom: 0; }
+
+  /* Prompt block */
+  .prompt {
+    border-top: 2px solid var(--ink-1);
+    border-bottom: 1px solid var(--divider);
+    padding: var(--space-md) 0;
+    margin-bottom: var(--space-md);
+  }
+  .prompt-header {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-bottom: var(--space-md);
+    flex-wrap: wrap; gap: 0.5rem;
+  }
+  .prompt-num {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+  }
+  .prompt-title {
+    font-family: "Noto Serif JP", serif;
+    font-weight: 500;
+    font-size: 1.05rem;
+    margin: 0;
+  }
+  .prompt-body {
+    background: var(--bg-deep);
+    border-left: 4px solid var(--accent);
+    padding: var(--space-md);
+    font-family: ui-monospace, "SF Mono", monospace;
+    font-size: 0.83rem;
+    line-height: 1.75;
+    color: var(--ink-1);
+    white-space: pre-wrap;
+    word-break: break-word;
+    margin-bottom: var(--space-md);
+  }
+  .prompt-actions {
+    display: grid; grid-template-columns: 1fr; gap: 0.5rem;
+  }
+  @media (min-width: 480px) { .prompt-actions { grid-template-columns: repeat(3, 1fr); } }
+  .btn {
+    border: 1px solid var(--ink-1);
+    cursor: pointer; font-family: inherit;
+    padding: 0.7rem 1rem;
+    font-weight: 500; font-size: 0.85rem;
+    display: flex; align-items: center; justify-content: center; gap: 0.4rem;
+    min-height: 44px;
+    letter-spacing: 0.05em;
+    transition: all 0.15s;
+    text-decoration: none;
+    background: var(--surface);
+    color: var(--ink-1);
+  }
+  .btn:hover { background: var(--ink-1); color: #fff; }
+  .btn-primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .btn-primary:hover { background: var(--accent-deep); color: #fff; }
+  .btn-secondary { background: var(--ink-1); color: #fff; border-color: var(--ink-1); }
+  .btn-secondary:hover { background: var(--bg); color: var(--ink-1); }
+
+  /* Before/After */
+  .ba {
+    display: grid; grid-template-columns: 1fr; gap: 1px;
+    background: var(--ink-1);
+    border: 1px solid var(--ink-1);
+  }
+  @media (min-width: 600px) { .ba { grid-template-columns: 1fr 1fr; } }
+  .ba-cell { background: #fff; padding: var(--space-md); }
+  .ba-cell.before { background: var(--bg-deep); }
+  .ba-cell.after { background: var(--accent-soft); }
+  .ba-label {
+    font-family: "Cormorant Garamond", serif;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    color: var(--ink-3);
+    margin-bottom: 0.5rem;
+  }
+  .ba-cell.after .ba-label { color: var(--accent-deep); }
+  .ba-content {
+    font-size: 0.88rem; line-height: 1.7;
+    margin: 0;
+  }
+
+  /* Steps */
+  .step-list {
+    list-style: none; padding: 0; margin: 0;
+    border-top: 1px solid var(--ink-1);
+    counter-reset: stepc;
+  }
+  .step-list li {
+    counter-increment: stepc;
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    gap: var(--space-md);
+    padding: var(--space-md) 0;
+    border-bottom: 1px solid var(--divider);
+    align-items: start;
+  }
+  .step-list li::before {
+    content: counter(stepc, decimal-leading-zero);
+    font-family: "Cormorant Garamond", serif;
+    font-size: 2rem;
+    color: var(--accent);
+    line-height: 1;
+    font-weight: 300;
+  }
+  .step-body strong {
+    font-family: "Noto Serif JP", serif;
+    font-weight: 700;
+    display: block;
+    margin-bottom: 0.3rem;
+    font-size: 1rem;
+  }
+  .step-body p { margin: 0; color: var(--ink-2); font-size: 0.9rem; }
+
+  /* Warning */
+  .warn {
+    border-top: 2px solid var(--warn);
+    border-bottom: 1px solid var(--warn);
+    padding: var(--space-md) 0;
+    margin: var(--space-md) 0;
+  }
+  .warn-label {
+    font-family: "Cormorant Garamond", serif;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    color: var(--warn);
+    margin-bottom: 0.5rem;
+  }
+  .warn-title {
+    font-family: "Noto Serif JP", serif;
+    font-weight: 700;
+    margin: 0 0 0.5rem;
+    font-size: 1rem;
+  }
+  .warn p { margin: 0; font-size: 0.9rem; color: var(--ink-2); }
+
+  /* Pager */
+  .pager {
+    display: grid; grid-template-columns: 1fr 1fr;
+    border-top: 1px solid var(--ink-1);
+    border-bottom: 1px solid var(--ink-1);
+    margin: var(--space-xl) 0;
+  }
+  .pager a {
+    text-decoration: none; color: inherit;
+    padding: var(--space-md);
+    display: block;
+    transition: background 0.15s;
+  }
+  .pager a:hover { background: var(--bg-deep); }
+  .pager .prev { border-right: 1px solid var(--divider); }
+  .pager .next { text-align: right; }
+  .pager .label {
+    font-family: "Cormorant Garamond", serif;
+    letter-spacing: 0.2em;
+    font-size: 0.75rem;
+    color: var(--accent);
+    text-transform: uppercase;
+  }
+  .pager strong {
+    font-family: "Noto Serif JP", serif;
+    display: block;
+    margin-top: 0.3rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+  }
+
+  .toast {
+    position: fixed; bottom: 24px; left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--ink-1); color: #fff;
+    padding: 0.85rem 1.5rem;
+    font-size: 0.85rem; font-weight: 500;
+    letter-spacing: 0.05em;
+    opacity: 0; transition: all 0.3s; z-index: 100;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="index.html" class="back-link">← INDEX</a>
+    <span class="progress-meta"><strong>03</strong> / 09</span>
+  </div>
+</header>
+
+<section class="topic-hero">
+  <div class="container">
+    <div class="topic-cat">Section III — Transcription</div>
+    <div class="topic-num-row">
+      <span class="topic-num">03</span>
+      <span class="topic-num-suffix">of nine</span>
+    </div>
+    <h1 class="topic-title">音声から議事録を作る</h1>
+    <p class="topic-lead">
+      支援会議・カンファレンスの録音を、AIで「文字起こし → 要約 → 決定事項リスト」まで一気に整える。
+      手作業で2時間かかっていた作業が、20分で終わるようになります。
+    </p>
+  </div>
+</section>
+
+<main class="container">
+
+  <section class="section">
+    <div class="section-head">
+      <span class="section-num">i.</span>
+      <span class="section-label">Overview</span>
+      <h2 class="section-title">このトピックでわかること</h2>
+    </div>
+    <p>支援会議・ケースカンファレンス・事例検討会など、現場で発生する「議事録作成」をAIに任せて、本来の業務（記録の解釈・支援方針の検討）に時間を使えるようにします。</p>
+    <p>本セクションでは、スマートフォンで録音 → 文字起こし → AIで要約 → 規定様式に整える、までの一連の流れを実演します。</p>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <span class="section-num">ii.</span>
+      <span class="section-label">Why AI</span>
+      <h2 class="section-title">なぜAIで効率化できるのか</h2>
+    </div>
+    <p>AIは「聞く」「書き起こす」「要点をまとめる」「形式を整える」が得意です。一方、「誰の発言か」「ニュアンスはどうか」「次のアクションは何か」は人間が判断する領域です。</p>
+    <p>つまりAIに任せる部分と人間が判断する部分を分けることで、議事録作成は「ゼロから書く」作業から「ドラフトを整える」作業に変わります。</p>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <span class="section-num">iii.</span>
+      <span class="section-label">Prompts</span>
+      <h2 class="section-title">使えるプロンプト集</h2>
+    </div>
+
+    <div class="prompt">
+      <div class="prompt-header">
+        <span class="prompt-num">PROMPT 01</span>
+        <h3 class="prompt-title">文字起こしを議事録にまとめる</h3>
+      </div>
+      <div class="prompt-body">あなたは福祉施設の議事録作成を補助するアシスタントです。
+以下の文字起こしテキストから、議事録を作成してください。
+
+【出力フォーマット】
+■ 日時：
+■ 出席者：
+■ 議題：
+■ 決定事項（箇条書き）：
+■ 次回までの宿題（担当者と期限を明記）：
+■ その他の論点：
+
+【ルール】
+- 個人を特定できる情報（氏名・住所・電話番号）は[マスク]に置き換える
+- 推測ではなく、文字起こしに書かれている内容のみで作成する
+
+【文字起こし】
+（ここに貼り付け）</div>
+      <div class="prompt-actions">
+        <button class="btn" onclick="copyPrompt(this)">COPY</button>
+        <a class="btn btn-primary" href="#" onclick="openWith('chatgpt', this); return false;">OPEN IN CHATGPT</a>
+        <a class="btn btn-secondary" href="#" onclick="openWith('gemini', this); return false;">OPEN IN GEMINI</a>
+      </div>
+    </div>
+
+    <div class="prompt">
+      <div class="prompt-header">
+        <span class="prompt-num">PROMPT 02</span>
+        <h3 class="prompt-title">議事録から「次のアクション」だけ抽出</h3>
+      </div>
+      <div class="prompt-body">以下の議事録から、職員ごとに「次回までにやること」をテーブルにまとめてください。
+列：担当者 / タスク / 期限 / 関連する利用者（マスク済み）
+
+【議事録】
+（ここに貼り付け）</div>
+      <div class="prompt-actions">
+        <button class="btn" onclick="copyPrompt(this)">COPY</button>
+        <a class="btn btn-primary" href="#" onclick="openWith('chatgpt', this); return false;">OPEN IN CHATGPT</a>
+        <a class="btn btn-secondary" href="#" onclick="openWith('gemini', this); return false;">OPEN IN GEMINI</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <span class="section-num">iv.</span>
+      <span class="section-label">Before / After</span>
+      <h2 class="section-title">ビフォーアフター</h2>
+    </div>
+    <div class="ba">
+      <div class="ba-cell before">
+        <div class="ba-label">Before — 手書き走り書き</div>
+        <p class="ba-content">「Aさん（仮）の件、医療連携必要そう。次回までにB職員が病院に確認。Cさんは住居問題進捗あり。来月のケース会議で再検討すること」</p>
+      </div>
+      <div class="ba-cell after">
+        <div class="ba-label">After — AIで整形</div>
+        <p class="ba-content"><strong>決定事項</strong><br>1. [マスク1]の医療連携を進める<br>2. [マスク2]の住居問題は来月再検討<br><br><strong>宿題</strong><br>・B職員：[マスク1]の主治医に9/15までに確認</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <span class="section-num">v.</span>
+      <span class="section-label">Practice</span>
+      <h2 class="section-title">実践ステップ</h2>
+    </div>
+    <ol class="step-list">
+      <li><div class="step-body"><strong>録音する</strong><p>スマホの標準ボイスメモ、またはGoogle 録音アプリで会議を録音</p></div></li>
+      <li><div class="step-body"><strong>文字起こし</strong><p>Notta / CLOVA Note / Google Pixel の文字起こし機能などで自動文字起こし</p></div></li>
+      <li><div class="step-body"><strong>個人情報マスク</strong><p>氏名・住所はGoogleドキュメントの一括置換で[マスク1][マスク2]に置換</p></div></li>
+      <li><div class="step-body"><strong>AIで議事録化</strong><p>上記プロンプト01をコピーしてChatGPTに貼り付け、マスク済みテキストを後ろに追加</p></div></li>
+      <li><div class="step-body"><strong>確認・調整</strong><p>出力された議事録を人間がチェック。固有名詞を元に戻し、職員に共有</p></div></li>
+    </ol>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <span class="section-num">vi.</span>
+      <span class="section-label">Cautions</span>
+      <h2 class="section-title">注意点</h2>
+    </div>
+    <div class="warn">
+      <div class="warn-label">Caution 01</div>
+      <h3 class="warn-title">個人情報を直接入力しない</h3>
+      <p>無料版ChatGPT・Geminiでは、入力内容がAIの学習に使われる可能性があります。氏名・住所・病名などは必ず[マスク]に置換してから貼り付けてください。</p>
+    </div>
+    <div class="warn">
+      <div class="warn-label">Caution 02</div>
+      <h3 class="warn-title">AIの出力は必ず確認</h3>
+      <p>AIは時に存在しない決定事項を作ることがあります（ハルシネーション）。職員に共有する前に必ず人間がチェックしてください。</p>
+    </div>
+  </section>
+
+  <nav class="pager">
+    <a href="topic.html" class="prev">
+      <span class="label">← Previous</span>
+      <strong>02. マニュアル作成</strong>
+    </a>
+    <a href="topic.html" class="next">
+      <span class="label">Next →</span>
+      <strong>04. ケース記録</strong>
+    </a>
+  </nav>
+
+</main>
+
+<div class="toast" id="toast">プロンプトをコピーしました</div>
+
+<script>
+  function copyPrompt(btn) {
+    const text = btn.closest('.prompt').querySelector('.prompt-body').textContent;
+    navigator.clipboard.writeText(text).then(() => showToast('COPIED'));
+  }
+  function openWith(service, btn) {
+    const text = btn.closest('.prompt').querySelector('.prompt-body').textContent;
+    navigator.clipboard.writeText(text);
+    const encoded = encodeURIComponent(text);
+    const url = service === 'chatgpt'
+      ? 'https://chatgpt.com/?q=' + encoded
+      : 'https://gemini.google.com/app';
+    showToast('COPIED — Opening ' + service.toUpperCase());
+    setTimeout(() => window.open(url, '_blank'), 400);
+  }
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2000);
+  }
+</script>
+
+</body>
+</html>

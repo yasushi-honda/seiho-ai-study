@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>seiho-ai-study デザイン案 比較</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Klee+One:wght@600&family=Noto+Serif+JP:wght@500;700&family=Cormorant+Garamond:wght@300;500&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "Noto Sans JP", sans-serif;
+    background: #1a1a1a;
+    color: #fff;
+    line-height: 1.7;
+    min-height: 100vh;
+    padding: 2rem 1rem;
+  }
+  .wrap { max-width: 1200px; margin: 0 auto; }
+  h1 { font-family: "Noto Serif JP", serif; font-size: clamp(1.5rem, 3vw, 2.5rem); margin-bottom: 0.5rem; }
+  .lead { color: #aaa; margin-bottom: 2.5rem; font-size: 0.95rem; }
+  .options { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
+  @media (min-width: 768px) { .options { grid-template-columns: 1fr 1fr; } }
+  .card {
+    background: #2a2a2a;
+    border: 1px solid #3a3a3a;
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: transform 0.2s;
+  }
+  .card:hover { transform: translateY(-2px); }
+  .card-label {
+    font-family: "Cormorant Garamond", serif;
+    letter-spacing: 0.2em;
+    color: #B8924A;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  .card h2 { font-family: "Noto Serif JP", serif; font-size: 1.4rem; margin-bottom: 0.5rem; }
+  .tag { display: inline-block; background: #3a3a3a; padding: 0.3rem 0.8rem; border-radius: 999px; font-size: 0.75rem; margin: 0.3rem 0.3rem 0 0; color: #ccc; }
+  .preview { color: #aaa; margin: 1rem 0; font-size: 0.9rem; }
+  .links { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-top: 1rem; }
+  .links a {
+    display: block; padding: 0.75rem;
+    background: #fff; color: #1a1a1a;
+    text-decoration: none; text-align: center;
+    border-radius: 6px; font-weight: 600; font-size: 0.85rem;
+  }
+  .links a:hover { background: #e0e0e0; }
+  .note { background: #1a3a2a; padding: 1rem; border-radius: 8px; margin-top: 2rem; font-size: 0.85rem; color: #b0d0c0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>seiho-ai-study デザイン案</h1>
+  <p class="lead">大阪市生活保護施設連盟 AI研修Webアプリ（2026/9/7）— モックアップ2案。<br>スマホ実機で確認するのがおすすめです。</p>
+
+  <div class="options">
+    <div class="card">
+      <div class="card-label">Option A</div>
+      <h2>温かみ重視</h2>
+      <div>
+        <span class="tag">ベージュ基調</span>
+        <span class="tag">丸み</span>
+        <span class="tag">Klee One</span>
+        <span class="tag">柔らかい色面</span>
+      </div>
+      <p class="preview">福祉現場の温かさを表現。手書き感のあるフォント（Klee One）と丸みのある角、ベージュとくすんだ青緑（5C8B89）の組み合わせ。シニア参加者にも親しみやすい。</p>
+      <div class="links">
+        <a href="option-a/index.html">トップを見る</a>
+        <a href="option-a/topic.html">詳細を見る</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Option B</div>
+      <h2>行政資料系</h2>
+      <div>
+        <span class="tag">白基調</span>
+        <span class="tag">直線・罫線</span>
+        <span class="tag">Noto Serif JP</span>
+        <span class="tag">フォーマル</span>
+      </div>
+      <p class="preview">公的機関の研修資料のような信頼感。明朝体（Noto Serif JP）と罫線を活かしたフォーマルなレイアウト、深い青緑（2F6E5A）アクセント。仕事道具としての品格。</p>
+      <div class="links">
+        <a href="option-b/index.html">トップを見る</a>
+        <a href="option-b/topic.html">詳細を見る</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="note">
+    💡 <strong>確認ポイント</strong><br>
+    ① 親しみやすさ vs 信頼感、どちらが対象（施設職員）に響くか<br>
+    ② 9トピックカードの一覧性、スマホでスクロールしたときの読みやすさ<br>
+    ③ プロンプトカードのCTAボタン（コピー / ChatGPTで開く / Geminiで開く）の見え方<br>
+    ④ シニア参加者を想定したフォントサイズ・行間
+  </div>
+</div>
+</body>
+</html>
