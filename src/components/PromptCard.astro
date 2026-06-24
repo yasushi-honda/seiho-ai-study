@@ -1,0 +1,78 @@
+---
+interface Props {
+  number: string;
+  title: string;
+  prompt: string;
+}
+
+const { number, title, prompt } = Astro.props;
+---
+
+<article
+  class="my-4 rounded-xl border border-border-soft bg-bg-deep p-4 md:p-5"
+  data-prompt-card
+  data-prompt={prompt}
+>
+  <header class="mb-3 flex flex-wrap items-baseline justify-between gap-2">
+    <span
+      class="font-display rounded-full bg-accent-2-soft px-3 py-1 text-xs font-semibold tracking-wider text-accent-2"
+    >
+      PROMPT {number}
+    </span>
+    <h3 class="font-display flex-1 text-base font-semibold text-ink-1">{title}</h3>
+  </header>
+
+  <pre
+    class="overflow-x-auto rounded-lg border border-border-soft bg-surface p-4 text-[0.83rem] leading-relaxed text-ink-1 whitespace-pre-wrap break-words"
+    style="font-family: var(--font-mono);">{prompt}</pre>
+
+  <div class="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-3">
+    <button
+      type="button"
+      data-action="copy"
+      class="min-h-11 rounded-full border border-border-soft bg-surface px-4 py-3 text-sm font-semibold text-ink-1 transition-colors hover:bg-card active:scale-[0.98]"
+    >
+      📋 コピー
+    </button>
+    <button
+      type="button"
+      data-action="chatgpt"
+      class="min-h-11 rounded-full bg-accent-1 px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-accent-1-deep active:scale-[0.98]"
+    >
+      ChatGPTで開く
+    </button>
+    <button
+      type="button"
+      data-action="gemini"
+      class="min-h-11 rounded-full bg-ink-1 px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-ink-2 active:scale-[0.98]"
+    >
+      Geminiで開く
+    </button>
+  </div>
+</article>
+
+<script>
+  import { copyAndOpen, type AIService } from '../lib/copyAndOpen';
+
+  type Action = 'copy' | 'chatgpt' | 'gemini';
+
+  function actionToService(action: Action): AIService {
+    return action === 'copy' ? 'copy-only' : action;
+  }
+
+  function showToast(msg: string) {
+    if (typeof window === 'undefined') return;
+    window.__showToast?.(msg);
+  }
+
+  document.querySelectorAll<HTMLElement>('[data-prompt-card]').forEach((card) => {
+    const prompt = card.dataset.prompt ?? '';
+    card.querySelectorAll<HTMLButtonElement>('button[data-action]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const action = btn.dataset.action as Action | undefined;
+        if (!action) return;
+        void copyAndOpen(prompt, actionToService(action), showToast);
+      });
+    });
+  });
+</script>

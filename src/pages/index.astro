@@ -1,5 +1,9 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import PromptCard from '../components/PromptCard.astro';
+import { getCollection } from 'astro:content';
+
+const topics = (await getCollection('topics')).sort((a, b) => a.data.order - b.data.order);
 ---
 
 <Layout title="生保AIスタディ">
@@ -11,37 +15,58 @@ import Layout from '../layouts/Layout.astro';
     </p>
     <h1 class="font-display mb-4 text-3xl font-semibold leading-tight md:text-5xl">
       伴走支援の時間を作る、<br />
-      現場のための<span class="bg-gradient-to-t from-accent-2-soft from-[35%] to-transparent to-[35%] px-1">AI活用術</span>
+      現場のための<span
+        class="bg-gradient-to-t from-accent-2-soft from-[35%] to-transparent to-[35%] px-1"
+        >AI活用術</span
+      >
     </h1>
     <p class="mb-8 max-w-2xl text-base text-ink-2 leading-relaxed">
       生活保護受給者・生活困窮者支援の現場を支える業務効率化。<br />
       記録・マニュアル・法令検索を、AIで「半歩はやく、半歩深く」。
     </p>
-    <div class="flex flex-wrap gap-3">
-      <span class="rounded-lg border border-border-soft bg-surface px-4 py-2 text-sm text-ink-2">
-        ⏱ <strong class="text-ink-1 font-bold">2時間30分</strong>
-      </span>
-      <span class="rounded-lg border border-border-soft bg-surface px-4 py-2 text-sm text-ink-2">
-        🎯 <strong class="text-ink-1 font-bold">9トピック</strong>の実践
-      </span>
-      <span class="rounded-lg border border-border-soft bg-surface px-4 py-2 text-sm text-ink-2">
-        📱 スマホで操作
-      </span>
-    </div>
 
     <div class="mt-12 rounded-xl border border-border-soft bg-card p-6">
       <p class="text-sm text-ink-2">
-        🚧 <strong class="text-ink-1">B1/B2 動作確認用ページ</strong>です。
-        Layout / Header / Footer / Toast / フォント / 配色トークンが動いています。
-        次の B3〜B6 でトップページ / トピック詳細を実装していきます。
+        🚧 <strong class="text-ink-1">B3+B4 動作確認用ページ</strong>です。
+        Content Collections から {topics.length} トピック検出、PromptCard コンポーネントの動作確認。
+        次の B5 でトップページ本実装、B6 でトピック詳細ページに進みます。
       </p>
-      <button
-        type="button"
-        class="mt-4 min-h-11 rounded-full bg-accent-1 px-5 py-2 text-sm font-semibold text-white hover:bg-accent-1-deep"
-        onclick="window.__showToast?.('Toast 動作確認 OK!')"
-      >
-        Toast テスト
-      </button>
     </div>
+
+    <h2 class="font-display mt-12 mb-4 text-xl font-semibold">検出されたトピック</h2>
+    <ul class="space-y-2 text-sm">
+      {
+        topics.map((t) => (
+          <li class="flex items-baseline gap-2">
+            <span class="font-display text-accent-1">{String(t.data.order).padStart(2, '0')}</span>
+            <span>{t.data.icon}</span>
+            <span>{t.data.title}</span>
+            <span class="text-ink-3 text-xs">({t.data.category})</span>
+          </li>
+        ))
+      }
+    </ul>
+
+    <h2 class="font-display mt-12 mb-4 text-xl font-semibold">PromptCard 動作確認</h2>
+    <PromptCard
+      number="01"
+      title="文字起こしを議事録にまとめる（サンプル）"
+      prompt={`あなたは福祉施設の議事録作成を補助するアシスタントです。
+以下の文字起こしテキストから、議事録を作成してください。
+
+【出力フォーマット】
+■ 日時：
+■ 出席者：
+■ 議題：
+■ 決定事項（箇条書き）：
+■ 次回までの宿題（担当者と期限を明記）：
+
+【ルール】
+- 個人を特定できる情報は[マスク]に置き換える
+- 推測ではなく、文字起こしに書かれている内容のみで作成する
+
+【文字起こし】
+（ここに貼り付け）`}
+    />
   </section>
 </Layout>
