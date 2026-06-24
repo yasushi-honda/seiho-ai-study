@@ -1,0 +1,23 @@
+---
+interface Props {
+  beforeLabel?: string;
+  afterLabel?: string;
+}
+
+const { beforeLabel = 'Before', afterLabel = 'After' } = Astro.props;
+---
+
+<div class="my-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
+  <div class="rounded-xl border border-border-soft bg-[#FAF4E8] p-4">
+    <div class="font-display mb-2 text-xs font-semibold text-ink-2">{beforeLabel}</div>
+    <div class="text-sm leading-relaxed text-ink-1">
+      <slot name="before" />
+    </div>
+  </div>
+  <div class="rounded-xl border border-accent-1/40 bg-[#E8F3F1] p-4">
+    <div class="font-display mb-2 text-xs font-semibold text-accent-1-deep">{afterLabel}</div>
+    <div class="text-sm leading-relaxed text-ink-1">
+      <slot name="after" />
+    </div>
+  </div>
+</div>

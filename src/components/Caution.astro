@@ -1,0 +1,30 @@
+---
+interface Props {
+  title?: string;
+  /** "warn" は注意（オレンジ系）、"info" は補足（青系） */
+  level?: 'warn' | 'info';
+}
+
+const { title, level = 'warn' } = Astro.props;
+
+const palette =
+  level === 'warn'
+    ? 'border-l-warn bg-warn-soft text-ink-1'
+    : 'border-l-accent-1 bg-accent-1/10 text-ink-1';
+
+const titleColor = level === 'warn' ? 'text-warn' : 'text-accent-1-deep';
+const icon = level === 'warn' ? '⚠' : 'ℹ';
+---
+
+<aside class={`my-4 border-l-4 ${palette} rounded-r-xl p-4`}>
+  {
+    title && (
+      <h4 class={`font-display m-0 mb-2 text-base font-semibold ${titleColor}`}>
+        <span aria-hidden="true">{icon}</span> {title}
+      </h4>
+    )
+  }
+  <div class="text-sm leading-relaxed">
+    <slot />
+  </div>
+</aside>

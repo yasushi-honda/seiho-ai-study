@@ -1,0 +1,76 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import TopicPager from '../../components/TopicPager.astro';
+import { withBase } from '../../lib/urls';
+
+export async function getStaticPaths() {
+  const topics = (await getCollection('topics')).sort((a, b) => a.data.order - b.data.order);
+  return topics.map((topic, i) => ({
+    params: { slug: topic.id },
+    props: {
+      topic,
+      prev: i > 0 ? topics[i - 1] : undefined,
+      next: i < topics.length - 1 ? topics[i + 1] : undefined,
+      total: topics.length,
+    },
+  }));
+}
+
+const { topic, prev, next, total } = Astro.props;
+const { Content } = await render(topic);
+const orderLabel = String(topic.data.order).padStart(2, '0');
+---
+
+<Layout title={topic.data.title} description={topic.data.lead}>
+  {/* Topic Hero */}
+  <header class="border-b border-border-soft">
+    <div class="container-page py-10 md:py-14">
+      <a
+        href={withBase('#topics')}
+        class="font-display text-sm text-accent-1 no-underline hover:underline"
+      >
+        ← トピック一覧へ
+      </a>
+      <div class="mt-4 flex items-baseline gap-3">
+        <span class="font-display text-5xl font-semibold leading-none text-accent-1 opacity-50">
+          {orderLabel}
+        </span>
+        <span class="text-3xl" aria-hidden="true">{topic.data.icon}</span>
+        <span class="ml-auto rounded-full bg-accent-1 px-3 py-1 text-xs font-semibold text-white">
+          {orderLabel} / {String(total).padStart(2, '0')}
+        </span>
+      </div>
+      <h1 class="font-display mt-3 text-2xl font-semibold leading-tight md:text-4xl">
+        {topic.data.title}
+      </h1>
+      <p class="mt-3 max-w-2xl text-base leading-relaxed text-ink-2">{topic.data.lead}</p>
+      {
+        topic.data.draft && (
+          <p class="mt-4 inline-block rounded-full bg-warn-soft px-3 py-1 text-xs font-semibold text-warn">
+            ⚠ DRAFT — 本コンテンツは整備中です
+          </p>
+        )
+      }
+      {
+        topic.data.estimatedMinutes && (
+          <p class="mt-3 text-xs text-ink-3">
+            想定実践時間：約 {topic.data.estimatedMinutes} 分
+          </p>
+        )
+      }
+    </div>
+  </header>
+
+  {/* Topic body (MDX) */}
+  <article
+    class="container-page py-10 md:py-14 [&_h2]:font-display [&_h2]:mt-10 [&_h2]:mb-4 [&_h2]:text-xl [&_h2]:font-semibold md:[&_h2]:text-2xl [&_h3]:font-display [&_h3]:mt-6 [&_h3]:mb-3 [&_h3]:text-lg [&_h3]:font-semibold [&_p]:mb-4 [&_p]:leading-relaxed [&_ul]:mb-4 [&_ul]:list-disc [&_ul]:pl-6 [&_ol]:mb-4 [&_ol]:list-decimal [&_ol]:pl-6 [&_a]:text-accent-1 [&_a]:underline [&_a]:underline-offset-2 [&_blockquote]:my-4 [&_blockquote]:rounded-r-xl [&_blockquote]:border-l-4 [&_blockquote]:border-accent-1 [&_blockquote]:bg-bg-deep [&_blockquote]:px-4 [&_blockquote]:py-3 [&_blockquote]:text-sm [&_blockquote]:text-ink-2 [&_code]:rounded [&_code]:bg-bg-deep [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:font-mono [&_code]:text-[0.85em]"
+  >
+    <Content />
+
+    <TopicPager
+      prev={prev ? { slug: prev.id, title: prev.data.title, order: prev.data.order } : undefined}
+      next={next ? { slug: next.id, title: next.data.title, order: next.data.order } : undefined}
+    />
+  </article>
+</Layout>
