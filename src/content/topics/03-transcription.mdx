@@ -28,7 +28,7 @@ import Steps from '../../components/Steps.astro';
 | 工程 | 担当 | 必要時間 |
 |---|---|---|
 | 録音 | IC レコーダー / スマホ | 会議時間どおり |
-| 文字起こし | 音声 AI（Notta / CLOVA Note 等） | 録音の 0.5〜1 倍 |
+| 文字起こし | 音声 AI（Notta / LINE WORKS AiNote 等） | 録音の 0.5〜1 倍 |
 | 整形・要約 | テキスト AI（ChatGPT / Gemini） | 1〜3 分 |
 | 人間チェック | 職員 | 10〜15 分 |
 
@@ -38,11 +38,11 @@ import Steps from '../../components/Steps.astro';
 
 | ツール | 強み | 注意点 |
 |---|---|---|
-| **Notta** | 日本語精度・話者識別が良好、無料枠あり | 法人契約版を選ぶことを推奨 |
-| **CLOVA Note**（LINE WORKS） | 日本語特化、要約も組み込み | 法人利用時は契約形態を確認 |
-| **Plaud Note**（IC レコーダー型） | 録音 → 自動連携で運用が楽 | 端末コストあり |
-| **ミルモレコーダー**（ウェルモ） | **福祉・介護業界特化**、SOAP・F-SOAIP テンプレート搭載 | 介護記録向けに最適化 |
-| **iPhone 純正「メモ」** | 端末内処理（外部送信なし）で機密性◎ | 精度・話者識別は専用ツールに劣る |
+| [**Notta**](https://www.notta.ai/jp/) | 日本語精度・話者識別が良好、無料枠あり | [法人プラン](https://www.notta.ai/business)（Enterprise で AI 学習オフがデフォルト）を選ぶことを推奨 |
+| [**LINE WORKS AiNote**](https://line-works.com/services/ainote/)（旧 CLOVA Note） | 日本語特化、要約も組み込み。LINE WORKS 株式会社が提供 | 旧 CLOVA Note β版は 2025 年 7 月終了、正式版へ移行済み |
+| [**Plaud Note**](https://jp.plaud.ai/)（IC レコーダー型） | 録音 → 自動連携で運用が楽 | 端末コスト（22,000 円〜）+ 月額プランあり |
+| [**ミルモレコーダー**](https://welmo.co.jp/news/news-20241126/)（ウェルモ） | **福祉・介護業界特化**、SOAP・F-SOAIP テンプレート搭載 | 介護記録向けに最適化 |
+| [**iPhone 純正「ボイスメモ」+「メモ」（Apple Intelligence）**](https://support.apple.com/guide/iphone/use-apple-intelligence-in-notes-iph59143007d/ios) | オンデバイス処理優先で機密性◎ | iPhone 15 Pro 以降が対象、精度・話者識別は専用ツールに劣る |
 
 > **「データ学習がオフにできるか」「保存先がどこか」** は必ず契約前に確認してください（→ [トピック⑧ データ学習オフ・法人契約](#)）。
 
@@ -129,7 +129,7 @@ import Steps from '../../components/Steps.astro';
   steps={[
     { title: '録音前に同意を取る', description: '会議冒頭で「議事録作成のため録音します。文字起こし後の音声は削除します」と明示し、参加者の同意を取ります。' },
     { title: '録音する', description: 'IC レコーダー、スマホ、Plaud Note などで録音。会議室では卓上マイクが効果的です。' },
-    { title: '文字起こしツールで処理', description: 'Notta / CLOVA Note などにアップロード。終了通知が来るまで他の業務を進められます。' },
+    { title: '文字起こしツールで処理', description: 'Notta / LINE WORKS AiNote などにアップロード。終了通知が来るまで他の業務を進められます。' },
     { title: '個人情報をマスクしてから AI へ', description: '利用者名・住所・整理番号などは「A さん」「B 区」のように置換してから、ChatGPT / Gemini に投入します。' },
     { title: '人間が最終確認', description: '固有名詞・数字・決定事項の文言は必ず原文と照合します。録音は議事録確定後に削除（または規程に従い保管）。' },
   ]}

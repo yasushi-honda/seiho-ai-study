@@ -30,11 +30,11 @@ import Steps from '../../components/Steps.astro';
 
 | サービス | 個人/無料 | 個人/有料 | 法人プラン |
 |---|---|---|---|
-| **ChatGPT** | デフォルト**学習対象**、設定でオフ可 | 同左（Plus も同条件） | **Business / Enterprise はデフォルト学習対象外** |
-| **Gemini**（個人アプリ） | デフォルト**学習対象**、Activity オフで対象外 | 同左 | **Google Workspace with Gemini はデフォルト学習対象外** |
-| **Claude**（claude.ai） | 個人プランは学習に使われない | 同左 | **Team / Enterprise はデフォルト学習対象外** |
-| **NotebookLM** | アップ資料は学習に使われない | 同左 | **NotebookLM Enterprise**（Google Cloud）あり |
-| **Notta / CLOVA Note 等の文字起こし** | サービスごとに異なる | 法人プランを確認 | **法人版を選ぶこと推奨** |
+| [**ChatGPT**](https://openai.com/chatgpt/pricing/) | デフォルト**学習対象**、[設定でオフ可](https://help.openai.com/en/articles/7730893-data-controls-faq) | 同左（Plus も同条件） | [**Business / Enterprise はデフォルト学習対象外**](https://openai.com/enterprise-privacy/) |
+| [**Gemini**](https://gemini.google.com)（個人アプリ） | デフォルト**学習対象**、Activity オフで対象外 | 同左 | [**Google Workspace with Gemini はデフォルト学習対象外**](https://workspace.google.com/blog/ai-and-machine-learning/sensitive-data-protections-for-google-workspace) |
+| [**Claude**](https://claude.ai)（claude.ai） | [**個人プランも含めデフォルトで学習に使われない**](https://privacy.anthropic.com/en/articles/10023580-is-my-data-used-for-model-training) | 同左 | **Team / Enterprise はデフォルト学習対象外** |
+| [**NotebookLM**](https://notebooklm.google.com/) | アップ資料は学習に使われない | 同左 | [**NotebookLM Enterprise**](https://cloud.google.com/resources/notebooklm-enterprise)（Google Cloud）あり |
+| **[Notta](https://www.notta.ai/jp/) / [LINE WORKS AiNote](https://line-works.com/services/ainote/) 等の文字起こし** | サービスごとに異なる | 法人プランを確認 | **法人版を選ぶこと推奨** |
 
 > **重要**：上記は **2026 年 6 月時点** の整理です。各社の規約は頻繁に更新されるため、契約前に **公式ヘルプ** を必ず確認してください。
 
@@ -64,7 +64,7 @@ import Steps from '../../components/Steps.astro';
 
 ### Claude（個人アプリ / claude.ai）
 
-Anthropic の個人プラン（Free / Pro / Max）は **デフォルトで学習に使われません**。アップロードしたファイルやチャット内容はモデル訓練に使用されない設定が標準です。明示的なオプトインが必要な仕組み。
+[Anthropic の個人プラン（Free / Pro / Max）は **デフォルトで学習に使われません**](https://privacy.anthropic.com/en/articles/10023580-is-my-data-used-for-model-training)。アップロードしたファイルやチャット内容はモデル訓練に使用されない設定が標準で、明示的なオプトインが必要な仕組みです。
 
 > **ただし、**「学習に使われない ≠ サーバーに送信されない」 です。送信先・保存期間・第三者開示の条件は **各社の規約とプライバシーポリシーを確認** してください。
 
@@ -84,18 +84,21 @@ Anthropic の個人プラン（Free / Pro / Max）は **デフォルトで学習
 
 | プラン | 料金感 | 規模 | 強み |
 |---|---|---|---|
-| **ChatGPT Business**（旧 Team） | 約 $25-30 / 人・月 | 2 名〜 | 小規模から始められる、UI 平易 |
-| **ChatGPT Enterprise** | 約 $60 / 人・月（150 席〜） | 大規模 | SSO/SCIM/監査ログ、エンタープライズ要件 |
-| **Google Workspace** + Gemini | プランにより異なる | 全規模 | 既に Workspace 利用ならアドオン感覚 |
-| **Gemini Enterprise**（Google Cloud） | 個別見積 | 中〜大規模 | **ISMAP 本登録済**、政府・自治体の調達対応 |
-| **NotebookLM Enterprise**（Google Cloud） | 個別見積 | 中〜大規模 | **ISMAP 本登録済**、機密文書ナレッジベース |
-| **Anthropic Claude Team / Enterprise** | 約 $25 / 人・月〜 | 全規模 | 文章生成・要約品質が高い |
+| [**ChatGPT Go**](https://openai.com/chatgpt/pricing/) | $8 / 人・月 | 個人〜小規模 | 2026 年 1 月導入の入門プラン |
+| [**ChatGPT Business**](https://openai.com/chatgpt/pricing/)（旧 Team） | 年契約 $20 / 月、月契約 $25 / 月 | 2 席〜 | 小規模から始められる、UI 平易 |
+| [**ChatGPT Enterprise**](https://openai.com/chatgpt-enterprise/) | 実勢 $45-75 / 人・月（年契約必須） | 大規模 | SSO/SCIM/監査ログ、エンタープライズ要件 |
+| [**Google Workspace + Gemini**](https://workspace.google.com/pricing.html) | プランにより異なる | 全規模 | 既に Workspace 利用ならアドオン感覚 |
+| [**Gemini Enterprise**](https://cloud.google.com/products/gemini-enterprise)（Google Cloud） | 個別見積 | 中〜大規模 | **ISMAP 本登録済（2026 年 4 月 28 日）**、政府・自治体の調達対応 |
+| [**NotebookLM Enterprise**](https://cloud.google.com/resources/notebooklm-enterprise)（Google Cloud） | 個別見積 | 中〜大規模 | **ISMAP 本登録済（2026 年 4 月 28 日）**、機密文書ナレッジベース |
+| [**Anthropic Claude Team**](https://www.anthropic.com/pricing) Standard | 年契約 $20 / 月、月契約 $25 / 月 | **5 席〜** | 文章生成・要約品質が高い |
+| [**Anthropic Claude Team**](https://www.anthropic.com/pricing) Premium | 年契約 $100 / 月、月契約 $125 / 月 | 5 席〜 | より大きな利用量上限 |
+| [**Anthropic Claude Enterprise**](https://www.anthropic.com/enterprise) | 個別見積 | 中〜大規模 | SSO/SCIM/監査ログ、長文コンテキスト |
 
-> **2025〜2026 年の大きな出来事**：Google Cloud の **Gemini Enterprise** と **NotebookLM Enterprise** が **ISMAP（政府情報システム向けセキュリティ評価制度）に本登録** されました。中央省庁・地方自治体・関連団体が、ISMAP 調達ルールに沿って正式採用できる状態です。
+> **2026 年 4 月 28 日の大きな出来事**：[Google Cloud の **Gemini Enterprise** と **NotebookLM Enterprise** が **ISMAP（政府情報システム向けセキュリティ評価制度）に本登録**](https://cloud.google.com/blog/ja/products/gcp/completed-ismap-registration-for-gemini-enterprise-and-notebooklm-enterprise) されました。中央省庁・地方自治体・関連団体が、ISMAP 調達ルールに沿って正式採用できる状態です。
 
 ## ISMAP とは（福祉施設の文脈で）
 
-**ISMAP**（Information system Security Management and Assessment Program）= 政府情報システムのためのセキュリティ評価制度。デジタル庁・総務省・経産省・NISC が共同運用、IPA が技術支援。
+[**ISMAP**](https://www.ismap.go.jp/)（Information system Security Management and Assessment Program）= 政府情報システムのためのセキュリティ評価制度。**デジタル庁・総務省・経済産業省・国家サイバー統括室**（旧 NISC、2024 年に改称）が所管し、[**IPA（情報処理推進機構）が ISMAP 運用支援機関**](https://www.ipa.go.jp/security/ismap/index.html) として実務支援を担当します（令和 2 年 6 月開始）。
 
 **福祉施設にとっての意味**：
 - 「政府が事前にセキュリティ評価したリスト」に載っているサービスは、**説明責任を果たしやすい**
