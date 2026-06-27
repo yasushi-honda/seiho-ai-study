@@ -36,10 +36,10 @@ import Steps from '../../components/Steps.astro';
 
 | 選択肢 | コスト | データ管理 | 向いている用途 |
 |---|---|---|---|
-| **NotebookLM**（個人 / Google Workspace） | 無料〜（法人プラン推奨） | アップ資料のみ参照、学習に使われない | **施設内マニュアル・事例集の検索** |
-| **ChatGPT Projects**（Plus / Team / Enterprise） | 有料 | プロジェクト内のファイル参照 | チームでプロンプト + 資料を共有 |
-| **Gemini Gem**（Google Workspace） | Workspace 契約 | Workspace の Drive 内資料を参照 | Drive 中心の運用 |
-| **法人向けRAG基盤**（自前構築 / SaaS） | 高（数十万〜） | 完全な自社管理 | 法人全体の知識統合（中長期） |
+| [**NotebookLM**](https://notebooklm.google.com/)（個人 / [NotebookLM Enterprise](https://cloud.google.com/resources/notebooklm-enterprise)） | 無料〜（法人プラン推奨） | アップ資料のみ参照、学習に使われない | **施設内マニュアル・事例集の検索** |
+| [**ChatGPT Projects**](https://help.openai.com/en/articles/10169521-projects-in-chatgpt)（Free / Business / Enterprise 等の全プラン） | 無料〜（共有機能は Business 以上） | プロジェクト内のファイル参照 | チームでプロンプト + 資料を共有 |
+| [**Gemini Gems**](https://workspace.google.com/blog/product-announcements/new-gemini-gems-deeper-knowledge-and-business-context)（Google Workspace） | Workspace 契約 | Workspace の Drive 内資料を参照（最大 10 ファイル） | Drive 中心の運用 |
+| **法人向け RAG 基盤**（自前構築 / SaaS） | 高（数十万〜） | 完全な自社管理 | 法人全体の知識統合（中長期） |
 
 > **小さく始めるなら NotebookLM 一択。** 1 施設分のマニュアル・事例集なら無料プランで十分始められます。**個人情報の取り扱い面では、Google Workspace 法人契約版** が安心です（→ [トピック⑧](#)）。
 
@@ -110,7 +110,7 @@ import Steps from '../../components/Steps.astro';
   steps={[
     { title: '集める資料を決める', description: '施設内マニュアル、業務手順書、過去事例集（書籍含む）、Q&A 集、関連法令 PDF、自治体通知などをリストアップします。' },
     { title: '個人情報をマスクする', description: '過去事例の利用者名・住所・特定可能情報を「A さん」「B 区」のように一括置換。マスク済み版を別途保存しておきます。' },
-    { title: 'NotebookLM にノートブックを作る', description: 'notebooklm.google.com で「施設ナレッジベース」というノートブックを作成 → マスク済み資料をアップロード。' },
+    { title: 'NotebookLM にノートブックを作る', description: 'https://notebooklm.google.com/ で「施設ナレッジベース」というノートブックを作成 → マスク済み資料をアップロード。' },
     { title: '上のプロンプトで運用テスト', description: 'プロンプト ①〜③ を実際に試し、出典が正しく引かれるか、ハルシネーションがないかを職員で確認します。' },
     { title: '更新のリズムを決める', description: '改正・新規事例が出たら追加するルール、半年に 1 回の棚卸し、担当者を決めて運用を継続します。' },
   ]}
