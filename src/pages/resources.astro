@@ -28,8 +28,8 @@ const sections: ResourceSection[] = [
       },
       {
         title: '個人情報保護法（e-Gov 法令検索）',
-        url: 'https://elaws.e-gov.go.jp/document?lawid=415AC0000000057',
-        note: '要配慮個人情報・委託など中心条文',
+        url: 'https://laws.e-gov.go.jp/law/415AC0000000057',
+        note: '要配慮個人情報（第2条3項）・委託先の監督（第25条）など。2026年7月に改正法が公布されたが、2026年8月時点で主要部分は未施行',
       },
       {
         title: 'ISMAP 政府情報システムのためのセキュリティ評価制度',
@@ -69,13 +69,13 @@ const sections: ResourceSection[] = [
         note: '法人データは学習対象外（デフォルト）',
       },
       {
-        title: 'NotebookLM',
-        url: 'https://notebooklm.google.com/',
-        note: '個人版・出典付き回答。法令検索・施設知識基盤に',
+        title: 'Gemini Notebook（旧NotebookLM）',
+        url: 'https://notebook.google.com/',
+        note: '2026年7月にNotebookLMから改称。個人版・出典付き回答。法令検索・施設知識基盤に',
       },
       {
-        title: 'NotebookLM Enterprise（Google Cloud）',
-        url: 'https://cloud.google.com/products/agent-builder',
+        title: 'Gemini Notebook Enterprise（Google Cloud、旧NotebookLM Enterprise）',
+        url: 'https://cloud.google.com/resources/notebooklm-enterprise',
         note: 'ISMAP 本登録済。政府・自治体・関連団体の調達対応',
       },
       {
@@ -92,22 +92,22 @@ const sections: ResourceSection[] = [
     links: [
       {
         title: 'Notta',
-        url: 'https://www.notta.ai/ja',
-        note: '日本語精度・話者識別。法人版を推奨',
+        url: 'https://www.notta.ai/business',
+        note: '日本語精度・話者識別。法人向け上位プランで「AI学習に使わない」設定がデフォルト',
       },
       {
-        title: 'CLOVA Note（LINE WORKS）',
-        url: 'https://clovanote.line.me/',
-        note: '日本語特化、要約機能内蔵',
+        title: 'LINE WORKS AiNote（旧CLOVA Note）',
+        url: 'https://line-works.com/ainote/',
+        note: '日本語特化、要約機能内蔵。旧CLOVA Noteβ版は2025年7月31日終了',
       },
       {
         title: 'Plaud Note',
-        url: 'https://www.plaud.ai/',
-        note: 'IC レコーダー型、録音→自動連携',
+        url: 'https://jp.plaud.ai/',
+        note: 'IC レコーダー型、録音→自動連携。後継のPlaud Note Pro・NotePin Sも展開中',
       },
       {
         title: 'ミルモレコーダー（ウェルモ）',
-        url: 'https://welmo.co.jp/service/mirumo-recorder/',
+        url: 'https://lp.recorder.milmo.jp/',
         note: '福祉・介護業界特化。SOAP・F-SOAIP テンプレート',
       },
     ],
@@ -120,17 +120,22 @@ const sections: ResourceSection[] = [
       {
         title: '千葉県「いつでも福祉相談サポット」',
         url: 'https://www.pref.chiba.lg.jp/kenshidou/types/welfarechatbot.html',
-        note: '生成AI チャットボット（Web/LINE、24時間）',
+        note: '生成AI チャットボット（24時間）。2026年6月時点でLINE版は不具合のためWeb版中心の運用',
       },
       {
-        title: '厚生労働省「2040 年に向けたサービス提供体制等のあり方に関する中間とりまとめ」',
-        url: 'https://www.mhlw.go.jp/stf/newpage_53006.html',
-        note: 'ケアプラン・議事録への生成 AI 活用が明記',
+        title: '茨城県「福祉相談業務における生成AIの活用」',
+        url: 'https://www.pref.ibaraki.jp/hokenfukushi/fukushi/hogo/kurashi/20260303.html',
+        note: '2025年12月開始。生活困窮者等の相談業務に生成AIを導入した県福祉事務所の事例',
       },
       {
-        title: '宮城県「生成 AI で業務効率化」NotebookLM 活用事例',
+        title: '厚生労働省「2040 年に向けたサービス提供体制等のあり方に関するとりまとめ」',
+        url: 'https://www.mhlw.go.jp/stf/newpage_60080.html',
+        note: '2025年7月25日公表。計画書・議事録への生成AI活用に言及（ケアプランは検討段階）',
+      },
+      {
+        title: '宮城県「生成 AI で業務効率化」Gemini Notebook 活用事例',
         url: 'https://www.pref.miyagi.jp/documents/41848/2511_45.pdf',
-        note: '自治体側の運用知見',
+        note: '県立学校教員向け情報教育通信（教育委員会）。福祉分野の事例ではない点に留意',
       },
     ],
   },
@@ -140,14 +145,19 @@ const sections: ResourceSection[] = [
     description: '時間があるときに目を通せる素材',
     links: [
       {
-        title: 'デジタル庁「テキスト生成 AI 利活用におけるリスクへの対策ガイドブック」',
-        url: 'https://www.digital.go.jp/resources/govai-guidebook',
-        note: '行政側のリスク対策の考え方',
+        title: 'デジタル庁「行政の進化と革新のための生成AIの調達・利活用に係るガイドライン」（DS-920 2.0版）',
+        url: 'https://www.digital.go.jp/assets/contents/node/information/field_ref_resources/decb64eb-f26e-41cb-8d37-f3dd173108b8/59054b35/20260612_resources_standard_guidelines_guideline_01.pdf',
+        note: '2026年6月12日公表、2026年9月1日適用開始。行政側のリスク対策・調達の考え方',
       },
       {
-        title: 'IPA「ChatGPT 等の生成 AI に関する技術解説」',
-        url: 'https://www.ipa.go.jp/security/vuln/index.html',
-        note: '技術的なセキュリティ視点',
+        title: 'デジタル庁「テキスト生成AI利活用におけるリスクへの対策ガイドブック」（α版）',
+        url: 'https://www.digital.go.jp/resources/generalitve-ai-guidebook',
+        note: '2024年5月公開・2025年6月最終更新。個別リスクとその対策の具体例',
+      },
+      {
+        title: 'IPA「AI利用者のためのセキュリティ豆知識」',
+        url: 'https://www.ipa.go.jp/digital/ai/security/ai_security_tips.html',
+        note: '2026年4月公開。専門知識を問わないAI利用者・マネージャ向けの社内研修教材',
       },
     ],
   },
@@ -169,7 +179,7 @@ const sections: ResourceSection[] = [
     <div class="mb-8 rounded-xl border-l-4 border-warn bg-warn-soft p-4 text-sm leading-relaxed text-ink-1">
       <p class="m-0">
         <strong>⚠ 注意：</strong>
-        外部リンクは2026年6月時点の公開URLです。リンク切れ・サービス停止の可能性があります。
+        外部リンクは2026年8月時点の公開URLです。リンク切れ・サービス停止の可能性があります。
         AI サービスの料金・仕様は変動するため、契約前に必ず最新の公式情報をご確認ください。
       </p>
     </div>

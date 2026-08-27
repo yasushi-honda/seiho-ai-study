@@ -16,7 +16,7 @@ import Steps from '../../components/Steps.astro';
 ## このトピックでわかること
 
 - 施設の **暗黙知** を、新任職員でも引き出せる検索基盤に変える方法
-- **NotebookLM / ChatGPT Projects / Gemini Gem / 法人検索基盤** の選び方
+- **Gemini Notebook（旧NotebookLM） / ChatGPT Projects / Gemini Gem / 法人検索基盤** の選び方
 - **個人情報を含む過去事例** を扱うときの匿名化ルール
 - 「**ベテランが辞めても残る知識**」の作り方
 
@@ -28,7 +28,7 @@ import Steps from '../../components/Steps.astro';
 - 「この申請、手順書だとここに書いてあるけど、実際は別の窓口で…」
 - 「過去の困難事例集の◯◯ページに、参考になる対応例があった」
 
-これらを AI が **「アップした資料の範囲で」** 即答できる仕組みを **「ナレッジベース」** と呼びます。トピック⑤の法令検索と同じ NotebookLM の仕組みを、**施設の内部資料に適用** したものです。
+これらを AI が **「アップした資料の範囲で」** 即答できる仕組みを **「ナレッジベース」** と呼びます。トピック⑤の法令検索と同じ Gemini Notebook（旧NotebookLM）の仕組みを、**施設の内部資料に適用** したものです。
 
 > 「ベテラン職員の引き出し」を **施設の共有資産** に変える試みです。3 年後の新人が、ベテラン在籍時と同じスピードで判断できるようになります。
 
@@ -36,12 +36,12 @@ import Steps from '../../components/Steps.astro';
 
 | 選択肢 | コスト | データ管理 | 向いている用途 |
 |---|---|---|---|
-| [**NotebookLM**](https://notebooklm.google.com/)（個人 / [NotebookLM Enterprise](https://cloud.google.com/resources/notebooklm-enterprise)） | 無料〜（法人プラン推奨） | アップ資料のみ参照、学習に使われない | **施設内マニュアル・事例集の検索** |
-| [**ChatGPT Projects**](https://help.openai.com/en/articles/10169521-projects-in-chatgpt)（Free / Business / Enterprise 等の全プラン） | 無料〜（共有機能は Business 以上） | プロジェクト内のファイル参照 | チームでプロンプト + 資料を共有 |
-| [**Gemini Gems**](https://workspace.google.com/blog/product-announcements/new-gemini-gems-deeper-knowledge-and-business-context)（Google Workspace） | Workspace 契約 | Workspace の Drive 内資料を参照（最大 10 ファイル） | Drive 中心の運用 |
+| [**Gemini Notebook**（旧NotebookLM）](https://notebook.google.com/)（個人 / [Gemini Notebook Enterprise](https://cloud.google.com/resources/notebooklm-enterprise)） | 無料〜（法人プラン推奨） | アップ資料のみ参照、学習に使われない（フィードバック送信時を除く） | **施設内マニュアル・事例集の検索** |
+| [**ChatGPT Projects**](https://help.openai.com/en/articles/10169521-projects-in-chatgpt)（Free 含む全プラン） | 無料〜（プロジェクト共有も 2025 年 10 月以降 Free 含む全プランで利用可） | プロジェクト内のファイル参照 | チームでプロンプト + 資料を共有 |
+| [**Gemini Gems**](https://support.google.com/gemini/answer/15146780?hl=ja)（Google Workspace） | Workspace 契約 | Workspace の Drive 内資料を参照（1 プロンプトあたり添付は最大 10 ファイル） | Drive 中心の運用 |
 | **法人向け RAG 基盤**（自前構築 / SaaS） | 高（数十万〜） | 完全な自社管理 | 法人全体の知識統合（中長期） |
 
-> **小さく始めるなら NotebookLM 一択。** 1 施設分のマニュアル・事例集なら無料プランで十分始められます。**個人情報の取り扱い面では、Google Workspace 法人契約版** が安心です（→ [トピック⑧](#)）。
+> **小さく始めるなら Gemini Notebook 一択。** 1 施設分のマニュアル・事例集なら無料プランで十分始められます。**個人情報の取り扱い面では、Google Workspace 法人契約版** が安心です（→ [トピック⑧](#)）。
 
 ## 使えるプロンプト集
 
@@ -104,13 +104,13 @@ import Steps from '../../components/Steps.astro';
 （ここに、改正情報を貼り付け）`}
 />
 
-## 実践ステップ（NotebookLM での構築）
+## 実践ステップ（Gemini Notebook での構築）
 
 <Steps
   steps={[
     { title: '集める資料を決める', description: '施設内マニュアル、業務手順書、過去事例集（書籍含む）、Q&A 集、関連法令 PDF、自治体通知などをリストアップします。' },
     { title: '個人情報をマスクする', description: '過去事例の利用者名・住所・特定可能情報を「A さん」「B 区」のように一括置換。マスク済み版を別途保存しておきます。' },
-    { title: 'NotebookLM にノートブックを作る', description: 'https://notebooklm.google.com/ で「施設ナレッジベース」というノートブックを作成 → マスク済み資料をアップロード。' },
+    { title: 'Gemini Notebook にノートブックを作る', description: 'https://notebook.google.com/ で「施設ナレッジベース」というノートブックを作成 → マスク済み資料をアップロード。' },
     { title: '上のプロンプトで運用テスト', description: 'プロンプト ①〜③ を実際に試し、出典が正しく引かれるか、ハルシネーションがないかを職員で確認します。' },
     { title: '更新のリズムを決める', description: '改正・新規事例が出たら追加するルール、半年に 1 回の棚卸し、担当者を決めて運用を継続します。' },
   ]}
@@ -127,7 +127,7 @@ import Steps from '../../components/Steps.astro';
 
 <Caution title="個人情報・組織情報の取り扱い" level="warn">
 - ❌ **生のケース記録（氏名・住所等を含む）を絶対にアップしない**
-- ❌ **無料の個人アカウント版を業務利用しない** — Google Workspace 法人契約の NotebookLM を使う（→ [トピック⑧](#)）
+- ❌ **無料の個人アカウント版を業務利用しない** — Google Workspace 法人契約の Gemini Notebook を使う（→ [トピック⑧](#)）
 - ❌ **AI 学習に使われる設定のまま使わない** — 法人プランでも設定確認を
 - ❌ **「うちにしかない情報」（職員氏名・施設運営の内部情報）も同様に扱う**
 </Caution>
@@ -141,7 +141,7 @@ import Steps from '../../components/Steps.astro';
 
 ## このトピックのまとめ
 
-- 施設の暗黙知を **NotebookLM** で共有資産化する
+- 施設の暗黙知を **Gemini Notebook（旧NotebookLM）** で共有資産化する
 - 個人情報マスク・法人契約は **構築の前提条件**
 - **「困った検索ログ」「新任の質問」** を継続的に取り込むと育つ
 - AI は引出しを助けるツール、**最終判断は人間**

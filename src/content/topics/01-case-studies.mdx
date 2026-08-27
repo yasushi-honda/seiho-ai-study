@@ -25,7 +25,9 @@ import PromptCard from '../../components/PromptCard.astro';
 ### A. 住民・利用者向け（外向き）
 
 **🏛 自治体の福祉相談チャットボット**
-[千葉県は 2025 年 2 月 27 日から、福祉分野の総合相談チャットボット「いつでも福祉相談サポット」](https://www.pref.chiba.lg.jp/kenshidou/types/welfarechatbot.html) を Web / LINE で 24 時間 365 日運用しています。NTT 東日本と連携し、生成 AI が相談内容を聞き取り、県や市町村の担当部署・相談支援機関を案内する仕組みです。同様の動きは [東京都八王子市の AI 傾聴窓口「はちココ」（2025 年 2〜4 月に試行運用、都内自治体初）](https://prtimes.jp/main/html/rd/p/000000007.000124477.html) など、他自治体にも広がっています。
+[千葉県は 2025 年 2 月 27 日から、福祉分野の総合相談チャットボット「いつでも福祉相談サポット」](https://www.pref.chiba.lg.jp/kenshidou/types/welfarechatbot.html) を 24 時間 365 日運用しています。NTT 東日本と連携し、生成 AI が相談内容を聞き取り、県や市町村の担当部署・相談支援機関を案内する仕組みです（2026 年 6 月時点で LINE 版は不具合のため Web 版中心の運用に移行）。同様の動きとして [東京都八王子市が AI 傾聴窓口「はちココ」を 2025 年 2〜4 月に試行運用（都内自治体初）](https://prtimes.jp/main/html/rd/p/000000007.000124477.html) しました。試行後の本格運用状況は自治体公式には確認できておらず、出典も事業者側のプレスリリースにとどまる点にご留意ください。
+
+さらに 2025 年 12 月には、[茨城県が生活困窮者等に関する相談業務へ生成 AI を導入](https://www.pref.ibaraki.jp/hokenfukushi/fukushi/hogo/kurashi/20260303.html)。県内 4 か所の福祉事務所で、汎用クラウド生成 AI とタブレット端末を使い「相談の質向上」「職員による迅速で的確な対応」を目指す取り組みが始まっています。生活保護・生活困窮の相談業務そのものへの導入例として、今回の研修に最も近い事例です。
 
 **📞 多言語対応の窓口支援**
 外国籍の利用者対応で、生成 AI による多言語の説明文ドラフトを使う自治体・NPO が増えています。「やさしい日本語」への自動変換も、現場で十分使えるレベルになっています。
@@ -33,11 +35,11 @@ import PromptCard from '../../components/PromptCard.astro';
 ### B. 職員・支援者向け（内向き）
 
 **📝 ケアプラン・議事録のドラフト作成**
-[厚生労働省「2040 年に向けたサービス提供体制等のあり方に関する中間とりまとめ」（2025 年 4 月 10 日公表）](https://www.mhlw.go.jp/stf/newpage_56897.html) でも、**ケアプラン原案やサービス担当者会議の議事録作成に生成 AI を活用することで業務効率化につながる**ことが示されました。
+[厚生労働省「2040 年に向けたサービス提供体制等のあり方に関するとりまとめ」（2025 年 4 月の中間とりまとめを経て、2025 年 7 月 25 日に公表）](https://www.mhlw.go.jp/stf/newpage_60080.html) でも、「介護事業者において様々作成する文書、例えば**計画書やサービス担当者会議等の議事録を生成 AI の技術を活用して、その原案を作成することも業務効率化に資する**」と明記されました（ただし「AI の信頼性やセキュリティ等の問題があるが」という留保付き）。ケアプラン作成への AI 活用自体は「今後、どのように現場に組み込むか検討が必要」という段階です。
 
 **🎙 音声記録の文字起こし＆要約**
-- 介護・福祉特化の議事録 AI（[ミルモレコーダー](https://welmo.co.jp/news/news-20241126/)（ウェルモ）等：SOAP・F-SOAIP テンプレート搭載）
-- 汎用議事録 AI（[Notta](https://www.notta.ai/jp/)、[LINE WORKS AiNote（旧 CLOVA Note）](https://line-works.com/services/ainote/)、[Plaud Note](https://jp.plaud.ai/)、[Rimo Voice](https://rimo.app/about/voice) 等）
+- 介護・福祉特化の議事録 AI（[ミルモレコーダー](https://lp.recorder.milmo.jp/)（ウェルモ）等：SOAP・F-SOAIP テンプレート搭載）
+- 汎用議事録 AI（[Notta](https://www.notta.ai/business)、[LINE WORKS AiNote（旧 CLOVA Note）](https://line-works.com/ainote/)、[Plaud Note](https://jp.plaud.ai/)、[Rimo Voice](https://rimo.app/) 等）
 
 ケースカンファレンス・支援会議の **議事録作成 2 時間が 20 分** になる、というのは多くの現場で実感されている数字です（→ [トピック③ 音声から議事録を作る](#) で詳しく扱います）。
 
@@ -50,7 +52,7 @@ import PromptCard from '../../components/PromptCard.astro';
 複雑な制度改正・加算要件を AI に読み込ませ、「うちの施設に関係するのはどこか」を要約させる用途。**判断は必ず人間** が行う前提で、**情報収集の時間を 1/5 に圧縮** する使い方として広がっています。
 
 **💴 非営利向けの費用支援**
-2026 年に入って、[Claude（Anthropic）](https://www.anthropic.com/news/claude-for-nonprofits) や [Gemini / Google Workspace for Nonprofits](https://www.google.com/nonprofits/) が非営利団体向けに**最大 75% 程度の割引プログラム**を提供しているほか、[OpenAI も ChatGPT Business（20%）・Enterprise（25%）の非営利割引](https://openai.com/chatgpt/pricing/) を用意するなど、AI 活用を後押しする動きが広がっています。**「コストの壁」が下がってきている** のがこの 1 年の大きな変化です（適用には各社の非営利認定要件を満たす必要があり、日本の社会福祉法人が直接適用できるかは個別確認が必要）。
+2026 年に入って、[Claude（Anthropic）](https://www.anthropic.com/news/claude-for-nonprofits) が Team プラン（最低 2 席・月額 $8/ユーザー）・Enterprise プラン最大 75% の非営利割引を提供しているほか、[OpenAI も非営利団体向けに ChatGPT Business Standard（年払 $8/月・月払 $10/月）や Enterprise（最大 75% 割引）](https://help.openai.com/en/articles/9359041-openai-for-nonprofits) を用意するなど、AI 活用を後押しする動きが広がっています。**「コストの壁」が下がってきている** のがこの 1 年の大きな変化です（適用は各社の提携認証機関 **Goodstack** による審査が必要で、日本の社会福祉法人が該当するかは個別確認が必要）。[Google for Nonprofits](https://www.google.com/nonprofits/) は**市町村・都道府県・厚生労働省のいずれかから認可を受けた社会福祉法人を対象団体として公式に明記**しており、Gemini や Gemini Notebook を含む Google の AI ツールが利用対象です。
 
 ## 大阪市生活保護施設連盟の現場で、当てはめるなら
 
