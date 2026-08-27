@@ -38,7 +38,7 @@ export const TIMETABLE: TimetableSlot[] = [
   {
     time: '15:50',
     title: 'Part 3：法令・事例の検索',
-    description: 'NotebookLM / RAG で「知の即時検索」',
+    description: 'Gemini Notebook（旧NotebookLM） / RAG で「知の即時検索」',
   },
   {
     time: '16:10',
