@@ -29,7 +29,7 @@ import Steps from '../../components/Steps.astro';
 |---|---|---|
 | 録音 | IC レコーダー / スマホ | 会議時間どおり |
 | 文字起こし | 音声 AI（Notta / LINE WORKS AiNote 等） | 録音の 0.5〜1 倍 |
-| 整形・要約 | テキスト AI（ChatGPT / Gemini） | 1〜3 分 |
+| 整形・要約 | テキスト AI（Gemini） | 1〜3 分 |
 | 人間チェック | 職員 | 10〜15 分 |
 
 **90 分の会議の議事録が、合計 30〜40 分で仕上がる** イメージです。
@@ -130,7 +130,7 @@ import Steps from '../../components/Steps.astro';
     { title: '録音前に同意を取る', description: '会議冒頭で「議事録作成のため録音します。文字起こし後の音声は削除します」と明示し、参加者の同意を取ります。' },
     { title: '録音する', description: 'IC レコーダー、スマホ、Plaud Note などで録音。会議室では卓上マイクが効果的です。' },
     { title: '文字起こしツールで処理', description: 'Notta / LINE WORKS AiNote などにアップロード。終了通知が来るまで他の業務を進められます。' },
-    { title: '個人情報をマスクしてから AI へ', description: '利用者名・住所・整理番号などは「A さん」「B 区」のように置換してから、ChatGPT / Gemini に投入します。' },
+    { title: '個人情報をマスクしてから AI へ', description: '利用者名・住所・整理番号などは「A さん」「B 区」のように置換してから、Gemini に投入します。' },
     { title: '人間が最終確認', description: '固有名詞・数字・決定事項の文言は必ず原文と照合します。録音は議事録確定後に削除（または規程に従い保管）。' },
   ]}
 />
