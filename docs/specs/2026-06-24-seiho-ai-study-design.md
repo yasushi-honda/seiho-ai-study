@@ -37,8 +37,8 @@
 | トップページ | ✓ | ヒーロー、タイムテーブル、9トピックカード、QRコード |
 | 9トピック詳細ページ | ✓ | 各トピック独立ページ、章立て構成 |
 | プロンプトコピー機能 | ✓ | クリップボードAPIでワンタップコピー、トースト通知 |
-| Gemini遷移ボタン（主） | ✓ | コピー + `gemini.google.com/app`遷移 + 手動ペースト案内。PromptCard内で主ボタン（accent-1・左）表示（2026-08-30〜） |
-| ChatGPT遷移ボタン（副・参考） | ✓ | コピー + `chatgpt.com/?q=`遷移。PromptCard内で副ボタン（ink-1・右）表示（2026-08-30〜） |
+| Gemini遷移ボタン（主） | ✓ | コピー + `gemini.google.com/app`遷移 + 手動ペースト案内。PromptCard内で主ボタン（accent-1、コピーの次＝2番目）表示（2026-08-30〜） |
+| ChatGPT遷移ボタン（副・参考） | ✓ | コピー + `chatgpt.com/?q=`遷移。PromptCard内で副ボタン（ink-1、3番目）表示（2026-08-30〜） |
 | QRコード表示 | ✓ | トップページに自サイトURLのQR |
 | タイムテーブル | ✓ | トップに当日進行表 |
 | FAQセクション | ✓ | 独立ページ |
@@ -319,7 +319,7 @@ export async function copyAndOpen(
 - Geminiはトップを開き、クリップボードからの手動ペーストを案内
 - 実装後 `/verify` で iOS Safari / Android Chrome 双方で実機確認
 
-**2026-08-30 追記（方針転換）**: 主催者の意向により「主にGoogleのAIを使う研修」に統一。PromptCard.astroのボタン表示順・配色をGemini主（accent-1・左）／ChatGPT副（ink-1・右、参考扱い）に入替えた（`src/components/PromptCard.astro`）。上表のURL仕様・prefill可否自体（技術的事実）は変更なし。`copyAndOpen.ts`のロジック・型定義（`AIService`）も無改修。Geminiがprefill非対応のまま主導線になったため、参加者向けFAQ（`src/pages/faq.astro`）の操作説明も「コピー→開く→長押しペースト」の実態に合わせて更新済み。
+**2026-08-30 追記（方針転換）**: 主催者の意向により「主にGoogleのAIを使う研修」に統一。PromptCard.astroのボタン表示順・配色をGemini主（accent-1、コピーの次＝2番目）／ChatGPT副（ink-1、3番目、参考扱い）に入替えた（`src/components/PromptCard.astro`）。上表のURL仕様・prefill可否自体（技術的事実）は変更なし。`copyAndOpen.ts`のロジック・型定義（`AIService`）も無改修。Geminiがprefill非対応のまま主導線になったため、参加者向けFAQ（`src/pages/faq.astro`）の操作説明も「コピー→開く→長押しペースト」の実態に合わせて更新済み。
 
 ### 5.4 PWA仕様
 
