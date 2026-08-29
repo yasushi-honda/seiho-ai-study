@@ -17,7 +17,7 @@ export const TIMETABLE: TimetableSlot[] = [
   {
     time: '14:00',
     title: 'オープニング',
-    description: '研修のねらい・参加者アンケート',
+    description: '研修のねらい',
   },
   {
     time: '14:15',
