@@ -4,7 +4,7 @@ title: "データ学習オフ設定と法人契約"
 category: "Settings"
 icon: "⚙️"
 summary: "無料・有料・法人プランの違いと選び方"
-lead: "ChatGPT / Gemini の「データ学習オフ」設定の場所と注意点。個人プランと法人プラン（Team / Enterprise / Gemini Enterprise）の違いも、現場目線で整理します。"
+lead: "Gemini の「データ学習オフ」設定の場所と注意点。個人プランと法人プラン（Google Workspace / Gemini Enterprise）の違いも、現場目線で整理します。"
 estimatedMinutes: 20
 draft: false
 ---
@@ -15,7 +15,7 @@ import Steps from '../../components/Steps.astro';
 ## このトピックでわかること
 
 - 主要 AI サービスの **「学習に使われる / 使われない」の現状** （2026 年 8 月時点）
-- **個人プランで学習オフ** にする手順（ChatGPT / Gemini / Claude）
+- **個人プランで学習オフ** にする手順（Gemini。他社サービスは参考として併記）
 - **法人プラン** が「学習対象外」だけでなく担保する価値
 - **ISMAP** が福祉施設の意思決定にどう関わるか
 - 施設規模・用途別の **プラン選定フロー**
@@ -30,26 +30,15 @@ import Steps from '../../components/Steps.astro';
 
 | サービス | 個人/無料 | 個人/有料 | 法人プラン |
 |---|---|---|---|
-| [**ChatGPT**](https://chatgpt.com/ja-JP/pricing/) | デフォルト**学習対象**、[設定でオフ可](https://help.openai.com/en/articles/7730893-data-controls-faq) | 同左（Plus も同条件） | [**Business / Enterprise はデフォルト学習対象外**](https://openai.com/enterprise-privacy/) |
 | [**Gemini**](https://gemini.google.com)（個人アプリ） | デフォルト**学習対象**、Activity オフで対象外 | 同左 | [**Google Workspace with Gemini はデフォルト学習対象外**](https://knowledge.workspace.google.com/admin/gemini/generative-ai-in-google-workspace-privacy-hub?hl=ja) |
-| [**Claude**](https://claude.ai)（claude.ai） | [**個人プランは「オプトアウト方式」**](https://privacy.claude.com/en/articles/10023580-is-my-data-used-for-model-training)（オフにしない限り学習対象、保持 5 年） | 同左 | **Team / Enterprise はデフォルト学習対象外** |
 | [**Gemini Notebook**（旧NotebookLM）](https://notebook.google.com/) | アップ資料は学習に使われない（フィードバック送信時を除く） | 同左 | [**Gemini Notebook Enterprise**](https://cloud.google.com/resources/notebooklm-enterprise)（Google Cloud）あり |
 | **[Notta](https://www.notta.ai/business) / [LINE WORKS AiNote](https://line-works.com/ainote/) 等の文字起こし** | サービスごとに異なる | 法人プランを確認 | **法人版を選ぶこと推奨** |
+| （参考）[**ChatGPT**](https://chatgpt.com/ja-JP/pricing/) | デフォルト**学習対象**、[設定でオフ可](https://help.openai.com/en/articles/7730893-data-controls-faq) | 同左（Plus も同条件） | [**Business / Enterprise はデフォルト学習対象外**](https://openai.com/enterprise-privacy/) |
+| （参考）[**Claude**](https://claude.ai)（claude.ai） | [**個人プランは「オプトアウト方式」**](https://privacy.claude.com/en/articles/10023580-is-my-data-used-for-model-training)（オフにしない限り学習対象、保持 5 年） | 同左 | **Team / Enterprise はデフォルト学習対象外** |
 
 > **重要**：上記は **2026 年 8 月時点** の整理です。各社の規約は頻繁に更新されるため、契約前に **公式ヘルプ** を必ず確認してください。特に Claude は 2025 年 8 月に個人プランの既定方針が「学習に使わない」から「オプトアウト（オフにしない限り使う）」へ転換した経緯があり、**このような方針転換は今後も起こり得ます**。
 
 ## 個人プランで「学習オフ」にする手順
-
-### ChatGPT（個人 / Plus）
-
-<Steps
-  steps={[
-    { title: 'プロフィールアイコン → 設定', description: '画面右上のプロフィールアイコンから「Settings」を開く。' },
-    { title: 'Data Controls を選択', description: '左メニューから「Data Controls」（データ管理）を選択。' },
-    { title: '「Improve the model for everyone」をオフ', description: 'モデル改善（学習）への利用を無効化するスイッチをオフに切り替える。' },
-    { title: 'チャット履歴の保持期間も確認', description: '同画面で「Chat history & training」も合わせて確認。学習に使われなくても、履歴自体は OpenAI に残る点に注意。' },
-  ]}
-/>
 
 ### Google Gemini（個人アプリ）
 
@@ -62,19 +51,16 @@ import Steps from '../../components/Steps.astro';
   ]}
 />
 
-### Claude（個人アプリ / claude.ai）
+> **ただし、**「学習に使われない ≠ サーバーに送信されない」 です。送信先・保存期間・第三者開示の条件は **公式ヘルプ・プライバシーポリシーを確認** してください。
 
-[Anthropic の個人プラン（Free / Pro / Max）は **オプトアウト方式**](https://privacy.claude.com/en/articles/10023580-is-my-data-used-for-model-training)です。2025 年 8 月の規約変更により、**オフにしない限り会話が今後のモデル学習に使われ、データ保持期間も 5 年に延びます**（オフの場合は従来どおり 30 日）。Team / Enterprise プランは引き続き **デフォルトで学習対象外**です。
+### 他のAIサービスをお使いの場合（参考）
 
-<Steps
-  steps={[
-    { title: '設定 → プライバシーを開く', description: 'ユーザー名メニューから「Settings」→「Privacy」を選択。' },
-    { title: '「Help improve our AI models」をオフ', description: 'このトグルをオフにすると、以降の新しいチャット・コーディングセッションはモデル学習に使われなくなります（既に学習に使われたデータは除く）。' },
-    { title: '保持期間の変化を理解する', description: 'オフにするとデータ保持期間は 30 日に短縮されます。オンのままだと 5 年間保持される点に注意してください。' },
-  ]}
-/>
+本研修は Gemini を中心に進めますが、既に ChatGPT や Claude をお使いの方向けに要点だけ簡潔にまとめます。
 
-> **ただし、**「学習に使われない ≠ サーバーに送信されない」 です。送信先・保存期間・第三者開示の条件は **各社の規約とプライバシーポリシーを確認** してください。また、安全性レビューでフラグされた会話は、この設定に関わらず学習に使われる例外があります。
+- **ChatGPT**：Settings → Data Controls → 「Improve the model for everyone」をオフにすると、以降の会話が学習に使われなくなります（Business / Enterprise はデフォルトで学習対象外）
+- **Claude**：2025 年 8 月の規約変更により、個人プラン（Free / Pro / Max）は**オプトアウト方式**（オフにしない限り学習対象、保持 5 年／オフなら 30 日）に変わりました。Settings → Privacy → 「Help improve our AI models」で変更できます（Team / Enterprise はデフォルトで学習対象外）
+
+いずれも、業務利用・個人情報を扱う場面では **法人契約への切り替えを推奨**します（詳細は各社公式ヘルプを確認してください）。
 
 ## 法人プランが担保する「学習オフ」以外の価値
 
@@ -92,15 +78,14 @@ import Steps from '../../components/Steps.astro';
 
 | プラン | 料金感 | 規模 | 強み |
 |---|---|---|---|
-| [**ChatGPT Go**](https://chatgpt.com/ja-JP/pricing/) | ¥1,400 / 月（日本公式価格） | 個人〜小規模 | 2026 年 1 月導入の入門プラン。**広告が表示される場合がある**点に注意 |
-| [**ChatGPT Business**](https://chatgpt.com/ja-JP/pricing/)（旧 Team） | 年払 ¥3,050 / 月、月払 ¥3,850 / 月 | 2〜200 名 | 小規模から始められる、UI 平易 |
-| [**ChatGPT Enterprise**](https://openai.com/chatgpt-enterprise/) | 非公表・要見積 | 大規模 | SSO/SCIM/監査ログ、エンタープライズ要件 |
 | [**Google Workspace + Gemini**](https://workspace.google.com/pricing.html) | プランにより異なる | 全規模 | 既に Workspace 利用ならアドオン感覚 |
 | [**Gemini Enterprise**](https://cloud.google.com/gemini-enterprise)（Google Cloud） | 個別見積 | 中〜大規模 | **ISMAP 本登録済（2026 年 4 月 28 日）**、政府・自治体の調達対応 |
 | [**Gemini Notebook Enterprise**](https://cloud.google.com/resources/notebooklm-enterprise)（Google Cloud、旧NotebookLM Enterprise） | 個別見積 | 中〜大規模 | **ISMAP 本登録済（2026 年 4 月 28 日）**、機密文書ナレッジベース |
-| [**Anthropic Claude Team**](https://claude.com/pricing) Standard | 年払 $20 / 月、月払 $25 / 月（日本表示は JCT 込 $22 / $27.50） | **2 席〜** | 文章生成・要約品質が高い |
-| [**Anthropic Claude Team**](https://claude.com/pricing) Premium | 年払 $100 / 月、月払 $125 / 月（日本表示は JCT 込 $110 / $137.50） | 2 席〜 | より大きな利用量上限 |
-| [**Anthropic Claude Enterprise**](https://www.anthropic.com/enterprise) | 個別見積（self-serve は $22/席 + API 従量も選択可） | 中〜大規模 | SSO/SCIM/監査ログ、長文コンテキスト |
+| （参考）[**ChatGPT Go**](https://chatgpt.com/ja-JP/pricing/) | ¥1,400 / 月（日本公式価格） | 個人〜小規模 | 2026 年 1 月導入の入門プラン。**広告が表示される場合がある**点に注意 |
+| （参考）[**ChatGPT Business**](https://chatgpt.com/ja-JP/pricing/)（旧 Team） | 年払 ¥3,050 / 月、月払 ¥3,850 / 月 | 2〜200 名 | 小規模から始められる、UI 平易 |
+| （参考）[**ChatGPT Enterprise**](https://openai.com/chatgpt-enterprise/) | 非公表・要見積 | 大規模 | SSO/SCIM/監査ログ、エンタープライズ要件 |
+| （参考）[**Anthropic Claude Team**](https://claude.com/pricing) Standard/Premium | 年払 $20〜$100 / 月 | **2 席〜** | 文章生成・要約品質が高い |
+| （参考）[**Anthropic Claude Enterprise**](https://www.anthropic.com/enterprise) | 個別見積 | 中〜大規模 | SSO/SCIM/監査ログ、長文コンテキスト |
 
 > **2026 年 4 月 28 日の大きな出来事**：[Google Cloud の **Gemini Enterprise** と **NotebookLM Enterprise**（現・Gemini Notebook Enterprise） が **ISMAP（政府情報システム向けセキュリティ評価制度）に本登録**](https://cloud.google.com/blog/ja/products/gcp/completed-ismap-registration-for-gemini-enterprise-and-notebooklm-enterprise) されました（ブログ本文は登録当時の旧名称「NotebookLM Enterprise」表記のままです）。中央省庁・地方自治体・関連団体が、ISMAP 調達ルールに沿って正式採用できる状態です。
 
@@ -126,7 +111,7 @@ import Steps from '../../components/Steps.astro';
 />
 
 <Caution title="個人アカウント業務利用 = 事実上 NG" level="warn">
-- 個人アカウントの ChatGPT/Gemini を業務利用すると、以下のリスクが発生します：
+- 個人アカウントの Gemini を業務利用すると、以下のリスクが発生します：
   - データ学習オフ設定漏れ
   - **退職者の業務情報持ち出し** が止められない
   - 監査ログがなく、事故時の追跡不可
