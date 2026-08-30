@@ -39,39 +39,46 @@
 
 /* =============================================================
    ベースリセット
+   Tailwindのutilityクラス（@layer utilities）に正しく上書きされるよう
+   @layer baseに入れる。unlayeredのままだとCSS Cascade Layersの仕様上、
+   layer外のルールが常にlayer内のルールより優先されてしまい、
+   例えば a { color: inherit } がリンクの text-accent-1 等の
+   utilityクラスをすべて無効化してしまう（実際に発生していた不具合）。
    ============================================================= */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  -webkit-tap-highlight-color: transparent;
-}
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+  }
 
-html {
-  scroll-behavior: smooth;
-  -webkit-text-size-adjust: 100%;
-}
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
 
-body {
-  margin: 0;
-  background: var(--color-bg);
-  color: var(--color-ink-1);
-  font-family: var(--font-body);
-  font-size: clamp(15px, 0.9vw + 13px, 17px);
-  line-height: 1.75;
-  letter-spacing: 0.01em;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+  body {
+    margin: 0;
+    background: var(--color-bg);
+    color: var(--color-ink-1);
+    font-family: var(--font-body);
+    font-size: clamp(15px, 0.9vw + 13px, 17px);
+    line-height: 1.75;
+    letter-spacing: 0.01em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
 
-button {
-  font-family: inherit;
-  cursor: pointer;
+  button {
+    font-family: inherit;
+    cursor: pointer;
+  }
 }
 
 /* =============================================================
