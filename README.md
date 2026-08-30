@@ -11,7 +11,7 @@
 
 ## 概要
 
-研修当日は参加者がQRコードからアクセスし、講師の進行に合わせて9トピックの解説・プロンプト集・実践手順を手元のスマートフォンで確認します。研修後も同僚や他施設の方への共有資料として機能するよう、PWA対応でホーム画面追加・オフライン閲覧可。
+研修当日は参加者がQRコードからアクセスし、講師の進行に合わせて9トピックの解説・プロンプト集・実践手順を手元のスマートフォンで確認します。研修後も同僚や他施設の方への共有資料として機能します。
 
 ### 主な機能
 
@@ -19,7 +19,6 @@
 - プロンプトのワンタップコピー
 - Geminiへの遷移ボタン（手動ペースト案内付き、主導線）／ChatGPTへの遷移ボタン（参考・副導線）
 - QRコード表示（同僚への共有用）
-- PWAインストール対応（オフライン閲覧可）
 
 ## 技術スタック
 
@@ -27,7 +26,6 @@
 |---|---|
 | 静的サイトジェネレーター | [Astro](https://astro.build) 7.x |
 | CSS | [Tailwind CSS](https://tailwindcss.com) 4.x |
-| PWA | [@vite-pwa/astro](https://vite-pwa-org.netlify.app/frameworks/astro) |
 | MDX | [@astrojs/mdx](https://docs.astro.build/en/guides/integrations-guide/mdx/) |
 | 言語 | TypeScript（strict） |
 | パッケージ管理 | pnpm |
@@ -66,7 +64,7 @@ seiho-ai-study/
 │   ├── specs/             # 設計仕様書
 │   └── adr/               # 設計判断記録
 ├── design-mockups/        # 確定モックアップ（HTML、参照用アーカイブ）
-└── astro.config.mjs       # Astro設定（site/base/PWA/Tailwind/MDX）
+└── astro.config.mjs       # Astro設定（site/base/Tailwind/MDX）
 ```
 
 ## デプロイ

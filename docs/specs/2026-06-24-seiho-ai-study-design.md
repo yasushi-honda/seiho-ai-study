@@ -45,7 +45,7 @@
 | フィードバックフォーム | ✓ | Googleフォームへの外部リンク（フォームURLは別途準備） |
 | 参考リンク集 | ✓ | 公式ドキュメント・他事例・NotebookLM紹介リンク |
 | Credits | ✓ | 免責事項・作成日・参考文献 |
-| PWA対応 | ✓ | manifest.json + Service Worker、ホーム画面追加可、オフライン閲覧可 |
+| PWA対応 | ✗（撤回） | 2026-08-30撤回。理由は5.4節参照 |
 
 ### 2.2 非機能要件
 
@@ -82,7 +82,6 @@
 | CSSフレームワーク | **Tailwind CSS 4** | 設計トークンの一元管理、レスポンシブ実装の確実性 |
 | 言語 | TypeScript | 型安全 |
 | パッケージマネージャ | pnpm | 高速・省ディスク |
-| PWA | @vite-pwa/astro | Service Worker + manifest 自動生成 |
 | QRコード生成 | qrcode（ビルド時生成） | 静的SVG出力でランタイム依存ゼロ |
 | ホスティング | GitHub Pages | publicリポジトリで無料、Actionsで自動デプロイ |
 | デプロイ | GitHub Actions | mainへのpushで自動デプロイ |
@@ -321,7 +320,9 @@ export async function copyAndOpen(
 
 **2026-08-30 追記（方針転換）**: 主催者の意向により「主にGoogleのAIを使う研修」に統一。PromptCard.astroのボタン表示順・配色をGemini主（accent-1、コピーの次＝2番目）／ChatGPT副（ink-1、3番目、参考扱い）に入替えた（`src/components/PromptCard.astro`）。上表のURL仕様・prefill可否自体（技術的事実）は変更なし。`copyAndOpen.ts`のロジック・型定義（`AIService`）も無改修。Geminiがprefill非対応のまま主導線になったため、参加者向けFAQ（`src/pages/faq.astro`）の操作説明も「コピー→開く→長押しペースト」の実態に合わせて更新済み。
 
-### 5.4 PWA仕様
+### 5.4 PWA仕様（2026-08-30 撤回）
+
+**この節の内容は撤回されました。** 一時的な共有レベルの研修教材にオフライン閲覧・ホーム画面インストール機能は過剰と判断し、`@vite-pwa/astro`統合・manifest・Service Workerを全て削除（`src/layouts/Layout.astro`, `astro.config.mjs`）。加えて、研修直前まで頻繁にコンテンツ更新が続く状況では、Service Workerのキャッシュが最新の修正を隠してしまうリスクの方が実害として大きいと判断した。以下は撤回前の仕様として参考用に残す。
 
 **manifest.json**:
 ```json
@@ -370,8 +371,8 @@ export async function copyAndOpen(
 4. ✅ 「Geminiで開く」ボタンで新タブが開き、手動ペースト案内トーストが出る
 5. ✅ QRコードがトップページに表示され、スマホで読み取ると本サイトURLが開ける
 6. ✅ iPhone Safari 16+ / Android Chrome 110+ で全ページの表示・操作に破綻がない
-7. ✅ Lighthouseスコア: Performance 80+, Accessibility 95+, Best Practices 95+, PWA installable
-8. ✅ オフラインでも全ページ閲覧可（PWAインストール後）
+7. ✅ Lighthouseスコア: Performance 80+, Accessibility 95+, Best Practices 95+
+8. ~~オフラインでも全ページ閲覧可（PWAインストール後）~~（2026-08-30 PWA撤回により対象外、5.4節参照）
 9. ✅ タッチターゲット最低44x44px、テキストコントラスト比4.5:1以上
 10. ✅ GitHub Pagesで公開URLが `https://yasushi-honda.github.io/seiho-ai-study/` で動く
 
@@ -389,7 +390,6 @@ export async function copyAndOpen(
 | 表示 | Playwright screenshot 比較（モックアップとの一致確認） |
 | 性能 | Lighthouse CI（毎PR） |
 | アクセシビリティ | axe-core（Playwrightに統合） |
-| PWA | Chrome DevTools Application パネル + 実機オフライン確認 |
 
 ---
 
