@@ -1,0 +1,60 @@
+---
+interface FlowNode {
+  label: string;
+  detail?: string;
+  /** 担当者タグ（例: "人間" / "AI"） */
+  actor?: string;
+}
+
+interface Props {
+  nodes: FlowNode[];
+  /** horizontal: 手順・処理の流れ（既定）。vertical: 階層・所管関係 */
+  direction?: 'horizontal' | 'vertical';
+  /** true の場合、最後のノードから最初のノードへ戻る循環サイクルであることを示す */
+  cycle?: boolean;
+}
+
+const { nodes, direction = 'horizontal', cycle = false } = Astro.props;
+const isVertical = direction === 'vertical';
+---
+
+<div
+  class={`my-4 flex flex-col items-stretch gap-2 ${isVertical ? '' : 'sm:flex-row sm:items-start'}`}
+  role="list"
+>
+  {
+    nodes.map((node, i) => (
+      <>
+        <div
+          role="listitem"
+          class="flex flex-1 flex-col gap-1 rounded-xl border border-border-soft bg-card p-3 shadow-card"
+        >
+          {node.actor && (
+            <span class="font-display self-start rounded-full bg-accent-2-soft px-2 py-0.5 text-xs font-semibold text-accent-2">
+              {node.actor}
+            </span>
+          )}
+          <strong class="font-display text-sm leading-snug text-ink-1">{node.label}</strong>
+          {node.detail && <p class="m-0 text-xs leading-relaxed text-ink-2">{node.detail}</p>}
+        </div>
+        {i < nodes.length - 1 && (
+          <span
+            aria-hidden="true"
+            class={`font-display flex items-center justify-center text-lg text-accent-1 ${
+              isVertical ? '' : 'rotate-90 sm:rotate-0'
+            }`}
+          >
+            {isVertical ? '↓' : '→'}
+          </span>
+        )}
+      </>
+    ))
+  }
+  {
+    cycle && nodes.length > 0 && (
+      <p class="font-display m-0 text-center text-xs text-ink-3">
+        <span aria-hidden="true">↺</span> 最初の「{nodes[0].label}」に戻って繰り返す
+      </p>
+    )
+  }
+</div>

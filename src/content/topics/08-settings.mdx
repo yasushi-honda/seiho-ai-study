@@ -11,6 +11,10 @@ draft: false
 
 import Caution from '../../components/Caution.astro';
 import Steps from '../../components/Steps.astro';
+import BeforeAfter from '../../components/BeforeAfter.astro';
+import FlowDiagram from '../../components/FlowDiagram.astro';
+import DecisionFlow from '../../components/DecisionFlow.astro';
+import ComparisonMatrix from '../../components/ComparisonMatrix.astro';
 
 ## このトピックでわかること
 
@@ -28,15 +32,54 @@ import Steps from '../../components/Steps.astro';
 
 ## 主要 AI サービスの現状（2026 年 8 月）
 
-| サービス | 個人/無料 | 個人/有料 | 法人プラン |
-|---|---|---|---|
-| [**Gemini**](https://gemini.google.com)（個人アプリ） | デフォルト**学習対象**、Activity オフで対象外 | 同左 | [**Google Workspace with Gemini はデフォルト学習対象外**](https://knowledge.workspace.google.com/admin/gemini/generative-ai-in-google-workspace-privacy-hub?hl=ja) |
-| [**Gemini Notebook**（旧NotebookLM）](https://notebook.google.com/) | アップ資料は学習に使われない（フィードバック送信時を除く） | 同左 | [**Gemini Notebook Enterprise**](https://cloud.google.com/resources/notebooklm-enterprise)（Google Cloud）あり |
-| **[Notta](https://www.notta.ai/business) / [LINE WORKS AiNote](https://line-works.com/ainote/) 等の文字起こし** | サービスごとに異なる | 法人プランを確認 | **法人版を選ぶこと推奨** |
-| （参考）[**ChatGPT**](https://chatgpt.com/ja-JP/pricing/) | デフォルト**学習対象**、[設定でオフ可](https://help.openai.com/en/articles/7730893-data-controls-faq) | 同左（Plus も同条件） | [**Business / Enterprise はデフォルト学習対象外**](https://openai.com/enterprise-privacy/) |
-| （参考）[**Claude**](https://claude.ai)（claude.ai） | [**個人プランは「オプトアウト方式」**](https://privacy.claude.com/en/articles/10023580-is-my-data-used-for-model-training)（オフにしない限り学習対象、保持 5 年） | 同左 | **Team / Enterprise はデフォルト学習対象外** |
+<ComparisonMatrix
+  items={[
+    {
+      name: 'Gemini（個人アプリ）',
+      attributes: [
+        { label: '個人/無料・有料', value: 'デフォルト<strong>学習対象</strong>、Activity オフで対象外' },
+        { label: '法人プラン', value: '<a href="https://knowledge.workspace.google.com/admin/gemini/generative-ai-in-google-workspace-privacy-hub?hl=ja">Google Workspace with Gemini はデフォルト学習対象外</a>' },
+      ],
+    },
+    {
+      name: 'Gemini Notebook（旧NotebookLM）',
+      attributes: [
+        { label: '個人/無料・有料', value: 'アップ資料は学習に使われない（フィードバック送信時を除く）' },
+        { label: '法人プラン', value: '<a href="https://cloud.google.com/resources/notebooklm-enterprise">Gemini Notebook Enterprise</a>（Google Cloud）あり' },
+      ],
+    },
+    {
+      name: 'Notta / LINE WORKS AiNote 等の文字起こし',
+      attributes: [
+        { label: '個人/無料・有料', value: 'サービスごとに異なる、法人プランを確認' },
+        { label: '法人プラン', value: '<strong>法人版を選ぶこと推奨</strong>' },
+      ],
+    },
+    {
+      name: '（参考）ChatGPT',
+      attributes: [
+        { label: '個人/無料・有料', value: 'デフォルト<strong>学習対象</strong>、<a href="https://help.openai.com/en/articles/7730893-data-controls-faq">設定でオフ可</a>（Plus も同条件）' },
+        { label: '法人プラン', value: '<a href="https://openai.com/enterprise-privacy/">Business / Enterprise はデフォルト学習対象外</a>' },
+      ],
+    },
+    {
+      name: '（参考）Claude（claude.ai）',
+      attributes: [
+        { label: '個人/無料・有料', value: '<a href="https://privacy.claude.com/en/articles/10023580-is-my-data-used-for-model-training">個人プランは「オプトアウト方式」</a>（オフにしない限り学習対象、保持 5 年）' },
+        { label: '法人プラン', value: '<strong>Team / Enterprise はデフォルト学習対象外</strong>' },
+      ],
+    },
+  ]}
+/>
 
-> **重要**：上記は **2026 年 8 月時点** の整理です。各社の規約は頻繁に更新されるため、契約前に **公式ヘルプ** を必ず確認してください。特に Claude は 2025 年 8 月に個人プランの既定方針が「学習に使わない」から「オプトアウト（オフにしない限り使う）」へ転換した経緯があり、**このような方針転換は今後も起こり得ます**。
+**方針転換は今後も起こり得ます。** 実例として、Claude 個人プランは 2025 年 8 月に既定方針が転換しました：
+
+<BeforeAfter beforeLabel="Claude 個人プラン（〜2025年8月）" afterLabel="Claude 個人プラン（2025年8月〜）">
+  <div slot="before">学習に <strong>使わない</strong> のが既定</div>
+  <div slot="after"><strong>オプトアウト方式</strong>（オフにしない限り学習対象、保持 5 年。オフなら 30 日）</div>
+</BeforeAfter>
+
+> 上記は **2026 年 8 月時点** の整理です。各社の規約は頻繁に更新されるため、契約前に **公式ヘルプ** を必ず確認してください。
 
 ## 個人プランで「学習オフ」にする手順
 
@@ -76,22 +119,95 @@ import Steps from '../../components/Steps.astro';
 
 ## 主要法人プランの選び方（2026 年 8 月時点）
 
-| プラン | 料金感 | 規模 | 強み |
-|---|---|---|---|
-| [**Google Workspace + Gemini**](https://workspace.google.com/pricing.html) | プランにより異なる | 全規模 | 既に Workspace 利用ならアドオン感覚 |
-| [**Gemini Enterprise**](https://cloud.google.com/gemini-enterprise)（Google Cloud） | 個別見積 | 中〜大規模 | **ISMAP 本登録済（2026 年 4 月 28 日）**、政府・自治体の調達対応 |
-| [**Gemini Notebook Enterprise**](https://cloud.google.com/resources/notebooklm-enterprise)（Google Cloud、旧NotebookLM Enterprise） | 個別見積 | 中〜大規模 | **ISMAP 本登録済（2026 年 4 月 28 日）**、機密文書ナレッジベース |
-| （参考）[**ChatGPT Go**](https://chatgpt.com/ja-JP/pricing/) | ¥1,400 / 月（日本公式価格） | 個人〜小規模 | 2026 年 1 月導入の入門プラン。**広告が表示される場合がある**点に注意 |
-| （参考）[**ChatGPT Business**](https://chatgpt.com/ja-JP/pricing/)（旧 Team） | 年払 ¥3,050 / 月、月払 ¥3,850 / 月 | 2〜200 名 | 小規模から始められる、UI 平易 |
-| （参考）[**ChatGPT Enterprise**](https://openai.com/chatgpt-enterprise/) | 非公表・要見積 | 大規模 | SSO/SCIM/監査ログ、エンタープライズ要件 |
-| （参考）[**Anthropic Claude Team**](https://claude.com/pricing) Standard/Premium | 年払 $20〜$100 / 月 | **2 席〜** | 文章生成・要約品質が高い |
-| （参考）[**Anthropic Claude Enterprise**](https://www.anthropic.com/enterprise) | 個別見積 | 中〜大規模 | SSO/SCIM/監査ログ、長文コンテキスト |
+<ComparisonMatrix
+  items={[
+    {
+      name: 'Google Workspace + Gemini',
+      attributes: [
+        { label: '料金感', value: 'プランにより異なる' },
+        { label: '規模', value: '全規模' },
+        { label: '強み', value: '既に <a href="https://workspace.google.com/pricing.html">Workspace</a> 利用ならアドオン感覚' },
+      ],
+    },
+    {
+      name: 'Gemini Enterprise（Google Cloud）',
+      highlight: true,
+      highlightLabel: 'ISMAP登録済',
+      attributes: [
+        { label: '料金感', value: '個別見積' },
+        { label: '規模', value: '中〜大規模' },
+        { label: '強み', value: '<a href="https://cloud.google.com/gemini-enterprise">公式</a>：<strong>ISMAP 本登録済（2026年4月28日）</strong>、政府・自治体の調達対応' },
+      ],
+    },
+    {
+      name: 'Gemini Notebook Enterprise（旧NotebookLM Enterprise）',
+      highlight: true,
+      highlightLabel: 'ISMAP登録済',
+      attributes: [
+        { label: '料金感', value: '個別見積' },
+        { label: '規模', value: '中〜大規模' },
+        { label: '強み', value: '<a href="https://cloud.google.com/resources/notebooklm-enterprise">公式</a>：<strong>ISMAP 本登録済（2026年4月28日）</strong>、機密文書ナレッジベース' },
+      ],
+    },
+    {
+      name: '（参考）ChatGPT Go',
+      attributes: [
+        { label: '料金感', value: '<a href="https://chatgpt.com/ja-JP/pricing/">¥1,400 / 月</a>（日本公式価格）' },
+        { label: '規模', value: '個人〜小規模' },
+        { label: '強み', value: '2026年1月導入の入門プラン。<strong>広告が表示される場合がある</strong>点に注意' },
+      ],
+    },
+    {
+      name: '（参考）ChatGPT Business（旧Team）',
+      attributes: [
+        { label: '料金感', value: '<a href="https://chatgpt.com/ja-JP/pricing/">年払¥3,050 / 月、月払¥3,850 / 月</a>' },
+        { label: '規模', value: '2〜200名' },
+        { label: '強み', value: '小規模から始められる、UI平易' },
+      ],
+    },
+    {
+      name: '（参考）ChatGPT Enterprise',
+      attributes: [
+        { label: '料金感', value: '<a href="https://openai.com/chatgpt-enterprise/">非公表・要見積</a>' },
+        { label: '規模', value: '大規模' },
+        { label: '強み', value: 'SSO/SCIM/監査ログ、エンタープライズ要件' },
+      ],
+    },
+    {
+      name: '（参考）Anthropic Claude Team Standard/Premium',
+      attributes: [
+        { label: '料金感', value: '<a href="https://claude.com/pricing">年払$20〜$100 / 月</a>' },
+        { label: '規模', value: '<strong>2席〜</strong>' },
+        { label: '強み', value: '文章生成・要約品質が高い' },
+      ],
+    },
+    {
+      name: '（参考）Anthropic Claude Enterprise',
+      attributes: [
+        { label: '料金感', value: '<a href="https://www.anthropic.com/enterprise">個別見積</a>' },
+        { label: '規模', value: '中〜大規模' },
+        { label: '強み', value: 'SSO/SCIM/監査ログ、長文コンテキスト' },
+      ],
+    },
+  ]}
+/>
 
-> **2026 年 4 月 28 日の大きな出来事**：[Google Cloud の **Gemini Enterprise** と **NotebookLM Enterprise**（現・Gemini Notebook Enterprise） が **ISMAP（政府情報システム向けセキュリティ評価制度）に本登録**](https://cloud.google.com/blog/ja/products/gcp/completed-ismap-registration-for-gemini-enterprise-and-notebooklm-enterprise) されました（ブログ本文は登録当時の旧名称「NotebookLM Enterprise」表記のままです）。中央省庁・地方自治体・関連団体が、ISMAP 調達ルールに沿って正式採用できる状態です。
+> **2026 年 4 月 28 日**：[Gemini Enterprise と Gemini Notebook Enterprise（当時の名称：NotebookLM Enterprise）が ISMAP に本登録](https://cloud.google.com/blog/ja/products/gcp/completed-ismap-registration-for-gemini-enterprise-and-notebooklm-enterprise)。中央省庁・地方自治体・関連団体が、調達ルールに沿って正式採用できる状態です。
 
 ## ISMAP とは（福祉施設の文脈で）
 
-[**ISMAP**](https://www.ismap.go.jp/csm)（Information system Security Management and Assessment Program）= 政府情報システムのためのセキュリティ評価制度。**NISC（現・国家サイバー統括室。2025 年 7 月 1 日に NISC を改組して発足）・デジタル庁・総務省・経済産業省**を所管省庁とし、[**IPA（情報処理推進機構）が ISMAP 運用支援機関**](https://www.cyber.go.jp/policy/group/general/ismap.html) として実務支援を担当します（令和 2 年 6 月開始）。
+[**ISMAP**](https://www.ismap.go.jp/csm)（Information system Security Management and Assessment Program）= 政府情報システムのためのセキュリティ評価制度（令和 2 年 6 月開始）。所管・運用の関係は次の通りです。
+
+<FlowDiagram
+  direction="vertical"
+  nodes={[
+    { label: '所管4省庁', detail: '国家サイバー統括室（旧NISC、2025年7月1日改組）／デジタル庁／総務省／経済産業省' },
+    { label: 'IPA（情報処理推進機構）', detail: 'ISMAP運用支援機関として実務を担当' },
+    { label: 'ISMAP登録リスト', detail: '評価済のクラウドサービス（Gemini Enterprise 等）が掲載される' },
+  ]}
+/>
+
+出典：[IPA — ISMAP運用支援機関について](https://www.cyber.go.jp/policy/group/general/ismap.html)
 
 **福祉施設にとっての意味**：
 - 「政府が事前にセキュリティ評価したリスト」に載っているサービスは、**説明責任を果たしやすい**
@@ -100,11 +216,27 @@ import Steps from '../../components/Steps.astro';
 
 ## プラン選定フロー
 
+扱う情報の種類（トピック⑦の 3 分類）に沿って、次の 2 つの質問で契約形態を決めます。
+
+<DecisionFlow
+  branches={[
+    {
+      question: '個人情報を扱うか？',
+      yes: '法人契約必須（データ学習オフが既定のプランを選ぶ、個人プラン運用は内規で禁止）',
+      no: '個人プランでの運用も可（学習オフ設定は必須）',
+    },
+    {
+      question: '行政連携・要配慮個人情報を扱うか？',
+      yes: 'ISMAP 登録済サービス（Gemini Enterprise / Gemini Notebook Enterprise 等）を優先候補に',
+      no: '通常の法人プランでよい',
+    },
+  ]}
+/>
+
+導入は次の順で進めます：
+
 <Steps
   steps={[
-    { title: '扱う情報の種類を整理', description: '個人情報を含むか / 要配慮個人情報を含むか / 業務情報のみか を区分。トピック⑦の 3 分類に対応。' },
-    { title: '個人情報を扱うなら法人契約必須', description: '個人情報を含む可能性がある業務には、法人契約 + データ学習オフが既定のプランを選ぶ。個人プランでの運用は内規で禁止する。' },
-    { title: '行政連携・要配慮情報を扱うなら ISMAP', description: '行政との連携、要配慮個人情報の取り扱いがある場合、ISMAP 登録済サービス（Gemini Enterprise / Gemini Notebook Enterprise 等）を優先候補に。' },
     { title: 'まず小さく始める', description: '全社一斉ではなく、特定の業務（例：議事録作成）で 5〜10 名のパイロットから。3 か月で効果と課題を測る。' },
     { title: '半期に 1 回見直す', description: 'AI サービスの仕様・規約は半年単位で変わる。契約更新のタイミングで再評価する内規をつくる。' },
   ]}
