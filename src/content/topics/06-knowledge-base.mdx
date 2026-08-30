@@ -12,6 +12,7 @@ draft: false
 import Caution from '../../components/Caution.astro';
 import PromptCard from '../../components/PromptCard.astro';
 import Steps from '../../components/Steps.astro';
+import ComparisonMatrix from '../../components/ComparisonMatrix.astro';
 
 ## このトピックでわかること
 
@@ -34,11 +35,36 @@ import Steps from '../../components/Steps.astro';
 
 ## 3 つの構築選択肢
 
-| 選択肢 | コスト | データ管理 | 向いている用途 |
-|---|---|---|---|
-| [**Gemini Notebook**（旧NotebookLM）](https://notebook.google.com/)（個人 / [Gemini Notebook Enterprise](https://cloud.google.com/resources/notebooklm-enterprise)） | 無料〜（法人プラン推奨） | アップ資料のみ参照、学習に使われない（フィードバック送信時を除く） | **施設内マニュアル・事例集の検索** |
-| [**Gemini Gems**](https://support.google.com/gemini/answer/15146780?hl=ja)（Google Workspace） | Workspace 契約 | Workspace の Drive 内資料を参照（1 プロンプトあたり添付は最大 10 ファイル） | Drive 中心の運用 |
-| **法人向け RAG 基盤**（自前構築 / SaaS） | 高（数十万〜） | 完全な自社管理 | 法人全体の知識統合（中長期） |
+<ComparisonMatrix
+  items={[
+    {
+      name: '<a href="https://notebook.google.com/">Gemini Notebook</a>（旧NotebookLM、個人 / <a href="https://cloud.google.com/resources/notebooklm-enterprise">Gemini Notebook Enterprise</a>）',
+      highlight: true,
+      highlightLabel: '推奨',
+      attributes: [
+        { label: 'コスト', value: '無料〜（法人プラン推奨）' },
+        { label: 'データ管理', value: 'アップ資料のみ参照、学習に使われない（フィードバック送信時を除く）' },
+        { label: '向いている用途', value: '<strong>施設内マニュアル・事例集の検索</strong>' },
+      ],
+    },
+    {
+      name: '<a href="https://support.google.com/gemini/answer/15146780?hl=ja">Gemini Gems</a>（Google Workspace）',
+      attributes: [
+        { label: 'コスト', value: 'Workspace 契約' },
+        { label: 'データ管理', value: 'Workspace の Drive 内資料を参照（1 プロンプトあたり添付は最大 10 ファイル）' },
+        { label: '向いている用途', value: 'Drive 中心の運用' },
+      ],
+    },
+    {
+      name: '法人向け RAG 基盤（自前構築 / SaaS）',
+      attributes: [
+        { label: 'コスト', value: '高（数十万〜）' },
+        { label: 'データ管理', value: '完全な自社管理' },
+        { label: '向いている用途', value: '法人全体の知識統合（中長期）' },
+      ],
+    },
+  ]}
+/>
 
 > **小さく始めるなら Gemini Notebook 一択。** 1 施設分のマニュアル・事例集なら無料プランで十分始められます。**個人情報の取り扱い面では、Google Workspace 法人契約版** が安心です（→ [トピック⑧](#)）。
 
