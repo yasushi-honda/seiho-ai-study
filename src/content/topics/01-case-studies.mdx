@@ -11,6 +11,8 @@ draft: false
 
 import Caution from '../../components/Caution.astro';
 import PromptCard from '../../components/PromptCard.astro';
+import FlowDiagram from '../../components/FlowDiagram.astro';
+import ComparisonMatrix from '../../components/ComparisonMatrix.astro';
 
 ## このトピックでわかること
 
@@ -22,12 +24,27 @@ import PromptCard from '../../components/PromptCard.astro';
 
 ## 福祉×AI、いまどこまで来ているか
 
+<ComparisonMatrix
+  items={[
+    { name: '🏛 A. 住民・利用者向け（外向き）', attributes: [{ label: '代表例', value: '福祉相談チャットボット、多言語窓口支援' }] },
+    { name: '📝 B. 職員・支援者向け（内向き）', attributes: [{ label: '代表例', value: 'ケアプラン・議事録ドラフト、文字起こし、マニュアル整備' }] },
+    { name: '📊 C. 経営・管理側', attributes: [{ label: '代表例', value: '補助金・加算リサーチ、非営利向け費用支援' }] },
+  ]}
+/>
+
 ### A. 住民・利用者向け（外向き）
 
-**🏛 自治体の福祉相談チャットボット**
-[千葉県は 2025 年 2 月 27 日から、福祉分野の総合相談チャットボット「いつでも福祉相談サポット」](https://www.pref.chiba.lg.jp/kenshidou/types/welfarechatbot.html) を 24 時間 365 日運用しています。NTT 東日本と連携し、生成 AI が相談内容を聞き取り、県や市町村の担当部署・相談支援機関を案内する仕組みです（2026 年 6 月時点で LINE 版は不具合のため Web 版中心の運用に移行）。同様の動きとして [東京都八王子市が AI 傾聴窓口「はちココ」を 2025 年 2〜4 月に試行運用（都内自治体初）](https://prtimes.jp/main/html/rd/p/000000007.000124477.html) しました。試行後の本格運用状況は自治体公式には確認できておらず、出典も事業者側のプレスリリースにとどまる点にご留意ください。
+**🏛 自治体の福祉相談チャットボット**（2025年、3自治体の動き）
 
-さらに 2025 年 12 月には、[茨城県が生活困窮者等に関する相談業務へ生成 AI を導入](https://www.pref.ibaraki.jp/hokenfukushi/fukushi/hogo/kurashi/20260303.html)。県内 4 か所の福祉事務所で、汎用クラウド生成 AI とタブレット端末を使い「相談の質向上」「職員による迅速で的確な対応」を目指す取り組みが始まっています。生活保護・生活困窮の相談業務そのものへの導入例として、今回の研修に最も近い事例です。
+<FlowDiagram
+  nodes={[
+    { label: '千葉県「いつでも福祉相談サポット」', detail: '2025年2月27日〜、24時間365日運用（NTT東日本と連携、2026年6月時点でLINE版はWeb版へ移行）' },
+    { label: '八王子市「はちここ」', detail: '2025年2〜4月に試行運用（都内自治体初）。本格運用の状況は自治体公式未確認、出典は事業者PR' },
+    { label: '茨城県 生活困窮者相談へのAI導入', detail: '2025年12月〜、県内4か所の福祉事務所。生活保護・生活困窮相談への導入として研修に最も近い事例' },
+  ]}
+/>
+
+出典：[千葉県公式](https://www.pref.chiba.lg.jp/kenshidou/types/welfarechatbot.html)／[PR TIMES（八王子市）](https://prtimes.jp/main/html/rd/p/000000007.000124477.html)／[茨城県公式](https://www.pref.ibaraki.jp/hokenfukushi/fukushi/hogo/kurashi/20260303.html)
 
 **📞 多言語対応の窓口支援**
 外国籍の利用者対応で、生成 AI による多言語の説明文ドラフトを使う自治体・NPO が増えています。「やさしい日本語」への自動変換も、現場で十分使えるレベルになっています。
@@ -51,8 +68,35 @@ import PromptCard from '../../components/PromptCard.astro';
 **📊 補助金・加算情報のリサーチ**
 複雑な制度改正・加算要件を AI に読み込ませ、「うちの施設に関係するのはどこか」を要約させる用途。**判断は必ず人間** が行う前提で、**情報収集の時間を 1/5 に圧縮** する使い方として広がっています。
 
-**💴 非営利向けの費用支援**
-2026 年に入って、[Google for Nonprofits の日本向け資格ガイドライン](https://support.google.com/nonprofits/answer/3215869?hl=ja&co=GENIE.CountryCode%3DJP) は**市町村・都道府県・厚生労働省のいずれかから認可を受けた社会福祉法人を対象団体として公式に明記**しており、Gemini や Gemini Notebook を含む Google の AI ツールが利用対象です。**「コストの壁」が下がってきている** のがこの 1 年の大きな変化です。ほかにも [Claude（Anthropic）](https://www.anthropic.com/news/claude-for-nonprofits) や [OpenAI](https://help.openai.com/en/articles/9359041-openai-for-nonprofits) が非営利団体向け割引プログラムを用意していますが、適用は各社の提携認証機関 **Goodstack** による審査が必要で、日本の社会福祉法人が該当するかは個別確認が必要です。
+**💴 非営利向けの費用支援**：**「コストの壁」が下がってきている** のがこの 1 年の大きな変化です（2026年時点）。
+
+<ComparisonMatrix
+  items={[
+    {
+      name: '<a href="https://support.google.com/nonprofits/answer/3215869?hl=ja&co=GENIE.CountryCode%3DJP">Google for Nonprofits</a>',
+      highlight: true,
+      highlightLabel: '社福法人が対象と明記',
+      attributes: [
+        { label: '対象', value: '市町村・都道府県・厚生労働省のいずれかから認可を受けた社会福祉法人を<strong>公式に対象団体と明記</strong>' },
+        { label: '対象ツール', value: 'Gemini、Gemini Notebook 等' },
+      ],
+    },
+    {
+      name: '<a href="https://www.anthropic.com/news/claude-for-nonprofits">Claude for Nonprofits</a>',
+      attributes: [
+        { label: '割引', value: '最大75%' },
+        { label: '審査', value: '提携認証機関<strong>Goodstack</strong>による審査（日本の社会福祉法人の該当は個別確認）' },
+      ],
+    },
+    {
+      name: '<a href="https://help.openai.com/en/articles/9359041-openai-for-nonprofits">OpenAI for Nonprofits</a>',
+      attributes: [
+        { label: '割引', value: 'Business Standard $8〜10/月、Enterprise最大75%' },
+        { label: '審査', value: '同じく<strong>Goodstack</strong>による審査（個別確認）' },
+      ],
+    },
+  ]}
+/>
 
 ## 大阪市生活保護施設連盟の現場で、当てはめるなら
 
