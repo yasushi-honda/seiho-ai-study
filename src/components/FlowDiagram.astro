@@ -20,13 +20,11 @@ const isVertical = direction === 'vertical';
 
 <div
   class={`my-4 flex flex-col items-stretch gap-2 ${isVertical ? '' : 'sm:flex-row sm:items-start'}`}
-  role="list"
 >
   {
     nodes.map((node, i) => (
       <>
         <div
-          role="listitem"
           class="flex flex-1 flex-col gap-1 rounded-xl border border-border-soft bg-card p-3 shadow-card"
         >
           {node.actor && (

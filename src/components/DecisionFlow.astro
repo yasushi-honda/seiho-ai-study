@@ -21,12 +21,11 @@ interface Props {
 const { branches } = Astro.props;
 ---
 
-<div class="my-4" role="list">
+<div class="my-4">
   {
     branches.map((b, i) => (
       <>
         <div
-          role="listitem"
           class="rounded-xl border border-border-soft bg-card p-4"
         >
           <p class="font-display m-0 mb-2 text-sm font-semibold text-ink-1">{b.question}</p>
