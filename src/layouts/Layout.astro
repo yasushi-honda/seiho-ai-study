@@ -76,7 +76,10 @@ const ogImageUrl = ogImage ? new URL(ogImage, Astro.site).toString() : undefined
       // これは、そのキルスイッチ経由で正しく解除された後の後始末、および
       // 万一の取りこぼしに対する保険。同一オリジン上の別プロジェクトの
       // service worker・キャッシュを誤って壊さないよう、scope/cache名を
-      // 本サイト分に限定する。
+      // 本サイト分に限定する。GitHub Pages上の同一オリジンは複数プロジェクト
+      // で共有されるため、precacheキャッシュはWorkboxのデフォルト命名
+      // （scope URLを含む）を利用してscope一致のみ削除し、cacheName固定の
+      // google-fonts系（他プロジェクトと衝突しうる）は対象外とする。
       const scopeOrigin = location.origin + scopePath;
       if ('serviceWorker' in navigator) {
         navigator.serviceWorker.getRegistrations().then((regs) => {
@@ -88,7 +91,7 @@ const ogImageUrl = ogImage ? new URL(ogImage, Astro.site).toString() : undefined
       if ('caches' in window) {
         caches.keys().then((keys) => {
           for (const key of keys) {
-            if (key.startsWith('workbox-precache') || key.startsWith('google-fonts-')) {
+            if (key.startsWith('workbox-precache') && key.includes(scopeOrigin)) {
               caches.delete(key);
             }
           }
