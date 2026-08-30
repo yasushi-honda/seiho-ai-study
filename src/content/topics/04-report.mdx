@@ -13,6 +13,7 @@ import BeforeAfter from '../../components/BeforeAfter.astro';
 import Caution from '../../components/Caution.astro';
 import PromptCard from '../../components/PromptCard.astro';
 import Steps from '../../components/Steps.astro';
+import FlowDiagram from '../../components/FlowDiagram.astro';
 
 ## このトピックでわかること
 
@@ -26,13 +27,15 @@ import Steps from '../../components/Steps.astro';
 
 > 大事なのは、**プロンプトに「様式のテンプレート」を一緒に貼ること**。AI に「うちの様式」を毎回教えてあげる、というイメージです。
 
-| 報告書作成の工程 | 担当 | コツ |
-|---|---|---|
-| 情報収集（面談・観察） | 人間 | メモは雑でよい。後で整形できる |
-| 様式テンプレート準備 | 人間（初回のみ） | プロンプトに毎回貼り付ける雛形を作る |
-| メモ → 様式への整形 | AI | 90% は機械的にできる |
-| 不足情報の追加・修正 | 人間 | ここに専門性が出る |
-| 上長レビュー | 人間 | 規程・倫理面の最終確認 |
+<FlowDiagram
+  nodes={[
+    { actor: '人間', label: '情報収集（面談・観察）', detail: 'メモは雑でよい。後で整形できる' },
+    { actor: '人間（初回のみ）', label: '様式テンプレート準備', detail: 'プロンプトに毎回貼り付ける雛形を作る' },
+    { actor: 'AI', label: 'メモ → 様式への整形', detail: '90% は機械的にできる' },
+    { actor: '人間', label: '不足情報の追加・修正', detail: 'ここに専門性が出る' },
+    { actor: '人間', label: '上長レビュー', detail: '規程・倫理面の最終確認' },
+  ]}
+/>
 
 ## 使えるプロンプト集
 

@@ -13,6 +13,7 @@ import BeforeAfter from '../../components/BeforeAfter.astro';
 import Caution from '../../components/Caution.astro';
 import PromptCard from '../../components/PromptCard.astro';
 import Steps from '../../components/Steps.astro';
+import FlowDiagram from '../../components/FlowDiagram.astro';
 
 ## このトピックでわかること
 
@@ -22,7 +23,14 @@ import Steps from '../../components/Steps.astro';
 
 ## なぜ AI で効率化できるのか
 
-文章を書くという作業のうち、**「ゼロから書き出す」「言葉を言い換える」「目次を組み立てる」** は AI が圧倒的に得意な領域です。一方で、**「制度の正確性を担保する」「現場のニュアンスを盛り込む」** は人間の役割。AI に下書きを任せ、人間が監修するという分業が、案内文・マニュアル作成では最も効果が出ます。
+文章作成の役割分担はシンプルです。AI に下書きを任せ、人間が監修する分業が、案内文・マニュアル作成では最も効果が出ます。
+
+<FlowDiagram
+  nodes={[
+    { actor: 'AI', label: 'ゼロから書き出す／言い換える／目次を組み立てる', detail: '圧倒的に得意な領域。下書きを任せる' },
+    { actor: '人間', label: '制度の正確性を担保する／現場のニュアンスを盛り込む', detail: 'AIの下書きを監修する' },
+  ]}
+/>
 
 > 体感としては **「書き出しの 70% を AI、仕上げの 30% を人間」** の分担で、作業時間が 1/3 になります。
 

@@ -11,7 +11,7 @@ draft: false
 
 import Caution from '../../components/Caution.astro';
 import PromptCard from '../../components/PromptCard.astro';
-import Steps from '../../components/Steps.astro';
+import FlowDiagram from '../../components/FlowDiagram.astro';
 
 ## このトピックでわかること
 
@@ -111,13 +111,17 @@ import Steps from '../../components/Steps.astro';
 
 ## 運用ステップ
 
-<Steps
-  steps={[
-    { title: '雛形をベースに第 1 版を作る', description: '上の雛形をコピーし、施設名・許可サービス・連絡先を埋めて第 1 版を作成。完璧を目指さない。' },
-    { title: '管理職と職員代表でレビュー', description: '3〜5 名でレビュー会議。「これだと現場が回らない箇所」「ここはもっと厳しめに」を 1 時間で議論。' },
-    { title: '研修で全職員に周知', description: '30 分の研修枠で読み合わせ。質疑応答を必ず時間に含める。「グレー判断の事例集」を別紙にすると質問が出やすい。' },
-    { title: '運用開始 + 困りごとを記録', description: '運用開始後、現場の「これ判断つかなかった」を集める担当を 1 名決める。月 1 で集約。' },
-    { title: '半年後に改訂', description: '集約した困りごと + AI サービスの仕様変化を反映して改訂。改訂版を再周知。' },
+半年ごとに見直しながら回し続ける、循環サイクルです。
+
+<FlowDiagram
+  direction="vertical"
+  cycle
+  nodes={[
+    { label: '雛形をベースに第1版を作る', detail: '上の雛形をコピーし、施設名・許可サービス・連絡先を埋めて作成。完璧を目指さない' },
+    { label: '管理職と職員代表でレビュー', detail: '3〜5名で1時間、「現場が回らない箇所」「もっと厳しめにすべき箇所」を議論' },
+    { label: '研修で全職員に周知', detail: '30分の研修枠で読み合わせ。質疑応答を必ず含める' },
+    { label: '運用開始＋困りごとを記録', detail: '「これ判断つかなかった」を集める担当を1名決め、月1で集約' },
+    { label: '半年後に改訂', detail: '集約した困りごと＋AIサービスの仕様変化を反映、改訂版を再周知' },
   ]}
 />
 
