@@ -11,7 +11,8 @@ draft: false
 
 import Caution from '../../components/Caution.astro';
 import PromptCard from '../../components/PromptCard.astro';
-import Steps from '../../components/Steps.astro';
+import FlowDiagram from '../../components/FlowDiagram.astro';
+import DecisionFlow from '../../components/DecisionFlow.astro';
 
 ## このトピックでわかること
 
@@ -31,7 +32,18 @@ import Steps from '../../components/Steps.astro';
 
 実際の現場では **「グレーゾーンの判断」** が連続して起きます。境界線を「言葉」で共有しておくと、毎回の判断コストが下がります。
 
-> 福祉分野の基準として、現在は [**「医療・介護関係事業者における個人情報の適切な取扱いのためのガイダンス」**](https://www.ppc.go.jp/personalinfo/legal/iryoukaigo_guidance/)（個人情報保護委員会・厚生労働省、平成 29 年 4 月 14 日策定／**令和 8 年 (2026 年) 4 月 1 日 一部改正**）が参照されます。直接の対象は医療機関・介護保険法事業者・老人福祉法施設等で、社会福祉施設一般は対象外ですが、[個人情報保護法ガイドライン（通則編）](https://www.ppc.go.jp/personalinfo/legal/guidelines_tsusoku/) と本ガイダンスの考え方を参考に運用するのが実務的な扱いです（旧「福祉分野ガイドライン」は平成 29 年 5 月 30 日限りで廃止、新ガイドライン（通則編ほか）の適用開始と同日）。
+福祉分野で実務上参照される基準は、次の関係で整理できます。
+
+<FlowDiagram
+  direction="vertical"
+  nodes={[
+    { label: '個人情報保護法ガイドライン（通則編）', detail: '全法人共通の土台' },
+    { label: '医療・介護関係事業者ガイダンス', detail: '医療機関・介護保険法事業者・老人福祉法施設が直接対象（社会福祉施設一般は対象外）' },
+    { label: '大阪市生活保護施設連盟 加盟施設', detail: '直接対象ではないが、上記2つの考え方を参考に運用するのが実務的' },
+  ]}
+/>
+
+出典：[個人情報保護委員会・厚生労働省「医療・介護関係事業者における個人情報の適切な取扱いのためのガイダンス」](https://www.ppc.go.jp/personalinfo/legal/iryoukaigo_guidance/)（平成29年4月14日策定、令和8年4月1日一部改正）／[個人情報保護法ガイドライン（通則編）](https://www.ppc.go.jp/personalinfo/legal/guidelines_tsusoku/)。旧「福祉分野ガイドライン」は平成29年5月30日限りで廃止（新ガイドラインの適用開始と同日）。
 
 ## 「個人情報」と「要配慮個人情報」
 
@@ -140,13 +152,27 @@ import Steps from '../../components/Steps.astro';
 
 ## 入力前の 3 秒チェック
 
-毎回、AI 入力前に頭の中でこの 3 つを確認:
+毎回、AI 入力前にこの 3 つを上から確認し、**どれか 1 つでも「はい」なら入れない**：
 
-<Steps
-  steps={[
-    { title: '「この人だ」と特定できる？', description: '氏名・住所・整理番号・固有エピソードなど、誰かが読んだら「A さんのことだ」とわかる要素が残っていないか。' },
-    { title: '要配慮情報を含む？', description: '病歴・障害・犯罪関連・社会的身分などが含まれていないか。含む場合は、そもそも AI に入れない選択肢を優先。' },
-    { title: '組み合わせで特定される？', description: '個別には大丈夫でも、年代＋地域＋利用施設＋勤務歴のように積み重なると特定可能になる。属性は分散させる。' },
+<DecisionFlow
+  branches={[
+    {
+      question: '「この人だ」と特定できる要素が残っている？（氏名・住所・整理番号・固有エピソード等）',
+      yes: '入れない（NG）',
+      no: '次の確認へ',
+      continueIf: 'no',
+    },
+    {
+      question: '病歴・障害・犯罪関連・社会的身分などの要配慮情報を含む？',
+      yes: '入れない（NG）',
+      no: '次の確認へ',
+      continueIf: 'no',
+    },
+    {
+      question: '年代＋地域＋利用施設＋勤務歴のように、組み合わせで特定される？',
+      yes: '入れない（NG）',
+      no: '投入OK（内容によっては上長確認）',
+    },
   ]}
 />
 
