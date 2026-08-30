@@ -35,35 +35,35 @@ import ComparisonMatrix from '../../components/ComparisonMatrix.astro';
 <ComparisonMatrix
   items={[
     {
-      name: 'Gemini（個人アプリ）',
+      name: '<a href="https://gemini.google.com">Gemini</a>（個人アプリ）',
       attributes: [
         { label: '個人/無料・有料', value: 'デフォルト<strong>学習対象</strong>、Activity オフで対象外' },
         { label: '法人プラン', value: '<a href="https://knowledge.workspace.google.com/admin/gemini/generative-ai-in-google-workspace-privacy-hub?hl=ja">Google Workspace with Gemini はデフォルト学習対象外</a>' },
       ],
     },
     {
-      name: 'Gemini Notebook（旧NotebookLM）',
+      name: '<a href="https://notebook.google.com/">Gemini Notebook</a>（旧NotebookLM）',
       attributes: [
         { label: '個人/無料・有料', value: 'アップ資料は学習に使われない（フィードバック送信時を除く）' },
         { label: '法人プラン', value: '<a href="https://cloud.google.com/resources/notebooklm-enterprise">Gemini Notebook Enterprise</a>（Google Cloud）あり' },
       ],
     },
     {
-      name: 'Notta / LINE WORKS AiNote 等の文字起こし',
+      name: '<a href="https://www.notta.ai/business">Notta</a> / <a href="https://line-works.com/ainote/">LINE WORKS AiNote</a> 等の文字起こし',
       attributes: [
         { label: '個人/無料・有料', value: 'サービスごとに異なる、法人プランを確認' },
         { label: '法人プラン', value: '<strong>法人版を選ぶこと推奨</strong>' },
       ],
     },
     {
-      name: '（参考）ChatGPT',
+      name: '（参考）<a href="https://chatgpt.com/ja-JP/pricing/">ChatGPT</a>',
       attributes: [
         { label: '個人/無料・有料', value: 'デフォルト<strong>学習対象</strong>、<a href="https://help.openai.com/en/articles/7730893-data-controls-faq">設定でオフ可</a>（Plus も同条件）' },
         { label: '法人プラン', value: '<a href="https://openai.com/enterprise-privacy/">Business / Enterprise はデフォルト学習対象外</a>' },
       ],
     },
     {
-      name: '（参考）Claude（claude.ai）',
+      name: '（参考）<a href="https://claude.ai">Claude</a>（claude.ai）',
       attributes: [
         { label: '個人/無料・有料', value: '<a href="https://privacy.claude.com/en/articles/10023580-is-my-data-used-for-model-training">個人プランは「オプトアウト方式」</a>（オフにしない限り学習対象、保持 5 年）' },
         { label: '法人プラン', value: '<strong>Team / Enterprise はデフォルト学習対象外</strong>' },
@@ -223,10 +223,11 @@ import ComparisonMatrix from '../../components/ComparisonMatrix.astro';
     {
       question: '個人情報を扱うか？',
       yes: '法人契約必須（データ学習オフが既定のプランを選ぶ、個人プラン運用は内規で禁止）',
-      no: '個人プランでの運用も可（学習オフ設定は必須）',
+      no: '個人プランでの運用も可（学習オフ設定は必須、以降の質問は対象外）',
+      continueIf: 'yes',
     },
     {
-      question: '行政連携・要配慮個人情報を扱うか？',
+      question: '（法人契約の中で）行政連携・要配慮個人情報も扱うか？',
       yes: 'ISMAP 登録済サービス（Gemini Enterprise / Gemini Notebook Enterprise 等）を優先候補に',
       no: '通常の法人プランでよい',
     },

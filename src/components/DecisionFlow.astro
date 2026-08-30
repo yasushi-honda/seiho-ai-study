@@ -4,8 +4,14 @@ interface Branch {
   question: string;
   /** YES の場合の結果ラベル */
   yes: string;
-  /** NO の場合の結果ラベル（次の質問に進む場合は "→ 次の質問へ" 等） */
+  /** NO の場合の結果ラベル */
   no: string;
+  /**
+   * 次の質問に続く条件。省略時は常に続く独立した質問として扱う。
+   * 'yes' を指定すると「YES の場合のみ次の質問へ」の注記付き矢印になり、
+   * NO の結果がそこでフロー完結であることを明示する（逆に 'no' も指定可）。
+   */
+  continueIf?: 'yes' | 'no';
 }
 
 interface Props {
@@ -26,16 +32,21 @@ const { branches } = Astro.props;
           <p class="font-display m-0 mb-2 text-sm font-semibold text-ink-1">{b.question}</p>
           <div class="flex flex-wrap gap-2 text-xs">
             <span class="rounded-full bg-accent-1/10 px-3 py-1 font-semibold text-accent-1-deep">
-              <span aria-hidden="true">✅</span> {b.yes}
+              <span aria-hidden="true">✅</span> はい：{b.yes}
             </span>
             <span class="rounded-full bg-warn-soft px-3 py-1 font-semibold text-warn">
-              <span aria-hidden="true">⚠</span> {b.no}
+              <span aria-hidden="true">⚠</span> いいえ：{b.no}
             </span>
           </div>
         </div>
         {i < branches.length - 1 && (
-          <div class="flex justify-center py-1" aria-hidden="true">
-            <span class="font-display text-lg text-accent-1">↓</span>
+          <div class="flex flex-col items-center gap-0.5 py-1">
+            <span class="font-display text-lg text-accent-1" aria-hidden="true">↓</span>
+            {b.continueIf && (
+              <span class="text-[11px] text-ink-3">
+                （「{b.continueIf === 'yes' ? 'はい' : 'いいえ'}」の場合のみ、次の質問へ）
+              </span>
+            )}
           </div>
         )}
       </>

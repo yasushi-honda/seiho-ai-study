@@ -9,6 +9,7 @@ interface Attribute {
 }
 
 interface Item {
+  /** カード見出し。HTML断片可（set:html で描画、name属性と同じ信頼境界） */
   name: string;
   attributes: Attribute[];
   /** 強調表示するカード（おすすめ・登録済 等） */
@@ -36,7 +37,7 @@ const { items } = Astro.props;
         }`}
       >
         <div class="mb-2 flex flex-wrap items-center gap-2">
-          <strong class="font-display text-sm font-semibold text-ink-1">{item.name}</strong>
+          <strong class="font-display text-sm font-semibold text-ink-1" set:html={item.name} />
           {item.highlight && (
             <span class="rounded-full bg-accent-1 px-2 py-0.5 text-[10px] font-semibold text-white">
               {item.highlightLabel ?? 'おすすめ'}
