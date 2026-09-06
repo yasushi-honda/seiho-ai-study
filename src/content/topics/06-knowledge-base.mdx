@@ -57,7 +57,7 @@ import ComparisonMatrix from '../../components/ComparisonMatrix.astro';
       ],
     },
     {
-      name: '法人向け RAG 基盤（自前構築 / SaaS）',
+      name: '法人向け RAG 基盤（自前構築 / SaaS。RAG＝手元の資料を検索してから回答させる仕組み）',
       attributes: [
         { label: 'コスト', value: '高（数十万〜）' },
         { label: 'データ管理', value: '完全な自社管理' },
@@ -137,7 +137,7 @@ import ComparisonMatrix from '../../components/ComparisonMatrix.astro';
     { title: '集める資料を決める', description: '施設内マニュアル、業務手順書、過去事例集（書籍含む）、Q&A 集、関連法令 PDF、自治体通知などをリストアップします。' },
     { title: '個人情報をマスクする', description: '過去事例の利用者名・住所・特定可能情報を「A さん」「B 区」のように一括置換。マスク済み版を別途保存しておきます。' },
     { title: 'Gemini Notebook にノートブックを作る', description: 'https://notebook.google.com/ で「施設ナレッジベース」というノートブックを作成 → マスク済み資料をアップロード。' },
-    { title: '上のプロンプトで運用テスト', description: 'プロンプト ①〜③ を実際に試し、出典が正しく引かれるか、ハルシネーションがないかを職員で確認します。' },
+    { title: '上のプロンプトで運用テスト', description: 'プロンプト ①〜③ を実際に試し、出典が正しく引かれるか、ハルシネーション（AI の誤情報生成）がないかを職員で確認します。' },
     { title: '更新のリズムを決める', description: '改正・新規事例が出たら追加するルール、半年に 1 回の棚卸し、担当者を決めて運用を継続します。' },
   ]}
 />

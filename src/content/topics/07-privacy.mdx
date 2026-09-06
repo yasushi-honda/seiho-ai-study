@@ -190,7 +190,7 @@ import DecisionFlow from '../../components/DecisionFlow.astro';
 
 <Caution title="参考：要配慮個人情報まで扱える専用基盤という選択肢" level="info">
 - ここまでは **市販の AI サービスをそのまま使う場合** の判断軸です
-- Google Cloud（Gemini Enterprise Agent Platform、旧 Vertex AI）を **施設自身が直接契約** し、**日本リージョン対応モデルの選定** ・ **API キーを使わない認証方式** ・ **Sensitive Data Protection による日本リージョン内でのマスキング処理** ・ **Cloud Logging による監査ログ** を組み合わせれば、技術面の安全管理措置は整えられます
+- Google Cloud（Gemini Enterprise Agent Platform、旧 Vertex AI）を **施設自身が直接契約** し、**日本リージョン対応モデルの選定**（データを日本国内のサーバーに保存する設定） ・ **API キーを使わない認証方式**（外部連携用の秘密情報を発行・管理しない安全な認証方式） ・ **Sensitive Data Protection による日本リージョン内でのマスキング処理**（Google Cloud の個人情報自動マスキング機能） ・ **Cloud Logging による監査ログ**（Google Cloud の操作履歴記録サービス） を組み合わせれば、技術面の安全管理措置は整えられます
 - あわせて **利用者の個人情報同意書取得** と、**委託先との NDA**（安全管理措置の開示・監査対応・インシデント通知等を明記）を揃えることで、要配慮個人情報まで扱える体制を構築できます
 - こうした知識・技術・契約設計まで一体で対応できる専門家として、**講師（ヤススシステム）** にご相談いただけます
 </Caution>

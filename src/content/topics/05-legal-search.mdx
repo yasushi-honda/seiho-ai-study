@@ -4,7 +4,7 @@ title: "法令データから瞬時に検索"
 category: "Legal Search"
 icon: "📚"
 summary: "生活保護法/困窮者法/障害者法/介護保険法"
-lead: "膨大な法令・通知・Q&Aから「該当する条文」を瞬時に引き当てる。Gemini Notebook（旧NotebookLM）やRAGを使った「法令の即時検索」の仕組みを実演します。"
+lead: "膨大な法令・通知・Q&Aから「該当する条文」を瞬時に引き当てる。Gemini Notebook（旧NotebookLM）やRAG（アップした資料だけを検索して回答させる仕組み）を使った「法令の即時検索」の仕組みを実演します。"
 estimatedMinutes: 20
 draft: false
 ---
@@ -41,7 +41,7 @@ AI を使えば、**「ケースの内容を伝える → 該当条文を引用�
 
 | 選択肢 | 強み | 弱み | おすすめ用途 |
 |---|---|---|---|
-| [**Gemini Notebook**（旧NotebookLM）](https://notebook.google.com/) | アップした PDF だけを参照、**回答にインライン引用** が付く、ハルシネーション抑制 | 自分でソース PDF を集める手間 | **施設内の常用ツール** として最有力 |
+| [**Gemini Notebook**（旧NotebookLM）](https://notebook.google.com/) | アップした PDF だけを参照、**回答にインライン引用** が付く、ハルシネーション（AI の誤情報生成）抑制 | 自分でソース PDF を集める手間 | **施設内の常用ツール** として最有力 |
 | **Gemini に直接質問** | すぐ使える | 改正反映ラグ、引用なし、誤情報リスク高 | 一般的な制度概要の理解 |
 | **Gemini Deep Research** | 公開情報を横断検索、出典付きレポート | 時間がかかる（数分〜10 分）、有料プラン | 制度改正のキャッチアップ |
 
