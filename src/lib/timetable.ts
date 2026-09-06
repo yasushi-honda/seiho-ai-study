@@ -48,7 +48,7 @@ export const TIMETABLE: TimetableSlot[] = [
   {
     time: '16:00',
     title: 'Part 5：実践ワーク②',
-    description: '法令検索・セキュリティを踏まえた実践',
+    description: 'Canvasでやさしい日本語チェッカーを作る（ハンズオン） / Gemini Liveで掲示物を見せて相談（講師デモ）',
   },
   {
     time: '16:20',
