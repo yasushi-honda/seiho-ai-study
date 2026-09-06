@@ -27,7 +27,7 @@ export const TIMETABLE: TimetableSlot[] = [
   {
     time: '14:40',
     title: 'Part 2：実践ワーク①',
-    description: '案内文・マニュアル / 議事録 / ケース記録',
+    description: '案内文（Canvasで自動生成フォームを作る） / 議事録 / ケース記録',
   },
   {
     time: '15:15',
