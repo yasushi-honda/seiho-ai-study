@@ -53,7 +53,7 @@ export const TIMETABLE: TimetableSlot[] = [
   {
     time: '16:20',
     title: 'クロージング',
-    description: '明日から始める3ステップ / Q&A',
+    description: '近くの方と感想を共有 → 数名を指名して発表 → 講師より締めの挨拶',
   },
   {
     time: '16:30',
