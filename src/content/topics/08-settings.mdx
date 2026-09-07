@@ -112,7 +112,7 @@ import ComparisonMatrix from '../../components/ComparisonMatrix.astro';
 | 価値 | 内容 |
 |---|---|
 | **データ学習対象外（既定）** | 設定ミスのリスクがそもそもない |
-| **SSO / SCIM** | アカウント管理を施設の ID 基盤に統合できる |
+| **SSO / SCIM**（統一ログイン／ユーザー情報自動同期） | アカウント管理を施設の ID 基盤に統合できる |
 | **監査ログ** | 「誰が、いつ、何を聞いたか」を法人側で記録できる |
 | **管理者権限** | 退職者アカウントの即時無効化、利用範囲の制限 |
 | **データ保持期間の制御** | 0 日保持 / 30 日保持 等を選べる場合がある |
@@ -139,7 +139,7 @@ import ComparisonMatrix from '../../components/ComparisonMatrix.astro';
         { label: '料金感', value: '個別見積' },
         { label: '規模', value: '中〜大規模' },
         { label: '強み', value: '<a href="https://cloud.google.com/gemini-enterprise">公式</a>：<strong>ISMAP 本登録済（2026年4月28日）</strong>、政府・自治体の調達対応' },
-        { label: '要配慮個人情報対応', value: '施設が直接契約し、日本リージョンモデル選定（国内サーバー保存）・API キー不要認証・Sensitive Data Protection によるマスキング（個人情報自動秘匿）・Cloud Logging の監査ログ（操作履歴記録）を組み合わせれば技術面の対応は可能。同意書・委託先 NDA 等の契約設計まで含め <strong>講師（ヤススシステム）</strong> にご相談ください（→ <a href="/seiho-ai-study/topics/07-privacy">トピック⑦</a>）' },
+        { label: '要配慮個人情報対応', value: '施設が直接契約し、日本リージョンモデル選定（国内サーバー保存）・API キー不要認証・Sensitive Data Protection によるマスキング（個人情報自動秘匿）・Cloud Logging の監査ログ（操作履歴記録）を組み合わせれば技術面の対応は可能。同意書・委託先 NDA（秘密保持契約）等の契約設計まで含め <strong>講師（ヤススシステム）</strong> にご相談ください（→ <a href="/seiho-ai-study/topics/07-privacy">トピック⑦</a>）' },
       ],
     },
     {
