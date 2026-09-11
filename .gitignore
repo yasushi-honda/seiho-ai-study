@@ -30,3 +30,6 @@ pnpm-debug.log*
 
 # Serena MCP local cache/memory
 .serena/
+
+# 研修アンケート回答等の非公開データ（ローカル限定）
+private/
