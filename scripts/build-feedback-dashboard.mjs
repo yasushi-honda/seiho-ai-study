@@ -29,7 +29,12 @@ if (files.length === 0) {
 
 const surveys = files.map((f) => {
   const raw = fs.readFileSync(path.join(dataDir, f), "utf-8");
-  return { file: f, ...JSON.parse(raw) };
+  try {
+    return { file: f, ...JSON.parse(raw) };
+  } catch (e) {
+    console.error(`${f} のJSONパースに失敗しました: ${e.message}`);
+    process.exit(1);
+  }
 });
 
 // </script> によるHTML破壊を防ぐためエスケープ
@@ -775,7 +780,8 @@ window.__SURVEYS__ = ${dataScript};
       <h3>✅ 今日からできること</h3>
       <ul>
         <li>案内文・マニュアル・一般的な文章生成など、<strong>個人が特定される情報を含まない用途</strong>では、今お使いのGemini in Workspaceをそのまま使い続けて問題ありません。</li>
-        <li>ケース記録の要約や相談メモの下書きを作りたい場合も、<strong>氏名・住所・生年月日等を仮名（A様、B様等）に置き換えてから入力</strong>すれば、現状のツールのまま活用できます。「困ったら、まず匿名化してから」を職場のルールにするだけで、使える範囲はかなり広がります。</li>
+        <li>相談メモの下書き等、<strong>病歴・生活歴・障害の状況等の要配慮個人情報を含まない</strong>場合に限り、氏名・住所・生年月日等を仮名（A様、B様等）に置き換えてから入力すれば、現状のツールのまま活用できます。「困ったら、まず匿名化してから」を職場のルールにするだけで、使える範囲はかなり広がります。</li>
+        <li>⚠️ <strong>ただしケース記録・支援経過記録のように病歴・生活歴等を含む文書は対象外です。</strong>氏名を仮名に置き換えても、生活歴・病歴・状況の組み合わせから本人が推測できてしまう場合があり、要配慮個人情報のままである可能性が残ります（下記「📎 個人情報・要配慮個人情報を実名でAIに使う場合の最適構造」のTier Cに該当）。</li>
       </ul>
 
       <h3>❌ 正直に：今はまだできないこと</h3>
@@ -905,7 +911,7 @@ window.__SURVEYS__ = ${dataScript};
     if (items.length === 0) return "";
     const body = items
       .map(
-        (r) => \`<div class="free-text-item"><span class="meta">回答\${r.id} ・ \${escapeHtml(r.submittedAt || "")}</span>\${escapeHtml(r[field])}</div>\`
+        (r) => \`<div class="free-text-item"><span class="meta">回答\${escapeHtml(r.id)} ・ \${escapeHtml(r.submittedAt || "")}</span>\${escapeHtml(r[field])}</div>\`
       )
       .join("");
     return \`<div class="card free-text-block"><h3>\${escapeHtml(title)}（\${items.length}件）</h3>\${body}</div>\`;
@@ -920,7 +926,7 @@ window.__SURVEYS__ = ${dataScript};
         return \`
         <div class="response-card">
           <div class="response-head">
-            <span class="rid">回答 #\${r.id}</span>
+            <span class="rid">回答 #\${escapeHtml(r.id)}</span>
             <span>\${escapeHtml(r.submittedAt || "")} / \${escapeHtml(r.affiliation || "")}</span>
           </div>
           <dl class="qa">
