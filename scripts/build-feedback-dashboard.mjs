@@ -444,9 +444,9 @@ window.__SURVEYS__ = ${dataScript};
       </div>
 
       <h3>なぜ非推奨なのか（見落とされがちなもう一つの法的論点）</h3>
-      <p>ここまでの「ISMAP登録の有無」とは別に、もう一つ重要な論点があります。<strong>個人情報保護法24条「外国にある第三者への提供」（越境移転規制）</strong>です。</p>
-      <p>Gemini in Workspaceはデータの処理地を「グローバル」「米国」「ヨーロッパ」からしか選べず、日本国内に固定できません。要配慮個人情報を、処理地を特定できないまま海外（特に米国）で処理させることは、法24条が定める<strong>越境移転規制の対象になり得ます</strong>。この場合、通常の利用同意とは別に<strong>越境移転そのものへの本人の同意</strong>や、移転先の保護水準についての契約上の手当てが必要になります。</p>
-      <p>ISMAP登録は「安全に守れているか」（法23条・安全管理措置）を担保するものであり、「そもそも海外で処理してよいか」（法24条・越境移転）とは別の話です。Gemini in WorkspaceはISMAP登録済みでも、この24条の論点をクリアできていません。</p>
+      <p>ここまでの「ISMAP登録の有無」とは別に、もう一つ重要な論点があります。<strong>個人情報保護法28条「外国にある第三者への提供の制限」（越境移転規制、令和2年改正で旧24条から条番号変更）</strong>です。</p>
+      <p>Gemini in Workspaceはデータの処理地を「グローバル」「米国」「ヨーロッパ」からしか選べず、日本国内に固定できません。法28条は、①同等水準国、②基準適合体制、③その他例外事由のいずれにも該当しない限り、<strong>あらかじめ本人の同意を得る</strong>ことを求めています。Gemini in Workspaceの処理地がこれらの例外に該当するかは個別確認が必要です。</p>
+      <p>ISMAP登録は「安全に守れているか」（法23条・安全管理措置）を担保するものであり、「そもそも海外で処理してよいか」（法28条・越境移転）とは別の話です。ISMAP登録済みであっても、この28条の論点は自動的にはクリアされません。</p>
 
       <h3>判定フロー</h3>
       <div style="overflow-x:auto;">
@@ -480,9 +480,12 @@ window.__SURVEYS__ = ${dataScript};
           <line class="fc-arrow" x1="520" y1="102" x2="600" y2="102" />
           <text class="fc-edge" x="558" y="94" text-anchor="middle">いいえ</text>
           <line class="fc-arrow" x1="600" y1="102" x2="600" y2="128" />
-          <rect class="fc-box good" x="500" y="128" width="220" height="55" rx="6" />
+          <rect class="fc-box good" x="500" y="128" width="220" height="68" rx="6" />
           <text class="fc-label" x="610" y="150" text-anchor="middle">匿名化データ・統計情報</text>
-          <text class="fc-sub" x="610" y="168" text-anchor="middle">制限なく利用可</text>
+          <text class="fc-sub" x="610" y="168" text-anchor="middle">
+            <tspan x="610" dy="0">利用可（他情報との組み合わせで</tspan>
+            <tspan x="610" dy="13">再識別できないか要確認）</tspan>
+          </text>
 
           <line class="fc-arrow" x1="390" y1="146" x2="390" y2="184" />
           <text class="fc-edge" x="410" y="168" text-anchor="start">はい</text>
@@ -693,7 +696,7 @@ window.__SURVEYS__ = ${dataScript};
         </tbody>
       </table>
       <p class="footnote">※Gemini Enterpriseは、Business版であればIT部門のセットアップや営業への問い合わせなしで<strong>30日間の無料トライアルをセルフサーブで開始</strong>できます（<a href="https://cloud.google.com/gemini-enterprise/faq" target="_blank" rel="noopener noreferrer">Google Cloud公式FAQ</a>、2026-09-09時点確認）。したがって「管理コンソールでGemini Enterpriseのトグルがオンになっている」＝「正式に契約済み」とは限りません。無料トライアル中の可能性もあるため、実際の契約状況は別途確認が必要です。</p>
-      <p class="footnote">※「日本リージョン限定は必須ではない」の意味：Vertex AI（Gemini Enterprise Agent Platform）自体はGoogle Cloud Platform（C21-0004-2）としてISMAP登録済みなので、リージョンに関わらずISMAP要件は満たします。日本リージョン以外を使う場合に論点になるのは個人情報保護法24条（外国にある第三者への提供＝越境移転規制）で、通常の個人情報であればプライバシーポリシー等での同意取得により越境移転規制はクリアできます。要配慮個人情報（Tier C）ほど慎重を期す必要がないため、Tier Bでは同意ベースの処理で足りるという判断です。移転先が米国の場合は同意が実質的に必須（米国はAPPIの十分性認定国に含まれない）である点に留意してください。</p>
+      <p class="footnote">※「日本リージョン限定は必須ではない」の意味：Vertex AI（Gemini Enterprise Agent Platform）自体はGoogle Cloud Platform（C21-0004-2）としてISMAP登録済みなので、リージョンに関わらずISMAP要件は満たします。日本リージョン以外を使う場合に論点になるのは個人情報保護法28条（外国にある第三者への提供の制限＝越境移転規制）で、通常の個人情報であれば同等水準国の該当性確認、または同意取得によりクリアできる場合が多いです。要配慮個人情報（Tier C）ほど慎重を期す必要がないため、Tier Bでは同意ベースの処理で足りるという判断です。移転先が米国の場合は同意が実質的に必須になりやすい（米国は個人情報保護委員会が指定する同等水準国に含まれない）点に留意してください。</p>
 
       <h3>Tier C（最も厳しい要件）での具体的な最適構造</h3>
       <p>要配慮個人情報を実名で扱う場合、2026-09-09時点で最も現実的なのは「既存のGoogle Cloudインフラは維持しつつ、テキスト生成・要約・音声文字起こしはAWS Bedrockに任せる」ハイブリッド構成です。<strong>ただしAI OCRだけは例外</strong>です。実機検証の結果、AWS Bedrock（Claude/Nova系）は日本語OCRの精度に弱点があることが分かったため、OCR用途に限ってはGCP側で自前ホスティングするPaddleOCRを使う構成を推奨します（根拠は次項）。</p>
