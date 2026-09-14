@@ -218,6 +218,53 @@ import ComparisonMatrix from '../../components/ComparisonMatrix.astro';
 - 自治体との連携業務、行政との情報やり取りを含む場面で、**選定根拠として強い**
 - 民間社会福祉法人でも、**「ISMAP 登録済を優先」** という内規を作ると、判断が早くなる
 
+## よくある質問：「Google Workspace + Gemini」は ISMAP なのか
+
+研修参加者から「Google Workspace + Gemini は ISMAP 登録済みと言えるのか」「Google for Nonprofits の Gemini は？」というご質問をいただきました。確度を明示しながらお答えします（2026 年 9 月時点の公式情報に基づく）。
+
+### Q1. 「Google for Nonprofits に Gemini Enterprise をアドオンできる」という情報は古いのではないか？
+
+**確度：中（状況的に妥当ですが、断定はできません）**
+
+直接の裏付けは取れていませんが、情報としては十分に妥当な見立てです。Google Workspace の ISMAP 対象範囲は実際に **2025 年 12 月〜2026 年 6 月にかけて更新** されていて、この分野は数か月単位で状況が変わっています。
+
+### Q2. 資料で「Gemini Enterprise / Notebook Enterprise」には「ISMAP」の記載があるが、その前の「Google Workspace + Gemini」には記載がないため「ISMAP ではない」という認識で正しいか？
+
+**結論：その認識は誤りの可能性が高いです**
+
+Google Workspace は **独立して ISMAP に登録済み**（登録番号 C21-0005-2）で、その対象範囲には「Gemini アプリ」「Gemini in Workspace」が明記されています（Google 社提出の「生成 AI に関する情報」開示書、2025 年 12 月 24 日付）。研修資料の時点で記載が分かれていたのは、Workspace 側の対象範囲の更新（2026 年 6 月 26 日）より前の情報だったためと考えられます。
+
+### ISMAP 登録は「3 つの独立した製品」に分かれている
+
+Google の生成 AI 関連サービスは、実は 1 つではなく **3 つの独立した登録** に分かれています。「基盤が登録済みだから、その上のサービスも自動的に登録済み」にはなりません。
+
+| サービス | ISMAP 登録番号 | 対象範囲 |
+|---|---|---|
+| Google Cloud Platform | C21-0004-2 | Vertex AI 基盤を含む |
+| Google Workspace | C21-0005-2 | Gemini アプリ・Gemini in Workspace を含む |
+| Gemini Enterprise | C26-0114-2 | エンタープライズ AI エージェント基盤 |
+
+3 つとも独立して ISMAP 登録済みですが、登録番号・対象範囲が別々なので、**製品ごとの個別確認が必要** です。
+
+### Q3. Gemini アプリ・Gemini in Workspace が Google Workspace の「コアサービス」なら、Google for Nonprofits の Gemini も「ISMAP である」と言えないか？
+
+**結論：方向性は支持されますが断定はできません**
+
+方向性としては支持されます。ISMAP の Workspace 登録は「有料版は OK、無料版は NG」のようなエディション別の言明ではなく、**製品単位** の言明だからです。Google 公式サポートページでも、Nonprofits エディションが「Gemini アプリ（エンタープライズグレードのデータ保護付き）」を提供していることは確認できています。
+
+ただし「Nonprofits 版は有料版と全く同一の基盤」と明記した一次資料の逐語文までは見つけられていません。**実運用前に Google for Nonprofits 窓口へ書面で確認することをおすすめします。**
+
+### もう一つ重要な点：「ISMAP 登録済み」と「日本国内だけで処理される」は別の話
+
+ここが実務上もっとも重要な注意点です。**ISMAP に登録されていることと、データが日本国内だけで処理されることは、別の軸の話です。**
+
+| | 日本国内処理の保証なし（グローバル／米国／欧州等） | 日本国内処理の保証あり（日本ロケーション指定可） |
+|---|---|---|
+| **ISMAP 登録済み** | Google Workspace + Gemini in Workspace（← 今回のご質問はここ）：ISMAP 登録済みだが日本限定処理は選べない | Gemini Enterprise／AWS Bedrock（Nova Pro）：要配慮個人情報にも対応できる本命ゾーン |
+| **ISMAP 未登録** | （一般的な海外 AI ツール等、本資料の対象外） | 国内完結の専用サービス（例：国内クラウドの AI Engine 系）：国内完結だが ISMAP 未登録のものもあるため個別確認が必要 |
+
+Google Workspace + Gemini は **ISMAP 登録済みですが、データの処理場所は「グローバル」「米国」「ヨーロッパ」からしか選べず、日本限定の選択肢がありません。** 要配慮個人情報（医療・福祉記録等）を扱う場合は、日本ロケーション指定が可能な「Gemini Enterprise」（Workspace とは別製品）を検討する必要があります。この論点は次の「個人情報のレベル別判定フロー」でさらに詳しく扱います。
+
 ## 個人情報のレベル別判定フロー
 
 「結局、どのレベルから個人情報を入れてよいのか」という質問に、判定フローと具体例で直接お答えします。
@@ -411,8 +458,11 @@ ISMAP 登録は「安全に守れているか」（法 23 条・安全管理措�
 
 ## 参照した一次情報
 
-このトピックの技術的な整理（判定フロー・Tier 構成）の根拠となる公式ページです。いずれも 2026 年 9 月時点で内容を直接確認しています。
+このトピックの技術的な整理（ISMAP・判定フロー・Tier 構成）の根拠となる公式ページです。いずれも 2026 年 9 月時点で内容を直接確認しています。
 
+- [ISMAP クラウドサービスリスト（ISMAP ポータル公式）](https://www.ismap.go.jp/csm?id=cloud_service_list) — Google Cloud Platform（C21-0004-2）・Google Workspace（C21-0005-2）・Gemini Enterprise（C26-0114-2）が別々の登録番号を持つことの出典（下記にも再掲）
+- [Google Workspace「生成 AI に関する情報」開示書（ISMAP ポータル、Google LLC 提出、2025-12-24 付）](https://www.ismap.go.jp/sys_attachment.do?sys_id=4fe2e2e52b2107d0f0bbfd69fe91bf04) — Gemini アプリ・Gemini in Workspace が Google Workspace の ISMAP 対象範囲に明記されていることの出典
+- [Google Workspace「言明対象範囲」（ISMAP ポータル、Google LLC 提出）](https://www.ismap.go.jp/sys_attachment.do?sys_id=c9522a652b2107d0f0bbfd69fe91bfe1) — 対象範囲の詳細
 - [Gemini 3.5 Flash モデルページ（Google Cloud 公式）](https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-5-flash) — asia-northeast1 では標準 PayGo 非対応・Provisioned Throughput のみ対応という記載の出典
 - [Agent Platform の料金（Google Cloud 公式）](https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing) — 「月額 $2,700 × GSU 数」という計算例の出典
 - [プロビジョンド スループットを購入する（Google Cloud 公式）](https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/provisioned-throughput/purchase-provisioned-throughput) — シングルゾーン購入には営業担当者への問い合わせが必須という記載の出典
