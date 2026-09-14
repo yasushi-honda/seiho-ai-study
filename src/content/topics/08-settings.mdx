@@ -22,6 +22,7 @@ import ComparisonMatrix from '../../components/ComparisonMatrix.astro';
 - **個人プランで学習オフ** にする手順（Gemini。他社サービスは参考として併記）
 - **法人プラン** が「学習対象外」だけでなく担保する価値
 - **ISMAP** が福祉施設の意思決定にどう関わるか
+- **要配慮個人情報を実名で扱う場合の技術的な最適構成**（2026 年 9 月時点）
 - 施設規模・用途別の **プラン選定フロー**
 
 ## なぜこのトピックが大事か
@@ -217,6 +218,153 @@ import ComparisonMatrix from '../../components/ComparisonMatrix.astro';
 - 自治体との連携業務、行政との情報やり取りを含む場面で、**選定根拠として強い**
 - 民間社会福祉法人でも、**「ISMAP 登録済を優先」** という内規を作ると、判断が早くなる
 
+## 個人情報のレベル別判定フロー
+
+「結局、どのレベルから個人情報を入れてよいのか」という質問に、判定フローと具体例で直接お答えします。
+
+<DecisionFlow
+  branches={[
+    {
+      question: '入力しようとしているデータは、個人を特定できる情報を含むか？',
+      yes: '次の質問へ（要配慮個人情報の有無を確認）',
+      no: '匿名化データ・統計情報として制限なく利用可',
+      continueIf: 'yes',
+    },
+    {
+      question: '要配慮個人情報（病歴・障害・犯罪歴等）を含むか？',
+      yes: '次の質問へ（処理体制の確認）',
+      no: '通常の個人情報。ISMAP 登録済みクラウド＋DPA＋同意があれば利用可（Gemini in Workspace も可、ただし越境移転に注意）',
+      continueIf: 'yes',
+    },
+    {
+      question: '日本国内処理保証＋3 省 2 ガイドライン相当の組織対応済みのツールか？',
+      yes: '利用可（Gemini Enterprise の日本ロケーション設定／AWS Bedrock 等＋組織的措置）',
+      no: '利用不可（Gemini in Workspace 等、日本ロケーション非対応のツールは非推奨）',
+    },
+  ]}
+/>
+
+「はい」を辿るほど要件が厳しくなります。要配慮個人情報は必ず最後の質問まで確認してください。
+
+### 具体例早見表
+
+| 入力しようとしている内容の例 | 分類 | Gemini in Workspace で入力してよいか |
+|---|---|---|
+| 一般的な案内文・チラシのひな形（個人名なし） | 匿名化情報 | ✅ 問題なし |
+| 研修資料・マニュアルの下書き | 匿名化情報 | ✅ 問題なし |
+| 施設名・職員の氏名 | 通常の個人情報 | ⚠️ 条件付きで可（DPA・同意が前提） |
+| 利用者の氏名・住所・連絡先のみ | 通常の個人情報 | ⚠️ 条件付きで可（DPA・同意が前提） |
+| 利用者の病歴・障害の状況 | 要配慮個人情報 | ❌ 非推奨 |
+| 逮捕歴・犯罪の経歴 | 要配慮個人情報 | ❌ 非推奨 |
+| ケース記録全般（病歴・生活歴等を含む） | 要配慮個人情報を含む可能性大 | ❌ 非推奨（個別に要配慮情報の有無を確認） |
+
+> ※「生活保護の受給歴」そのものは個人情報保護法が列挙する要配慮個人情報の定義に直接該当するとは限りませんが、ケース記録には病歴・障害等の要配慮個人情報が併記されることが多く、実務上は要配慮情報に準じた慎重な取扱いが妥当です。個別の該当性判断は専門家にご確認ください。
+
+### なぜ「日本国内処理」が要配慮個人情報では重要になるのか
+
+ここまでの「ISMAP 登録の有無」とは別に、もう一つ重要な論点があります。**個人情報保護法 24 条「外国にある第三者への提供」（越境移転規制）** です。
+
+Gemini in Workspace はデータの処理地を「グローバル」「米国」「ヨーロッパ」からしか選べず、日本国内に固定できません。要配慮個人情報を、処理地を特定できないまま海外（特に米国）で処理させることは、法 24 条が定める越境移転規制の対象になり得ます。この場合、通常の利用同意とは別に **越境移転そのものへの本人の同意** や、移転先の保護水準についての契約上の手当てが必要です。
+
+ISMAP 登録は「安全に守れているか」（法 23 条・安全管理措置）を担保するものであり、「そもそも海外で処理してよいか」（法 24 条・越境移転）とは別の話です。Gemini in Workspace は ISMAP 登録済みでも、この 24 条の論点はクリアできていません。
+
+## 実名データを扱う場合の 3 段階（2026 年 9 月時点）
+
+「要配慮個人情報に使えないのは困る」というお気持ちはもっともです。個人情報保護法は大きく 2 つの独立した義務を課しており、**片方を満たしても、もう片方の違反は消えません。**
+
+- **安全管理措置（法 23 条）**：データを守る仕組み。リージョン指定・認証方式・監査ログなど、**アーキテクチャ（技術）で解決できる**
+- **取得・利用目的の適法性（法 17 条・18 条・20 条 2 項）**：そもそも扱ってよいか。同意書・委託契約・利用目的の公表など、**法務・組織対応でしか解決できない**
+
+以下は主に前者（技術面）の整理です。
+
+<ComparisonMatrix
+  items={[
+    {
+      name: 'Tier A：匿名化・非識別化',
+      attributes: [
+        { label: '代表的な用途', value: '個人が特定されない一般的な文章生成・要約・案内文作成' },
+        { label: '必要な技術要件', value: '特別な要件なし' },
+        { label: '利用可能な製品例', value: 'Gemini in Workspace、Google for Nonprofits 版 Gemini 等、一般的なクラウド AI で可' },
+      ],
+    },
+    {
+      name: 'Tier B：通常の個人情報（実名）',
+      attributes: [
+        { label: '代表的な用途', value: '施設名・担当者名等を含む議事録・案内文' },
+        { label: '必要な技術要件', value: 'ISMAP 登録済みクラウド＋DPA 締結＋同意取得（日本リージョン限定は必須ではないが推奨）' },
+        { label: '利用可能な製品例', value: 'Gemini in Workspace（ISMAP 登録済み、日本限定の選択肢はないが Tier B では許容範囲）／より安全に倒すなら <strong>Gemini Enterprise</strong>（Workspace とは別契約、日本ロケーション指定可）／<strong>Vertex AI（Gemini Enterprise Agent Platform）の API</strong> も可／❌ <a href="https://ai.google.dev/gemini-api/terms">Google AI Studio</a> の素の API キーは NG（ISMAP 対象外の別製品）' },
+      ],
+    },
+    {
+      name: 'Tier C：要配慮個人情報（実名）',
+      highlight: true,
+      highlightLabel: '最も厳格',
+      attributes: [
+        { label: '代表的な用途', value: 'ケースワーク記録・支援経過記録の要約や下書き、相談面談音声の議事録作成、生活歴・病歴書類の AI OCR 化、自立支援計画書の下書き 等' },
+        { label: '必要な技術要件', value: 'B の要件に加え、データの保存＋AI 処理が日本国内に完全に閉じること、API キーレス認証、3 省 2 ガイドライン相当の組織的措置' },
+        { label: '利用可能な製品例', value: 'GCP（Cloud Run・Firestore、インフラ）＋AWS Bedrock（Amazon Nova Pro、テキスト生成・要約・音声）のハイブリッド構成（下記参照）' },
+      ],
+    },
+  ]}
+/>
+
+> ※ Gemini Enterprise は、Business 版であれば IT 部門のセットアップや営業への問い合わせなしで **30 日間の無料トライアルをセルフサーブで開始** できます（[Google Cloud 公式 FAQ](https://cloud.google.com/gemini-enterprise/faq)、2026-09-09 時点確認）。したがって「管理コンソールで Gemini Enterprise のトグルがオンになっている」＝「正式に契約済み」とは限りません。無料トライアル中の可能性もあるため、実際の契約状況は別途確認が必要です。
+>
+> ※「日本リージョン限定は必須ではない」の意味：Vertex AI（Gemini Enterprise Agent Platform）自体は Google Cloud Platform として ISMAP 登録済みなので、リージョンに関わらず ISMAP 要件は満たします。日本リージョン以外を使う場合に論点になるのは法 24 条（越境移転規制）で、通常の個人情報であればプライバシーポリシー等での同意取得によりクリアできます。移転先が米国の場合は同意が実質的に必須（米国は APPI の十分性認定国に含まれない）である点に留意してください。
+
+### Tier C（最も厳しい要件）での具体的な最適構造
+
+要配慮個人情報を実名で扱う場合、2026 年 9 月時点で最も現実的なのは「既存の Google Cloud インフラは維持しつつ、テキスト生成・要約・音声文字起こしは AWS Bedrock に任せる」ハイブリッド構成です。**ただし AI OCR だけは例外** で、実機検証の結果、AWS Bedrock（Claude/Nova 系）は日本語 OCR の精度に弱点があることが分かったため、OCR 用途に限っては GCP 側で自前ホスティングする PaddleOCR を使う構成を推奨します。
+
+- **Cloud Run（GCP・日本リージョン）** が利用者からの入力を受け付ける窓口
+- 保存は **Firestore（GCP・データ保存）**
+- AI OCR は **PaddleOCR（自前ホスティング、Cloud Run CPU・東京リージョン、低コスト）**
+- テキスト生成・要約・音声は **AWS Bedrock / Transcribe**
+- クラウド間の認証は固定パスワード不要の **キーレス方式**
+
+データの保存・AI 処理とも常に日本国内に閉じます。AI OCR だけは精度上の理由で自前ホスティングに切り出し、それ以外の生成 AI 処理は AWS Bedrock へ、という役割分担です。
+
+**なぜこの構成が今のところ最適と言えるのか（根拠）**：
+
+- **ISMAP の登録構造**：Google 関連は「Google Cloud 本体」「Google Workspace」「Gemini Enterprise」が別々の登録番号を持ち、基盤が登録済みでも上位サービスは自動的には登録されません。「Google Workspace + Gemini」だけでは日本限定の処理は保証されない一方、「Gemini Enterprise」（別製品）は日本ロケーション指定が可能です。AWS は Bedrock・Transcribe を含む単一登録（[C21-0008-2](https://www.ismap.go.jp/csm?id=cloud_service_list)）で構造がシンプルです。
+- **個別の AI モデルは別途登録不要**（2026 年 1 月確認）：[ISMAP 運営主体自身の公式見解（ポータル KB0011070）](https://www.ismap.go.jp/csm?id=kb_article_view&sysparm_article=KB0011070)により、クラウド事業者が自社の生成 AI 開発基盤（PaaS）を ISMAP 登録範囲に含めていれば、そこで動く個々のモデル（Gemini・Nova Pro 等）は別途登録不要と確認されています。
+- **コスト構造**：[Google Cloud 公式ドキュメント](https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-5-flash)によれば、Gemini 3.5 Flash 以降を日本リージョン（asia-northeast1）で使う場合、通常の従量課金（Standard PayGo）が使えず、[シングルゾーンの Provisioned Throughput（Google Cloud アカウント担当者への問い合わせが必須）](https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/provisioned-throughput/purchase-provisioned-throughput)のみ対応です。[料金ページの計算例](https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing)では月額 $2,700 × GSU 数という試算が示されています。小規模な組織には現実的ではありません。AWS Bedrock（Nova Pro）は固定費なしの従量課金のままです。
+- **日本語 OCR に限定した実機検証（非公開ベンチマーク）**：実際の日本語書類（旧字体異体字・簡体字類似漢字・事業所名の紛らわしいペア等）を使った実機検証では、**AWS Bedrock（Claude/Nova 系）は特定の漢字を再現性ある形で誤読する** 弱点が確認されました。一方、自前ホスティングの **PaddleOCR（PP-OCRv6、CPU 推論のみ）** は、東京リージョンの Cloud Run（CPU のみ・低コスト）上で Gemini 3.5 Flash とほぼ同水準の精度を達成できることも確認されています。この項目は社内の実機ベンチマークに基づくもので、公開されている一次情報へのリンクはありません。
+
+**技術を固めても残る法務・組織対応（必須）**：
+
+- 利用者への同意取得・プライバシーポリシーの改定（AI 処理を行う旨の明記）
+- クラウド事業者との DPA（データ処理契約）締結
+- 委託先（システム開発事業者）との NDA・業務委託契約
+- 要配慮個人情報を扱う場合は、3 省 2 ガイドライン（厚労省・総務省・経産省）相当の組織的措置
+
+> ※ 本セクションは 2026 年 9 月時点の公式一次情報（ISMAP ポータル・AWS/Google 公式ドキュメント）に基づく技術的整理であり、法的な最終判断は専門家にご確認ください。
+
+## 今すぐできること・これから準備が必要なこと
+
+### ✅ 今日からできること
+
+- 案内文・マニュアル・一般的な文章生成など、**個人が特定される情報を含まない用途** では、今お使いの Gemini in Workspace をそのまま使い続けて問題ありません。
+- 相談メモの下書き等、**病歴・生活歴・障害の状況等の要配慮個人情報を含まない** 場合に限り、氏名・住所・生年月日等を仮名（A 様、B 様等）に置き換えてから入力すれば、現状のツールのまま活用できます。「困ったら、まず匿名化してから」を職場のルールにするだけで、使える範囲はかなり広がります。
+- ⚠️ **ただしケース記録・支援経過記録のように病歴・生活歴等を含む文書は対象外です。** 氏名を仮名に置き換えても、生活歴・病歴・状況の組み合わせから本人が推測できてしまう場合があり、要配慮個人情報のままである可能性が残ります（上記 Tier C に該当）。
+
+### ❌ 正直に：今はまだできないこと
+
+- 利用者の実名と病歴・生活歴等を **そのまま** Gemini in Workspace やその他の一般的な AI ツールに入力すること。
+- 「今の契約・今のツールのまま」でこれを安全にクリアする方法は、2026 年 9 月時点では存在しません。ここは期待を持たせすぎないよう、はっきりお伝えします。
+
+### 🏗️ 組織として計画的に準備すべきこと
+
+要配慮個人情報を実名で扱えるようにするには、個人のスマホ設定のように「その場で解決すること」ではなく、**システム構築と契約整理を伴う一定規模のプロジェクト** として進める必要があります。
+
+- Tier C 対応の技術基盤の構築（Gemini Enterprise 日本ロケーション、または AWS Bedrock 等を用いたハイブリッド構成）
+- 費用感の見積もりと予算確保（固定費が発生する構成もあるため、事前の比較検討が必要）
+- ISMAP 登録範囲の個別確認、クラウド事業者との DPA 締結
+- 3 省 2 ガイドライン相当の組織的措置の整備（要配慮個人情報を扱う場合）
+- 利用者への同意取得・プライバシーポリシーの改定
+
+これらは技術・法務の両面にまたがる専門的な整理が必要で、片手間で進めるのは現実的ではありません。まずは **「誰が意思決定者で、いつまでにどの範囲を実現したいか」を組織内で確認する** ところから始めることをおすすめします。
+
 ## プラン選定フロー
 
 扱う情報の種類（トピック⑦の 3 分類）に沿って、次の 2 つの質問で契約形態を決めます。
@@ -261,10 +409,26 @@ import ComparisonMatrix from '../../components/ComparisonMatrix.astro';
 - 完全ローカル処理（端末内のみ）を要する場合は、iPhone 純正「メモ」の文字起こしなどに選択肢を絞ることになります
 </Caution>
 
+## 参照した一次情報
+
+このトピックの技術的な整理（判定フロー・Tier 構成）の根拠となる公式ページです。いずれも 2026 年 9 月時点で内容を直接確認しています。
+
+- [Gemini 3.5 Flash モデルページ（Google Cloud 公式）](https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-5-flash) — asia-northeast1 では標準 PayGo 非対応・Provisioned Throughput のみ対応という記載の出典
+- [Agent Platform の料金（Google Cloud 公式）](https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing) — 「月額 $2,700 × GSU 数」という計算例の出典
+- [プロビジョンド スループットを購入する（Google Cloud 公式）](https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/provisioned-throughput/purchase-provisioned-throughput) — シングルゾーン購入には営業担当者への問い合わせが必須という記載の出典
+- [ISMAP クラウドサービスリスト（ISMAP ポータル公式）](https://www.ismap.go.jp/csm?id=cloud_service_list) — 各社の登録番号・登録単位の出典
+- [ISMAP ポータル公式 KB0011070「生成 AI サービスに関する留意点について」](https://www.ismap.go.jp/csm?id=kb_article_view&sysparm_article=KB0011070) — 個々の生成 AI モデルは別途登録不要というルールの出典
+- [Gemini Enterprise app FAQ（Google Cloud 公式）](https://cloud.google.com/gemini-enterprise/faq) — Business 版の 30 日間無料トライアルに関する出典
+- [Gemini API 利用規約（Google AI for Developers 公式）](https://ai.google.dev/gemini-api/terms) — Google AI Studio 経由の API キーはデータが「あらゆる国」で保存されうるという出典
+- [Amazon Bedrock は ISMAP の言明対象であることについての考え方（AWS 公式ブログ）](https://aws.amazon.com/jp/blogs/news/amazon-bedrock-ismap/) — Bedrock 上の個別モデルは ISMAP 別途登録不要という見解の出典
+
+> ※ 上記はいずれも一次情報（ベンダー公式ドキュメント）です。第三者の集計サイトやまとめ記事は根拠として使用していません。日本語 OCR の精度比較は社内の実機検証（非公開ベンチマーク）に基づくもので、公開一次情報へのリンクはありません。
+
 ## このトピックのまとめ
 
 - **「設定で学習オフ」と「法人契約で対象外」は別物、両方そろえる**
 - 個人プランでも学習オフは可能だが、**業務利用は法人契約を強く推奨**
 - 法人契約の価値は学習対象外だけでなく、**SSO・監査ログ・DPA・管理者権限**
 - 行政連携・要配慮情報を扱うなら **ISMAP 登録済サービス** を優先
+- 要配慮個人情報を **実名のまま** 扱うには、ISMAP 登録（法 23 条）だけでなく **越境移転規制（法 24 条）** のクリアも必要。Gemini Enterprise の日本リージョンはコスト面（Provisioned Throughput のみ対応）で小規模組織には不利なため、AWS Bedrock 等とのハイブリッド構成が現実的な選択肢になる
 - 仕様は半年単位で変わる、**契約更新時に再評価**
