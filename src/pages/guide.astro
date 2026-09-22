@@ -1,0 +1,37 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Report, { frontmatter } from '../content/guide/personal-info-generative-ai.mdx';
+import { withBase } from '../lib/urls';
+---
+
+<Layout title={frontmatter.title} description={frontmatter.description}>
+  <header class="border-b border-border-soft">
+    <div class="container-page py-10 md:py-14">
+      <a href={withBase('')} class="font-display text-sm text-accent-1 no-underline hover:underline">
+        ← トップへ
+      </a>
+      <span class="font-display mt-4 block text-xs font-semibold uppercase tracking-widest text-accent-1">
+        AIガバナンス実務資料
+      </span>
+      <h1 class="font-display mt-2 text-2xl font-semibold leading-tight md:text-4xl">
+        {frontmatter.title}
+      </h1>
+      <p class="mt-3 max-w-2xl text-base leading-relaxed text-ink-2">{frontmatter.description}</p>
+      <div class="mt-4 flex flex-wrap gap-2 text-xs">
+        <span class="rounded-full bg-accent-1/10 px-3 py-1 font-semibold text-accent-1-deep">
+          最終更新 {frontmatter.lastUpdated}
+        </span>
+        <span class="rounded-full bg-bg-deep px-3 py-1 font-semibold text-ink-2">一次情報ベース・出典14件</span>
+      </div>
+      <p class="mt-4 max-w-2xl text-xs leading-relaxed text-ink-3">
+        対象読者：{frontmatter.audience}。特定のベンダーやサービスの宣伝を目的としたものではありません。
+      </p>
+    </div>
+  </header>
+
+  <article
+    class="container-page py-10 md:py-14 [&>h2]:font-display [&>h2]:mt-12 [&>h2]:mb-4 [&>h2]:border-b [&>h2]:border-border-soft [&>h2]:pb-2 [&>h2]:text-xl [&>h2]:font-bold [&>h2]:text-accent-1-deep md:[&>h2]:text-2xl [&>h3]:font-display [&>h3]:mt-10 [&>h3]:mb-3 [&>h3]:border-t [&>h3]:border-border-soft [&>h3]:pt-6 [&>h3]:text-xl [&>h3]:font-bold [&>h3]:text-accent-1-deep [&_p]:mb-4 [&_p]:leading-relaxed [&_ul]:mb-4 [&_ul]:list-disc [&_ul]:pl-6 [&_ol:not(.list-none)]:mb-4 [&_ol:not(.list-none)]:list-decimal [&_ol:not(.list-none)]:pl-6 [&_a]:text-accent-1 [&_a]:underline [&_a]:underline-offset-2 [&_blockquote]:my-4 [&_blockquote]:rounded-r-xl [&_blockquote]:border-l-4 [&_blockquote]:border-accent-1 [&_blockquote]:bg-bg-deep [&_blockquote]:px-4 [&_blockquote]:py-3 [&_blockquote]:text-sm [&_blockquote]:text-ink-2 [&_code]:rounded [&_code]:bg-bg-deep [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:font-mono [&_code]:text-[0.85em] [&_table]:my-4 [&_table]:w-full [&_table]:table-fixed [&_table]:border-collapse [&_table]:text-sm [&_th]:border [&_th]:border-border-soft [&_th]:bg-bg-deep [&_th]:p-2 [&_th]:text-left [&_th]:font-display [&_td]:border [&_td]:border-border-soft [&_td]:p-2 [&_td]:align-top"
+  >
+    <Report />
+  </article>
+</Layout>
